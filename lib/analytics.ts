@@ -1,14 +1,74 @@
-import { track } from '@vercel/analytics';
+import ReactGA from 'react-ga4';
 import { useEffect } from 'react';
 
+// Declare gtag as a global function
+declare global {
+  interface Window {
+    dataLayer: any[];
+    gtag: (...args: any[]) => void;
+  }
+}
+
+// Google Analytics Measurement ID - replace with your actual GA4 measurement ID
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-P374H6F49M';
+
 /**
- * Theo dõi sự kiện tùy chỉnh với Vercel Analytics
+ * Initialize Google Analytics
+ */
+export function initGA(): void {
+  try {
+    if (typeof window !== 'undefined') {
+      ReactGA.initialize(GA_MEASUREMENT_ID);
+    }
+  } catch (error) {
+    console.error('Error initializing Google Analytics:', error);
+  }
+}
+
+/**
+ * Theo dõi sự kiện tùy chỉnh với Google Analytics
  */
 export function trackEvent(eventName: string, properties?: Record<string, any>): void {
   try {
-    track(eventName, properties);
+    if (typeof window !== 'undefined' && window.gtag) {
+      // Use gtag directly if available (set up by Script component)
+      window.gtag('event', eventName, properties || {});
+    } else {
+      // Fallback to ReactGA
+      ReactGA.event({
+        category: 'User Interaction',
+        action: eventName,
+        ...(properties || {})
+      });
+    }
   } catch (error) {
     console.error('Error tracking event:', error);
+  }
+}
+
+/**
+ * Theo dõi lỗi với Google Analytics
+ */
+export function trackError(category: string, description: string, context?: Record<string, any>): void {
+  try {
+    if (typeof window !== 'undefined' && window.gtag) {
+      // Use gtag directly if available
+      window.gtag('event', 'error', {
+        error_category: category,
+        error_description: description,
+        ...(context || {})
+      });
+    } else {
+      // Fallback to ReactGA
+      ReactGA.event({
+        category: 'Error',
+        action: category,
+        label: description,
+        ...(context || {})
+      });
+    }
+  } catch (error) {
+    console.error('Error tracking error event:', error);
   }
 }
 
@@ -17,6 +77,21 @@ export function trackEvent(eventName: string, properties?: Record<string, any>):
  */
 export function useSessionTracking(): void {
   useEffect(() => {
+    // Only run on client
+    if (typeof window === 'undefined') return;
+    
+    // Ensure Google Analytics is initialized
+    initGA();
+    
+    // Track page view
+    if (window.gtag) {
+      window.gtag('event', 'page_view', {
+        page_path: window.location.pathname
+      });
+    } else {
+      ReactGA.send({ hitType: "pageview", page: window.location.pathname });
+    }
+    
     // Theo dõi bắt đầu phiên làm việc
     const startTime = Date.now();
     trackEvent('session_start');
@@ -78,20 +153,5 @@ export function trackExport(
     count: subtitleCount,
     language: targetLanguage,
     bilingual: isBilingual
-  });
-}
-
-/**
- * Theo dõi lỗi dịch
- */
-export function trackError(
-  errorType: string,
-  errorMessage: string,
-  context?: Record<string, any>
-): void {
-  trackEvent('error', {
-    type: errorType,
-    message: errorMessage,
-    ...context
   });
 } 

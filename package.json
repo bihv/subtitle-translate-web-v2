@@ -2,9 +2,22 @@
   "name": "subtitle-translate-v2",
   "version": "0.1.0",
   "private": true,
+  "description": "AI-powered subtitle translation tool using Google Gemini",
+  "author": "SubtitleAI Team",
+  "homepage": "https://translate.io.vn",
+  "keywords": [
+    "subtitles",
+    "translation",
+    "ai",
+    "gemini",
+    "srt",
+    "vtt",
+    "ass"
+  ],
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
@@ -23,8 +36,10 @@
     "file-saver": "^2.0.5",
     "lucide-react": "^0.487.0",
     "next": "15.3.0",
+    "next-sitemap": "^4.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-ga4": "^2.1.0",
     "tailwind-merge": "^3.2.0",
     "tw-animate-css": "^1.2.5"
   },

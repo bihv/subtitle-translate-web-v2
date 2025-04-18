@@ -1,8 +1,10 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n/I18nContext";
-import { Analytics } from "@vercel/analytics/react";
+import GoogleAnalytics from "../components/GoogleAnalytics";
+import { WebsiteSchema, OrganizationSchema, SoftwareApplicationSchema } from "../components/JsonLd";
+import { generateMetadata as generateSiteMetadata } from '../lib/generateMetadata';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,10 +16,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+export const metadata: Metadata = generateSiteMetadata({
   title: "SubtitleAI",
   description: "Translate subtitles from SRT files using Gemini AI",
-};
+});
 
 export default function RootLayout({
   children,
@@ -32,7 +34,10 @@ export default function RootLayout({
         <I18nProvider>
           {children}
         </I18nProvider>
-        <Analytics />
+        <GoogleAnalytics />
+        <WebsiteSchema />
+        <OrganizationSchema />
+        <SoftwareApplicationSchema />
       </body>
     </html>
   );
