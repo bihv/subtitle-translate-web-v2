@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient background -->
+  <rect width="512" height="512" rx="128" fill="url(#paint0_linear)" />
+  
+  <!-- Text "S" in the center -->
+  <text x="256" y="320" font-size="280" font-weight="bold" text-anchor="middle" fill="white" font-family="Arial, sans-serif">S</text>
+  
+  <!-- Subtitle lines -->
+  <rect x="128" y="380" width="256" height="16" rx="8" fill="white" fill-opacity="0.9" />
+  <rect x="160" y="420" width="192" height="16" rx="8" fill="white" fill-opacity="0.7" />
+  
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3B82F6"/>
+      <stop offset="0.5" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+</svg> 

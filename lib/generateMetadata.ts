@@ -19,28 +19,31 @@ export function generateMetadata({
   title = "SubtitleAI",
   description = "Translate subtitles from SRT files using Gemini AI",
   path = "/",
-  image,
+  image = "/og-image.jpg",
   locale = "vi",
   alternateLocales = ["en"]
 }: MetadataParams): Metadata {
-  // Xác định baseUrl dựa trên môi trường
+  // Luôn sử dụng domain production cho hình ảnh OG bất kể môi trường nào
+  // Điều này đảm bảo hình ảnh luôn có thể truy cập khi chia sẻ
+  const productionUrl = "https://translate.io.vn";
+  
+  // Xác định baseUrl dựa trên môi trường chỉ cho các URL khác
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
                   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 
-                  "https://translate.io.vn");
+                  productionUrl);
   
   const url = `${baseUrl}${path}`;
   
-  // Tạo URL cho ảnh OG động nếu không có ảnh được cung cấp
+  // Sử dụng URL sản phẩm THỰC TẾ cho hình ảnh OG bất kể đang ở môi trường nào
+  // Điều này đảm bảo hình ảnh luôn khả dụng khi chia sẻ trên mạng xã hội
   let imageUrl: string;
   
   if (image) {
     // Sử dụng ảnh được cung cấp nếu có
-    imageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`;
+    imageUrl = image.startsWith('http') ? image : `${productionUrl}${image}`;
   } else {
-    // Tạo ảnh OG động với API
-    const encodedTitle = encodeURIComponent(title);
-    const encodedDescription = encodeURIComponent(description);
-    imageUrl = `${baseUrl}/api/og?title=${encodedTitle}&description=${encodedDescription}`;
+    // Sử dụng ảnh mặc định
+    imageUrl = `${productionUrl}/og-image.jpg`;
   }
 
   // Tạo alternates cho hreflang
@@ -57,6 +60,28 @@ export function generateMetadata({
     authors: [{ name: "SubtitleAI" }],
     creator: "SubtitleAI",
     publisher: "SubtitleAI",
+    // Cấu hình favicon và các biểu tượng khác
+    icons: {
+      icon: [
+        { url: '/favicon.ico', sizes: '32x32' },
+        { url: '/favicon/icon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/favicon/icon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+        { url: '/favicon/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+      ],
+      shortcut: '/favicon.ico',
+      apple: [
+        { url: '/favicon/apple-icon-180x180.png', sizes: '180x180', type: 'image/png' },
+      ],
+      other: [
+        {
+          rel: 'apple-touch-icon',
+          url: '/favicon/apple-icon-180x180.png',
+        },
+      ],
+    },
+    // Manifest cho PWA
+    manifest: '/manifest.json',
     openGraph: {
       title,
       description,
@@ -70,7 +95,6 @@ export function generateMetadata({
         width: 1200,
         height: 630,
         alt: title,
-        // Đảm bảo hình ảnh luôn được cập nhật
         secureUrl: imageUrl
       }],
     },

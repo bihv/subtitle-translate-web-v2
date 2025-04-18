@@ -1,0 +1,23 @@
+{
+  "name": "SubtitleAI",
+  "short_name": "SubtitleAI",
+  "description": "Translate subtitles from SRT files using Gemini AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3B82F6",
+  "icons": [
+    {
+      "src": "/favicon/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+} 

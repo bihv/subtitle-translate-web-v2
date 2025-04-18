@@ -75,6 +75,21 @@ SubtitleAI is a modern web application that translates subtitle files using Goog
 - **SEO Optimization**: Open Graph images, metadata, and JSON-LD
 - **Internationalization**: Multi-language support with context-aware translations
 
+## Customizing Favicon
+
+The app uses a custom favicon for brand identity. To update the favicon:
+
+1. Create favicon images in various sizes (16x16, 32x32, 192x192, 512x512)
+2. Use tools like [Favicon.io](https://favicon.io/) or [RealFaviconGenerator](https://realfavicongenerator.net/)
+3. Place the generated files in the following locations:
+   - `public/favicon.ico` - Main favicon file
+   - `public/favicon/icon-16x16.png` - 16x16 PNG icon
+   - `public/favicon/icon-32x32.png` - 32x32 PNG icon
+   - `public/favicon/icon-192x192.png` - 192x192 PNG icon (for Android)
+   - `public/favicon/icon-512x512.png` - 512x512 PNG icon (for PWA)
+   - `public/favicon/apple-icon-180x180.png` - 180x180 PNG icon (for iOS)
+4. Metadata for the icons is already configured in the app
+
 ## API Key Security
 
 **Client-side storage**: Your API key can be stored in browser storage for convenience
