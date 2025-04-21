@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n/I18nContext";
 import GoogleAnalytics from "../components/GoogleAnalytics";
-import { WebsiteSchema, OrganizationSchema, SoftwareApplicationSchema } from "../components/JsonLd";
-import { generateMetadata as generateSiteMetadata } from '../lib/generateMetadata';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,11 +14,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = generateSiteMetadata({
-  title: "SubtitleAI",
-  description: "Translate subtitles from SRT files using Gemini AI",
-});
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,6 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta property="og:title" content="SubtitleAI" />
+        <meta property="og:description" content="Easily translate SRT subtitles into multiple languages with Gemini AI. Perfect for movies, educational videos, entertainment, and much more!" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://translate.io.vn/" />
+        <meta property="og:image" content="https://translate.io.vn/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="SubtitleAI" />
+        <meta name="twitter:description" content="Easily translate SRT subtitles into multiple languages with Gemini AI. Perfect for movies, educational videos, entertainment, and much more!" />
+        <meta name="twitter:image" content="https://translate.io.vn/og-image.jpg" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -35,9 +39,6 @@ export default function RootLayout({
           {children}
         </I18nProvider>
         <GoogleAnalytics />
-        <WebsiteSchema />
-        <OrganizationSchema />
-        <SoftwareApplicationSchema />
       </body>
     </html>
   );
