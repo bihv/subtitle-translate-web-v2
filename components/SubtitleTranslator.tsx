@@ -35,6 +35,7 @@ import {
   trackError,
   trackEvent
 } from '@/lib/analytics';
+import Link from "next/link";
 
 // Define subtitle item interface
 export interface SubtitleItem extends SubtitleItemBase {
@@ -1077,6 +1078,23 @@ Yêu cầu cụ thể cho mỗi phiên bản:
     return (
         <div className="container mx-auto px-4 py-8 max-w-7xl">
             <div className="space-y-4">
+                {/* Hướng dẫn sử dụng rõ ràng cho người dùng mới */}
+                <div className="bg-blue-50 border border-blue-200 rounded-md p-4 flex items-start gap-3">
+                    <Globe className="h-6 w-6 text-blue-500 mt-1 flex-shrink-0" />
+                    <div>
+                        <div className="font-semibold text-blue-800 text-base mb-1">{t('guide.introTitle')}</div>
+                        <ol className="list-decimal list-inside text-blue-700 text-sm space-y-1">
+                            <li>{t('guide.apiKeyTitle')}</li>
+                            <li>{t('guide.section2')}</li>
+                            <li>{t('guide.section3')}</li>
+                            <li>{t('guide.section5')}</li>
+                            <li>{t('guide.section6')}</li>
+                        </ol>
+                        <div className="mt-2 text-xs text-blue-600">
+                          <Link href="/guide" className="underline text-blue-700 hover:text-blue-900 font-medium">{t('guide.title')}</Link> — {t('guide.subtitle')}
+                        </div>
+                    </div>
+                </div>
                 {/* API Key Input and Model Selector */}
                 <ClientOnly>
                     <div className="space-y-4 mb-4">
@@ -1534,4 +1552,4 @@ Yêu cầu cụ thể cho mỗi phiên bản:
             </div>
         </div>
     );
-} 
+}
