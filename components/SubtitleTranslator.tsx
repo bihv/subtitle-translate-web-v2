@@ -38,7 +38,13 @@ import {
   trackTranslation, 
   trackExport, 
   trackError,
-  trackEvent
+  trackEvent,
+  trackTranslateButtonClick,
+  trackModelSelection,
+  trackProviderSwitch,
+  getGeminiModelType,
+  getOpenRouterModelType,
+  createDetailedModelKey
 } from '@/lib/analytics';
 import Link from "next/link";
 
@@ -170,6 +176,15 @@ export default function SubtitleTranslator() {
 
     // Handle AI provider change
     const handleAiProviderChange = (provider: AIProvider) => {
+        const previousProvider = aiProvider;
+        const previousModel = previousProvider === 'gemini' ? selectedModel : openRouterModel;
+        const newModel = provider === 'gemini' ? selectedModel : openRouterModel;
+        
+        // Track provider switch
+        if (previousProvider !== provider) {
+            trackProviderSwitch(previousProvider, provider, previousModel, newModel);
+        }
+        
         setAiProvider(provider);
         
         // Clear validation errors when switching providers
@@ -178,6 +193,17 @@ export default function SubtitleTranslator() {
 
     // Handle OpenRouter model change
     const handleOpenRouterModelChange = (model: string) => {
+        const previousModel = openRouterModel;
+        
+        // Find model pricing info for analytics
+        const modelData = openRouterModels.find((m: any) => m.id === model);
+        const previousModelData = openRouterModels.find((m: any) => m.id === previousModel);
+        
+        const modelType = getOpenRouterModelType(model, modelData?.pricing);
+        
+        // Track model selection change
+        trackModelSelection('openrouter', previousModel, model, modelType);
+        
         console.log(`🎯 Model changed to: ${model}`);
         setOpenRouterModel(model); // Update local state
         saveOpenRouterModel(model); // Save to OpenRouter API module
@@ -226,6 +252,13 @@ export default function SubtitleTranslator() {
 
     // Xử lý khi người dùng thay đổi model
     const handleModelChange = (modelId: string) => {
+        const previousModel = selectedModel;
+        const previousModelType = getGeminiModelType(previousModel);
+        const newModelType = getGeminiModelType(modelId);
+        
+        // Track model selection change
+        trackModelSelection('gemini', previousModel, modelId, newModelType);
+        
         setModel(modelId);
         setSelectedModel(modelId);
         console.log(`Model changed to: ${modelId}`);
@@ -427,8 +460,24 @@ export default function SubtitleTranslator() {
         pauseStateRef.current = false;
         setTranslationError(null); // Reset thông báo lỗi dịch
 
-        // Theo dõi sự kiện bắt đầu dịch
-        trackTranslation('auto', targetLanguage, subtitles.length, selectedModel);
+        // Xác định model và provider hiện tại cho analytics
+        const currentModel = aiProvider === 'gemini' ? selectedModel : openRouterModel;
+        const modelType = aiProvider === 'gemini' 
+            ? getGeminiModelType(currentModel)
+            : getOpenRouterModelType(currentModel);
+
+        // Theo dõi sự kiện nhấn nút dịch (button click tracking)
+        trackTranslateButtonClick(
+            'auto', 
+            targetLanguage, 
+            subtitles.length, 
+            aiProvider,
+            currentModel,
+            modelType
+        );
+
+        // Theo dõi sự kiện bắt đầu dịch (legacy tracking for compatibility)
+        trackTranslation('auto', targetLanguage, subtitles.length, currentModel);
 
         // Tạo abort controller mới
         abortControllerRef.current = new AbortController();

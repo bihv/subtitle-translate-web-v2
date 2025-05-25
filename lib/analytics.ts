@@ -140,6 +140,69 @@ export function trackTranslation(
 }
 
 /**
+ * Theo dõi sự kiện nhấn nút dịch (riêng biệt với completion)
+ */
+export function trackTranslateButtonClick(
+  sourceLanguage: string,
+  targetLanguage: string,
+  subtitleCount: number,
+  aiProvider: 'gemini' | 'openrouter',
+  model: string,
+  modelType?: 'free' | 'paid' | 'experimental'
+): void {
+  trackEvent('translate_button_click', {
+    source: sourceLanguage,
+    target: targetLanguage,
+    count: subtitleCount,
+    ai_provider: aiProvider,
+    model: model,
+    model_type: modelType || 'unknown',
+    // Thêm thông tin chi tiết về model provider
+    provider_model: `${aiProvider}:${model}`,
+    timestamp: new Date().toISOString()
+  });
+}
+
+/**
+ * Theo dõi việc lựa chọn model
+ */
+export function trackModelSelection(
+  aiProvider: 'gemini' | 'openrouter',
+  previousModel: string,
+  newModel: string,
+  modelType?: 'free' | 'paid' | 'experimental'
+): void {
+  trackEvent('model_selection', {
+    ai_provider: aiProvider,
+    previous_model: previousModel,
+    new_model: newModel,
+    model_type: modelType || 'unknown',
+    provider_model: `${aiProvider}:${newModel}`,
+    timestamp: new Date().toISOString()
+  });
+}
+
+/**
+ * Theo dõi việc chuyển đổi AI provider
+ */
+export function trackProviderSwitch(
+  previousProvider: 'gemini' | 'openrouter',
+  newProvider: 'gemini' | 'openrouter',
+  previousModel: string,
+  newModel: string
+): void {
+  trackEvent('provider_switch', {
+    previous_provider: previousProvider,
+    new_provider: newProvider,
+    previous_model: previousModel,
+    new_model: newModel,
+    previous_provider_model: `${previousProvider}:${previousModel}`,
+    new_provider_model: `${newProvider}:${newModel}`,
+    timestamp: new Date().toISOString()
+  });
+}
+
+/**
  * Theo dõi sự kiện xuất phụ đề
  */
 export function trackExport(
@@ -154,4 +217,63 @@ export function trackExport(
     language: targetLanguage,
     bilingual: isBilingual
   });
-} 
+}
+
+/**
+ * Helpers để xác định loại model và provider
+ */
+
+/**
+ * Xác định loại model Gemini
+ */
+export function getGeminiModelType(modelId: string): 'free' | 'paid' | 'experimental' {
+  // Free models
+  if (modelId.includes('flash') || modelId.includes('2.0-flash')) {
+    return 'free';
+  }
+  // Experimental models
+  if (modelId.includes('exp') || modelId.includes('experimental')) {
+    return 'experimental';
+  }
+  // Pro models (paid)
+  if (modelId.includes('pro')) {
+    return 'paid';
+  }
+  return 'free'; // Default to free
+}
+
+/**
+ * Xác định loại model OpenRouter dựa trên pricing
+ */
+export function getOpenRouterModelType(
+  modelId: string, 
+  pricingInfo?: { prompt: string; completion: string }
+): 'free' | 'paid' {
+  if (pricingInfo) {
+    const promptPrice = parseFloat(pricingInfo.prompt);
+    const completionPrice = parseFloat(pricingInfo.completion);
+    return (promptPrice === 0 && completionPrice === 0) ? 'free' : 'paid';
+  }
+  
+  // Fallback: check common free model patterns
+  const freeModelPatterns = [
+    'free',
+    'microsoft/wizardlm',
+    'meta-llama/llama-3.1-8b-instruct:free'
+  ];
+  
+  return freeModelPatterns.some(pattern => 
+    modelId.toLowerCase().includes(pattern.toLowerCase())
+  ) ? 'free' : 'paid';
+}
+
+/**
+ * Tạo model key chi tiết cho analytics
+ */
+export function createDetailedModelKey(
+  aiProvider: 'gemini' | 'openrouter',
+  modelId: string,
+  modelType: 'free' | 'paid' | 'experimental'
+): string {
+  return `${aiProvider}_${modelType}_${modelId.replace(/[^a-zA-Z0-9]/g, '_')}`;
+}
