@@ -86,18 +86,18 @@ export default function ModelSelector({ onModelChange, className = "" }: ModelSe
   const models = AVAILABLE_MODELS;
 
   return (
-    <div className={`space-y-2 ${className}`}>
-      <label className="text-sm font-medium text-gray-700">
+    <div className={`space-y-3 ${className}`}>
+      <label className="text-sm font-medium block mb-2">
         {translations.title[currentLanguage] || 'AI Model'}
       </label>
       <Select
         value={currentModel}
         onValueChange={handleModelChange}
       >
-        <SelectTrigger className="w-full">
+        <SelectTrigger className="w-full text-left">
           <SelectValue placeholder={translations.selectModel[currentLanguage] || 'Select model'} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="max-h-[400px] overflow-auto w-[400px] max-w-[90vw]">
           {models.map((model) => (
             <SelectItem key={model.id} value={model.id}>
               <div>

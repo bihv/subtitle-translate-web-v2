@@ -3,13 +3,18 @@
 import { useState, useEffect, useRef } from "react";
 import { translateWithGemini, setApiKey, getApiKey, setModel, getModel } from "@/lib/geminiApi";
 import type { TranslationResult } from "@/lib/geminiApi";
+import { translateWithOpenRouter, translateWithOpenRouterBatch, setOpenRouterApiKey as saveOpenRouterApiKey, getOpenRouterApiKey, setOpenRouterModel as saveOpenRouterModel, getOpenRouterModel, getOpenRouterModels } from "@/lib/openrouterApi";
 import SubtitleTable from "@/components/SubtitleTable";
 import LanguageSelector from "@/components/LanguageSelector";
 import LoadingIndicator from "@/components/LoadingIndicator";
 import ApiKeyInput from "@/components/ApiKeyInput";
+import OpenRouterApiKeyInput from "@/components/OpenRouterApiKeyInput";
 import ModelSelector, { AVAILABLE_MODELS, ModelOption, translations as modelTranslations } from "@/components/ModelSelector";
+import OpenRouterModelSelector from "@/components/OpenRouterModelSelector";
+import AIProviderSelector, { AIProvider } from "@/components/AIProviderSelector";
 import ClientOnly from "@/components/ClientOnlyComponent";
 import BatchErrorDisplay from "@/components/BatchErrorDisplay";
+import TokenEstimatorDisplay from "@/components/TokenEstimatorDisplay";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -90,6 +95,13 @@ export default function SubtitleTranslator() {
     const [showAlert, setShowAlert] = useState<boolean>(false);
     const [subtitleFormat, setSubtitleFormat] = useState<SubtitleFormat>('srt');
     const [exportFormat, setExportFormat] = useState<SubtitleFormat | 'original'>('original');
+    const [showTokenEstimate, setShowTokenEstimate] = useState<boolean>(true);
+    
+    // AI Provider state
+    const [aiProvider, setAiProvider] = useState<AIProvider>('gemini');
+    const [openRouterApiKey, setOpenRouterApiKey] = useState<string>(getOpenRouterApiKey());
+    const [openRouterModel, setOpenRouterModel] = useState<string>(getOpenRouterModel());
+    const [openRouterModels, setOpenRouterModels] = useState<any[]>([]); // Store OpenRouter models for display name lookup
 
     // Cập nhật pauseStateRef khi isPaused thay đổi
     useEffect(() => {
@@ -145,6 +157,73 @@ export default function SubtitleTranslator() {
         }
     };
 
+    // Handle OpenRouter API key change
+    const handleOpenRouterApiKeyChange = (apiKey: string) => {
+        setOpenRouterApiKey(apiKey); // Set in local state
+        saveOpenRouterApiKey(apiKey); // Set in openrouterApi module
+        
+        // Clear validation error if API key is provided
+        if (!!apiKey && validationError?.includes("OpenRouter API key")) {
+            setValidationError(null);
+        }
+    };
+
+    // Handle AI provider change
+    const handleAiProviderChange = (provider: AIProvider) => {
+        setAiProvider(provider);
+        
+        // Clear validation errors when switching providers
+        setValidationError(null);
+    };
+
+    // Handle OpenRouter model change
+    const handleOpenRouterModelChange = (model: string) => {
+        console.log(`🎯 Model changed to: ${model}`);
+        setOpenRouterModel(model); // Update local state
+        saveOpenRouterModel(model); // Save to OpenRouter API module
+    };
+
+    // Translation wrapper function that works with both providers
+    const translateTexts = async (
+        texts: string[], 
+        targetLanguage: string, 
+        prompt: string,
+        context?: string
+    ) => {
+        if (aiProvider === 'gemini') {
+            return await translateWithGemini({
+                texts,
+                targetLanguage,
+                prompt,
+                context,
+                model: selectedModel
+            });
+        } else if (aiProvider === 'openrouter') {
+            // OpenRouter now supports batch translation!
+            return await translateWithOpenRouterBatch(
+                texts,
+                targetLanguage,
+                prompt,
+                context
+            );
+        } else {
+            throw new Error('Invalid AI provider selected');
+        }
+    };
+
+    // Helper function to get the display name for the current model
+    const getCurrentModelDisplayName = () => {
+        if (aiProvider === 'gemini') {
+            const geminiModel = AVAILABLE_MODELS.find((m) => m.id === selectedModel);
+            return geminiModel?.name || selectedModel;
+        } else if (aiProvider === 'openrouter') {
+            // Try to find the model in the loaded OpenRouter models list
+            const openRouterModelData = openRouterModels.find((m: any) => m.id === openRouterModel);
+            return openRouterModelData?.name || openRouterModel || selectedModel;
+        }
+        return selectedModel;
+    };
+
     // Xử lý khi người dùng thay đổi model
     const handleModelChange = (modelId: string) => {
         setModel(modelId);
@@ -166,10 +245,17 @@ export default function SubtitleTranslator() {
 
     // Xác thực đầu vào trước khi dịch
     const validateBeforeTranslate = () => {
-        // Kiểm tra API key
-        if (!getApiKey()) {
-            setValidationError(t('errors.apiKeyRequired'));
-            return false;
+        // Kiểm tra API key theo provider
+        if (aiProvider === 'gemini') {
+            if (!getApiKey()) {
+                setValidationError(t('errors.apiKeyRequired'));
+                return false;
+            }
+        } else if (aiProvider === 'openrouter') {
+            if (!openRouterApiKey) {
+                setValidationError(t('openrouter.invalid'));
+                return false;
+            }
         }
 
         // Kiểm tra file SRT
@@ -564,14 +650,13 @@ export default function SubtitleTranslator() {
             // Update status to translating
             updateBatchStatus(batch, "translating");
 
-            // Call translation API with the current model
-            const translatedResults = await translateWithGemini({
-                texts: textsToTranslate,
+            // Call translation API with the current provider
+            const translatedResults = await translateTexts(
+                textsToTranslate,
                 targetLanguage,
-                prompt: customPrompt,
-                context,
-                model: selectedModel
-            });
+                customPrompt,
+                context
+            );
 
             // Update subtitles with translations
             batch.forEach((subtitle, index) => {
@@ -692,12 +777,12 @@ export default function SubtitleTranslator() {
             const contextString = context.map(c => `"${c.original}" -> "${c.translated}"`).join('\n');
 
             // Translate this subtitle
-            const translatedResult = await translateWithGemini({
-                texts: [subtitle.text],
+            const translatedResult = await translateTexts(
+                [subtitle.text],
                 targetLanguage,
-                prompt: customPrompt,
-                context: contextString ? `Here are some previous translations for context:\n${contextString}` : ''
-            });
+                customPrompt,
+                contextString ? `Here are some previous translations for context:\n${contextString}` : ''
+            );
 
             // Cập nhật kết quả
             if (translatedResult[0]?.error) {
@@ -1010,8 +1095,12 @@ export default function SubtitleTranslator() {
 
     // Thêm hàm xử lý gợi ý dịch thuật
     const handleSuggestBetterTranslation = async (id: number, originalText: string, currentTranslation: string) => {
-        if (!getApiKey()) {
+        // Validate API key based on provider
+        if (aiProvider === 'gemini' && !getApiKey()) {
             setValidationError(t('errors.apiKeyRequired'));
+            return [];
+        } else if (aiProvider === 'openrouter' && !openRouterApiKey) {
+            setValidationError(t('openrouter.invalid'));
             return [];
         }
 
@@ -1038,21 +1127,40 @@ Yêu cầu cụ thể cho mỗi phiên bản:
             // Đánh dấu đang dịch phụ đề này
             setCurrentTranslatingItemId(id);
             
-            // Gọi API Gemini để lấy gợi ý
-            const response = await translateWithGemini({
-                texts: [originalText],
-                targetLanguage,
-                prompt: suggestPrompt,
-                model: selectedModel
-            });
-            
-            if (response[0]?.error) {
-                throw new Error(response[0].error);
-            }
-            
             let suggestions: string[] = [];
-            for(let i = 0; i < 3; i++) {
-                suggestions.push(response[i]?.text);
+            
+            if (aiProvider === 'gemini') {
+                // Gọi API Gemini để lấy gợi ý
+                const response = await translateWithGemini({
+                    texts: [originalText],
+                    targetLanguage,
+                    prompt: suggestPrompt,
+                    model: selectedModel
+                });
+                
+                if (response[0]?.error) {
+                    throw new Error(response[0].error);
+                }
+                
+                for(let i = 0; i < 3; i++) {
+                    if (response[i]?.text) {
+                        suggestions.push(response[i].text);
+                    }
+                }
+            } else if (aiProvider === 'openrouter') {
+                // For OpenRouter, we'll make 3 separate calls with different prompts
+                const prompts = [
+                    `Translate this to ${targetLanguage} using simple, everyday language: "${originalText}"`,
+                    `Translate this to ${targetLanguage} using formal, academic language: "${originalText}"`,
+                    `Translate this to ${targetLanguage} using creative, natural expression: "${originalText}"`
+                ];
+                
+                for (const prompt of prompts) {
+                    const result = await translateWithOpenRouter(originalText, targetLanguage);
+                    if (result.success) {
+                        suggestions.push(result.translatedText);
+                    }
+                }
             }
             
             // Nếu vẫn không tìm thấy, trả về bản dịch hiện tại
@@ -1074,6 +1182,37 @@ Yêu cầu cụ thể cho mỗi phiên bản:
             setCurrentTranslatingItemId(null);
         }
     };
+
+    // Initialize API key status on component mount
+    useEffect(() => {
+        const geminiKey = getApiKey();
+        setApiKeyProvided(!!geminiKey);
+    }, []);
+
+    // Initialize AI provider from localStorage
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const savedProvider = localStorage.getItem("ai_provider") as AIProvider;
+            if (savedProvider && (savedProvider === "gemini" || savedProvider === "openrouter")) {
+                setAiProvider(savedProvider);
+            }
+        }
+    }, []);
+
+    // Load OpenRouter models when AI provider changes to OpenRouter
+    useEffect(() => {
+        if (aiProvider === 'openrouter') {
+            const loadOpenRouterModels = async () => {
+                try {
+                    const models = await getOpenRouterModels();
+                    setOpenRouterModels(models);
+                } catch (error) {
+                    console.error("Failed to load OpenRouter models for display:", error);
+                }
+            };
+            loadOpenRouterModels();
+        }
+    }, [aiProvider]);
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -1097,14 +1236,28 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                         </div>
                     </div>
                 </div>
-                {/* API Key Input and Model Selector */}
+                {/* AI Provider and API Key Configuration */}
                 <ClientOnly>
                     <div className="space-y-4 mb-4">
-                        <ApiKeyInput onApiKeyChange={handleApiKeyChange} />
+                        <AIProviderSelector 
+                            value={aiProvider}
+                            onProviderChange={handleAiProviderChange}
+                        />
+                        
+                        {aiProvider === 'gemini' && (
+                            <ApiKeyInput onApiKeyChange={handleApiKeyChange} />
+                        )}
+                        
+                        {aiProvider === 'openrouter' && (
+                            <OpenRouterApiKeyInput 
+                                value={openRouterApiKey}
+                                onApiKeyChange={handleOpenRouterApiKeyChange}
+                            />
+                        )}
                     </div>
                 </ClientOnly>
 
-                {apiKeyProvided && (
+                {((aiProvider === 'gemini' && apiKeyProvided) || (aiProvider === 'openrouter' && openRouterApiKey)) && (
                     <>
                         {/* Hiển thị lỗi dịch (nếu có) */}
                         {translationError && (
@@ -1267,18 +1420,23 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                         {!isSettingsCollapsed && (
                                             <CardContent className="space-y-4">
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                    <ModelSelector
-                                                        onModelChange={handleModelChange}
-                                                    />
-                                                    <div className="space-y-2">
-                                                        <label className="text-sm font-medium text-gray-700">
-                                                            {t('translationSettings.targetLanguage')}
-                                                        </label>
-                                                        <LanguageSelector
-                                                            value={targetLanguage}
-                                                            onChange={setTargetLanguage}
+                                                    {aiProvider === 'gemini' && (
+                                                        <ModelSelector
+                                                            onModelChange={handleModelChange}
                                                         />
-                                                    </div>
+                                                    )}
+                                                    
+                                                    {aiProvider === 'openrouter' && (
+                                                        <OpenRouterModelSelector
+                                                            value={openRouterModel}
+                                                            onModelChange={handleOpenRouterModelChange}
+                                                        />
+                                                    )}
+                                                    
+                                                    <LanguageSelector
+                                                        value={targetLanguage}
+                                                        onChange={setTargetLanguage}
+                                                    />
 
                                                     <div className="space-y-2 md:col-span-2">
                                                         <label className="text-sm font-medium text-gray-700">
@@ -1337,7 +1495,7 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                                 onClick={handleTranslate}
                                                                 disabled={!file || subtitles.length === 0}
                                                                 className="flex items-center gap-1"
-                                                                title={`${t('translationSettings.startTranslation')} ${AVAILABLE_MODELS.find((m) => m.id === selectedModel)?.name || selectedModel}`}
+                                                                title={`${t('translationSettings.startTranslation')} - ${getCurrentModelDisplayName()}`}
                                                             >
                                                                 <Globe className="h-4 w-4" />
                                                                 {t('translationSettings.startTranslation')}
@@ -1358,7 +1516,7 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                     <div className="flex items-center gap-2">
                                                         <span className="font-medium">{modelTranslations.title[locale === 'en' ? 'en' : 'vi']}:</span>
                                                         <span className="text-indigo-600">
-                                                            {AVAILABLE_MODELS.find((m: ModelOption) => m.id === selectedModel)?.name || selectedModel}
+                                                            {getCurrentModelDisplayName()}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -1393,7 +1551,7 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                             <span>
                                                                 {modelTranslations.title[locale === 'en' ? 'en' : 'vi']}:
                                                                 <span className="font-medium ml-1">
-                                                                    {AVAILABLE_MODELS.find((m) => m.id === selectedModel)?.name || selectedModel}
+                                                                    {getCurrentModelDisplayName()}
                                                                 </span>
                                                             </span>
                                                             <span className="text-gray-500">{translationProgress > 0 && translationProgress < 100 ? `${Math.round(subtitles.length * translationProgress / 100)}/${subtitles.length}` : ''}</span>
@@ -1414,16 +1572,37 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                     />
                                 )}
 
+                                {/* Token Usage Estimate */}
+                                {subtitles.length > 0 && showTokenEstimate && (
+                                    <TokenEstimatorDisplay
+                                        subtitles={subtitles}
+                                        targetLanguage={targetLanguage}
+                                        customPrompt={customPrompt}
+                                        modelId={aiProvider === 'gemini' ? selectedModel : openRouterModel}
+                                        aiProvider={aiProvider}
+                                        isVisible={showTokenEstimate}
+                                    />
+                                )}
+
                                 {/* Subtitle Table */}
                                 <Card>
                                     <CardHeader className="pb-3">
                                         <div className="flex justify-between items-start">
                                             <div>
-                                                <CardTitle>Subtitles</CardTitle>
-                                                <CardDescription>View and edit translated subtitles</CardDescription>
+                                                <CardTitle>{t('subtitleTable.title')}</CardTitle>
+                                                <CardDescription>{t('subtitleTable.description')}</CardDescription>
                                             </div>
                                             {subtitles.length > 0 && (
                                                 <div className="flex gap-2">
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                        onClick={() => setShowTokenEstimate(!showTokenEstimate)}
+                                                        className="flex items-center gap-1"
+                                                    >
+                                                        {showTokenEstimate ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                                        {showTokenEstimate ? t('tokenEstimate.hide') : t('tokenEstimate.show')}
+                                                    </Button>
                                                     <Button
                                                         variant="ghost"
                                                         size="icon"

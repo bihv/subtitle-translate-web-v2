@@ -78,7 +78,11 @@ export default function LanguageSelector({ value, onChange }: LanguageSelectorPr
   const displayValue = selectedLanguage ? selectedLanguage.display : value;
 
   return (
-    <div className="relative">
+    <div className="space-y-3">
+      <label className="text-sm font-medium block mb-2">
+        {t('translationSettings.targetLanguage')}
+      </label>
+      <div className="relative w-full">
       <div className="flex gap-2">
         <Input
           type="text"
@@ -94,12 +98,12 @@ export default function LanguageSelector({ value, onChange }: LanguageSelectorPr
             setTimeout(() => setIsOpen(false), 200);
           }}
           placeholder={t('translationSettings.selectLanguage')}
-          className="w-full"
+          className="w-full text-left"
         />
       </div>
 
       {isOpen && filteredLanguages.length > 0 && (
-        <div className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm custom-scrollbar border border-gray-200 dark:border-gray-600">
+        <div className="absolute z-10 mt-1 w-full max-w-[400px] max-w-[90vw] bg-white dark:bg-gray-800 shadow-lg max-h-[400px] rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm custom-scrollbar border border-gray-200 dark:border-gray-600">
           <ul className="divide-y divide-gray-200 dark:divide-gray-600">
             {filteredLanguages.map((language) => (
               <li
@@ -118,6 +122,7 @@ export default function LanguageSelector({ value, onChange }: LanguageSelectorPr
           </ul>
         </div>
       )}
+      </div>
     </div>
   );
 } 

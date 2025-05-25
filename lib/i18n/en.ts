@@ -36,6 +36,56 @@ const en = {
     update: "Update API Key",
     validating: "Validating..."
   },
+  aiProvider: {
+    title: "AI Provider",
+    description: "Choose AI provider to translate subtitles",
+    selectProvider: "Select provider",
+    gemini: "Google Gemini",
+    openrouter: "OpenRouter",
+    geminiDescription: "Direct API from Google, high performance",
+    openrouterDescription: "Access multiple AI models at competitive prices",
+    free: "Free",
+    paid: "Paid"
+  },
+  openrouter: {
+    title: "OpenRouter API Key",
+    description: "OpenRouter provides access to multiple AI models at competitive prices",
+    placeholder: "Enter your OpenRouter API key",
+    getKey: "Get free API key at OpenRouter.ai",
+    modelTitle: "OpenRouter Model",
+    selectModel: "Select model",
+    pricing: "Pricing",
+    pricingPrompt: "Input",
+    pricingCompletion: "Output", 
+    perToken: "/token",
+    context: "Context",
+    tokens: "tokens",
+    testing: "Testing...",
+    valid: "Valid API key",
+    invalid: "Invalid API key",
+    freeModels: "Free Models",
+    paidModels: "Premium Models",
+    customModel: "Custom Model",
+    enterCustomModel: "Enter Custom Model",
+    customModelDescription: "Enter any OpenRouter model ID manually",
+    customModelPlaceholder: "e.g., anthropic/claude-3.5-sonnet, openai/gpt-4o",
+    customModelHint: "Press Enter to save, Escape to cancel",
+    customModelSelected: "Custom Model Selected",
+    // Error and warning popup messages
+    errorTitle: "API Key Error",
+    warningTitle: "Credits Warning",
+    lowCreditsWarning: "Your OpenRouter account has negative credits. Consider using free models to avoid charges.",
+    freeModelsRecommendation: "Free models like WizardLM-2 8x22B and Llama 3.1 8B are available and work great for translation tasks.",
+    editCustomModel: "Edit",
+    // Search functionality
+    searchModels: "Search models...",
+    searchPlaceholder: "Type to search for models",
+    noModelsFound: "No models found",
+    clearSearch: "Clear search",
+    // Model loading states
+    noModelsAvailable: "No models available",
+    checkConnection: "Please check your connection and try again"
+  },
   fileUpload: {
     title: "Upload Subtitle File",
     description: "Select an SRT, VTT, or ASS subtitle file to translate",
@@ -70,6 +120,8 @@ const en = {
     translationCompleted: "Translation completed"
   },
   subtitleTable: {
+    title: "Subtitles",
+    description: "View and edit translated subtitles",
     id: "ID",
     time: "Time",
     originalText: "Original Text",
@@ -273,6 +325,33 @@ const en = {
     faq5Answer: "No, SubtitleAI requires an internet connection to communicate with Google's Gemini API for translations."
   },
   
+  // Token Estimate translations
+  tokenEstimate: {
+    show: "Show tokens",
+    hide: "Hide tokens",
+    title: "Token Usage Estimate",
+    subtitles: "subtitles",
+    input: "Input:",
+    output: "Output:",
+    total: "Total:",
+    cost: "Cost:",
+    costBreakdown: "Cost Breakdown:",
+    inputCost: "Input cost:",
+    outputCost: "Output cost:",
+    fastProcessing: "Fast processing expected",
+    moderateProcessing: "Moderate processing time",
+    largeFile: "Large file - may take time",
+    loadingPricing: "(Loading pricing...)",
+    pricingNotAvailable: "(Pricing not available)",
+    livePricing: "(Live pricing)",
+    standardRates: "(Standard rates)",
+    inputToken: "Input",
+    outputToken: "Output",
+    perToken: "/token",
+    builtInPricing: "Built-in pricing rates for",
+    disclaimer: "* Estimates are approximate and may vary based on actual usage. Does not include tokens for prompts and other factors."
+  },
+  
   // New translations for enhanced guide UI
   guideUi: {
     searchPlaceholder: "Search in guide...",
@@ -283,4 +362,4 @@ const en = {
   },
 };
 
-export default en; 
+export default en;

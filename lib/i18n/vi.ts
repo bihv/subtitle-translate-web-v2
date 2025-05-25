@@ -36,6 +36,57 @@ const vi = {
     update: "Cập nhật khóa API",
     validating: "Đang xác thực..."
   },
+  aiProvider: {
+    title: "Nhà cung cấp AI",
+    description: "Chọn nhà cung cấp AI để dịch phụ đề",
+    selectProvider: "Chọn nhà cung cấp",
+    gemini: "Google Gemini",
+    openrouter: "OpenRouter",
+    geminiDescription: "API trực tiếp từ Google, hiệu suất cao",
+    openrouterDescription: "Truy cập nhiều model AI với giá cạnh tranh",
+    free: "Miễn phí",
+    paid: "Trả phí"
+  },
+  openrouter: {
+    title: "OpenRouter API Key",
+    description: "OpenRouter cung cấp truy cập đến nhiều model AI với giá cả cạnh tranh",
+    placeholder: "Nhập OpenRouter API key của bạn",
+    getKey: "Lấy API key miễn phí tại OpenRouter.ai",
+    modelTitle: "Mô hình OpenRouter",
+    selectModel: "Chọn mô hình",
+    pricing: "Giá",
+    pricingPrompt: "Đầu vào",
+    pricingCompletion: "Đầu ra",
+    perToken: "/token",
+    context: "Ngữ cảnh",
+    tokens: "token",
+    testing: "Đang kiểm tra...",
+    valid: "API key hợp lệ",
+    invalid: "API key không hợp lệ",
+    freeModels: "Mô hình miễn phí",
+    paidModels: "Mô hình trả phí",
+    customModel: "Mô hình tùy chỉnh",
+    enterCustomModel: "Nhập tên mô hình tùy chỉnh",
+    customModelDescription: "Nhập bất kỳ model ID OpenRouter nào",
+    customModelPlaceholder: "Ví dụ: openai/gpt-4o",
+    customModelHint: "Nhập bất kỳ model ID OpenRouter nào",
+    customModelSet: "Đã đặt mô hình tùy chỉnh",
+    customModelSelected: "Đã chọn mô hình tùy chỉnh",
+    editCustomModel: "Chỉnh sửa mô hình tùy chỉnh",
+    // Search functionality
+    searchModels: "Tìm kiếm model...",
+    searchPlaceholder: "Gõ để tìm model",
+    noModelsFound: "Không tìm thấy model nào",
+    clearSearch: "Xóa tìm kiếm",
+    // Error and warning popup messages
+    errorTitle: "Lỗi API Key",
+    warningTitle: "Cảnh báo Credits",
+    lowCreditsWarning: "Tài khoản OpenRouter của bạn có số dư âm. Hãy cân nhắc sử dụng các mô hình miễn phí để tránh phí.",
+    freeModelsRecommendation: "Các mô hình miễn phí như WizardLM-2 8x22B và Llama 3.1 8B có sẵn và hoạt động rất tốt cho các tác vụ dịch thuật.",
+    // Model loading states
+    noModelsAvailable: "Không có mô hình nào",
+    checkConnection: "Vui lòng kiểm tra kết nối và thử lại"
+  },
   fileUpload: {
     title: "Tải lên tệp phụ đề",
     description: "Chọn tệp phụ đề SRT, VTT, hoặc ASS để dịch",
@@ -70,6 +121,8 @@ const vi = {
     translationCompleted: "Dịch hoàn tất"
   },
   subtitleTable: {
+    title: "Phụ đề",
+    description: "Xem và chỉnh sửa phụ đề đã dịch",
     id: "ID",
     time: "Thời gian",
     originalText: "Văn bản gốc",
@@ -273,6 +326,33 @@ const vi = {
     faq5Answer: "Không, SubtitleAI yêu cầu kết nối internet để giao tiếp với API Gemini của Google cho việc dịch thuật."
   },
   
+  // Token Estimate translations
+  tokenEstimate: {
+    show: "Hiện token",
+    hide: "Ẩn token",
+    title: "Ước tính sử dụng Token",
+    subtitles: "phụ đề",
+    input: "Đầu vào:",
+    output: "Đầu ra:",
+    total: "Tổng:",
+    cost: "Chi phí:",
+    costBreakdown: "Chi tiết chi phí:",
+    inputCost: "Chi phí đầu vào:",
+    outputCost: "Chi phí đầu ra:",
+    fastProcessing: "Xử lý nhanh dự kiến",
+    moderateProcessing: "Thời gian xử lý vừa phải",
+    largeFile: "Tệp lớn - có thể mất thời gian",
+    loadingPricing: "(Đang tải giá...)",
+    pricingNotAvailable: "(Giá không khả dụng)",
+    livePricing: "(Giá trực tiếp)",
+    standardRates: "(Giá tiêu chuẩn)",
+    inputToken: "Đầu vào",
+    outputToken: "Đầu ra",
+    perToken: "/token",
+    builtInPricing: "Giá tích hợp cho",
+    disclaimer: "* Ước tính là gần đúng và có thể thay đổi dựa trên việc sử dụng thực tế. Chưa bao gồm token cho prompt và các yếu tố khác.",
+  },
+  
   // New translations for enhanced guide UI
   guideUi: {
     searchPlaceholder: "Tìm kiếm trong hướng dẫn...",
@@ -283,4 +363,4 @@ const vi = {
   },
 };
 
-export default vi; 
+export default vi;
