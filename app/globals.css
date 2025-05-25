@@ -116,8 +116,27 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
+  html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Smooth transitions for theme changes */
+  *,
+  *::before,
+  *::after {
+    transition: 
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease,
+      fill 0.3s ease,
+      stroke 0.3s ease,
+      box-shadow 0.3s ease;
   }
 }
 
@@ -137,27 +156,31 @@
   }
   
   .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-gray-100 rounded-full;
+    background-color: hsl(var(--muted));
+    border-radius: 9999px;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors;
+    background-color: hsl(var(--muted-foreground) / 0.5);
+    border-radius: 9999px;
+    transition: background-color 0.2s ease;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400;
+    background-color: hsl(var(--muted-foreground) / 0.7);
   }
 }
 
 /* Custom styles for guide page */
 .guide-sidebar {
   width: 100%;
-  background-color: white;
+  background-color: hsl(var(--card));
   border-radius: 0.625rem;
   padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   height: 100%;
   overflow-y: auto;
+  border: 1px solid hsl(var(--border));
 }
 
 .guide-sidebar-content {
@@ -183,24 +206,25 @@
   transition: all 0.2s ease;
   width: 100%;
   display: block;
+  color: hsl(var(--foreground));
 }
 
 .guide-toc-item.active {
-  background-color: #EBF5FF;
-  color: #1E40AF;
+  background-color: hsl(var(--primary) / 0.1);
+  color: hsl(var(--primary));
   font-weight: 500;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .guide-toc-item:hover:not(.active) {
-  background-color: #F3F4F6;
+  background-color: hsl(var(--muted));
 }
 
 .guide-back-button {
   position: sticky;
   top: 80px;
   z-index: 40;
-  background: linear-gradient(to bottom, rgb(249 250 251) 70%, transparent);
+  background: linear-gradient(to bottom, hsl(var(--background)) 70%, transparent);
   padding: 12px 0;
   margin-bottom: 16px;
 }

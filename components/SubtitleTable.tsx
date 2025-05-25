@@ -187,15 +187,15 @@ export default function SubtitleTable({
   const getStatusBadge = (status: SubtitleItem["status"]) => {
     switch (status) {
       case "pending":
-        return <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 text-gray-600">Pending</span>;
+        return <span className="px-2 py-0.5 text-xs rounded-full bg-muted text-muted-foreground">Pending</span>;
       case "translating":
-        return <span className="px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-600 flex items-center">
+        return <span className="px-2 py-0.5 text-xs rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center">
           <Loader2 className="w-3 h-3 mr-1 animate-spin" />Translating
         </span>;
       case "translated":
-        return <span className="px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-600">Translated</span>;
+        return <span className="px-2 py-0.5 text-xs rounded-full bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400">Translated</span>;
       case "error":
-        return <span className="px-2 py-0.5 text-xs rounded-full bg-rose-100 text-rose-600">Error</span>;
+        return <span className="px-2 py-0.5 text-xs rounded-full bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400">Error</span>;
       default:
         return null;
     }
@@ -275,12 +275,12 @@ export default function SubtitleTable({
     <div className="space-y-4">
       {/* Batch error quick retry section */}
       {onRetryBatch && errorBatchCount > 0 && (
-        <div className="mx-4 mb-2 p-3 border border-amber-200 bg-amber-50 rounded">
+        <div className="mx-4 mb-2 p-3 border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 rounded">
           <div className="flex items-start gap-2">
-            <AlertTriangle className="text-amber-500 h-4 w-4 mt-1 flex-shrink-0" />
+            <AlertTriangle className="text-amber-500 dark:text-amber-400 h-4 w-4 mt-1 flex-shrink-0" />
             <div className="flex-1">
-              <h3 className="text-sm font-medium text-amber-800">Quick batch retry</h3>
-              <p className="text-xs text-amber-700 mb-2">
+              <h3 className="text-sm font-medium text-amber-800 dark:text-amber-200">Quick batch retry</h3>
+              <p className="text-xs text-amber-700 dark:text-amber-300 mb-2">
                 {t('batchErrorDisplay.description')}
               </p>
               
@@ -318,17 +318,17 @@ export default function SubtitleTable({
                     const isRetrying = retryingBatch === actualBatchIndex;
                     
                     return (
-                      <div key={`batch-${actualBatchIndex}`} className="flex items-center justify-between py-1 px-2 bg-white border border-amber-100 rounded text-sm">
+                      <div key={`batch-${actualBatchIndex}`} className="flex items-center justify-between py-1 px-2 bg-background border border-amber-100 dark:border-amber-800 rounded text-sm">
                         <div className="truncate">
-                          <span className="font-medium">{t('subtitleTable.batch')} {actualBatchIndex + 1}:</span> #{firstId}-{lastId}
-                          <span className="ml-1 text-rose-600 text-xs">({errorCount} {t('subtitleTable.errors')})</span>
+                          <span className="font-medium text-foreground">{t('subtitleTable.batch')} {actualBatchIndex + 1}:</span> #{firstId}-{lastId}
+                          <span className="ml-1 text-rose-600 dark:text-rose-400 text-xs">({errorCount} {t('subtitleTable.errors')})</span>
                         </div>
                         <Button
                           size="sm"
                           variant="ghost"
                           onClick={() => handleRetryBatch(actualBatchIndex)}
                           disabled={isRetrying || translating}
-                          className="h-6 px-2 text-xs text-amber-600 hover:text-amber-700 hover:bg-amber-100"
+                          className="h-6 px-2 text-xs text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/50"
                         >
                           {isRetrying ? (
                             <>
@@ -356,82 +356,50 @@ export default function SubtitleTable({
       <div className="overflow-x-auto -mx-4 sm:mx-0">
         <div 
           ref={tableContainerRef}
-          className={`${expandedTable ? 'max-h-[800px]' : 'max-h-[400px]'} custom-scrollbar overflow-y-auto border border-gray-200 rounded-md transition-all duration-300 scroll-container`}
+          className={`${expandedTable ? 'max-h-[800px]' : 'max-h-[400px]'} custom-scrollbar overflow-y-auto border border-border rounded-md transition-all duration-300 scroll-container`}
         >
           <style jsx>{`
             @keyframes highlight-pulse {
-              0%, 100% { background-color: rgba(254, 240, 138, 0.4); }
-              50% { background-color: rgba(251, 191, 36, 0.2); }
+              0%, 100% { background-color: rgba(59, 130, 246, 0.15); }
+              50% { background-color: rgba(59, 130, 246, 0.25); }
+            }
+            
+            @keyframes highlight-pulse-dark {
+              0%, 100% { background-color: rgba(59, 130, 246, 0.2); }
+              50% { background-color: rgba(59, 130, 246, 0.3); }
             }
             
             tr.highlighted {
-              background-image: linear-gradient(to right, #f59e0b 4px, rgba(254, 240, 138, 0.4) 4px) !important;
+              background-image: linear-gradient(to right, #3b82f6 4px, rgba(59, 130, 246, 0.15) 4px) !important;
               animation: highlight-pulse 2s infinite;
+            }
+            
+            .dark tr.highlighted {
+              background-image: linear-gradient(to right, #60a5fa 4px, rgba(59, 130, 246, 0.2) 4px) !important;
+              animation: highlight-pulse-dark 2s infinite;
             }
             
             .suggestion-panel {
               position: absolute;
               right: 20px;
-              background-color: white;
-              border: 1px solid #e5e7eb;
               border-radius: 0.5rem;
-              box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
               z-index: 50;
               width: 350px;
               overflow: hidden;
             }
-            
-            .suggestion-option {
-              border-bottom: 1px solid #f3f4f6;
-              padding: 0.75rem;
-              cursor: pointer;
-              transition: background-color 0.2s;
-            }
-            
-            .suggestion-option:hover {
-              background-color: #f9fafb;
-            }
-            
-            .suggestion-option:last-child {
-              border-bottom: none;
-            }
-            
-            .suggestion-label {
-              display: inline-block;
-              font-size: 0.65rem;
-              font-weight: 500;
-              padding: 0.15rem 0.4rem;
-              border-radius: 0.25rem;
-              margin-bottom: 0.35rem;
-            }
-            
-            .label-common {
-              background-color: #e0f2fe;
-              color: #0369a1;
-            }
-            
-            .label-academic {
-              background-color: #f3e8ff;
-              color: #7e22ce;
-            }
-            
-            .label-creative {
-              background-color: #fef3c7;
-              color: #b45309;
-            }
           `}</style>
           <table className="w-full border-collapse text-sm">
             <thead className="sticky top-0 z-10">
-              <tr className="bg-white border-b border-gray-200">
-                <th className="px-4 py-2 text-xs font-medium text-gray-500 uppercase w-12 bg-gray-50 first:rounded-tl-md">{t('subtitleTable.id')}</th>
-                <th className="px-4 py-2 text-xs font-medium text-gray-500 uppercase w-28 bg-gray-50">{t('subtitleTable.time')}</th>
-                <th className="px-4 py-2 text-xs font-medium text-gray-500 uppercase bg-gray-50">{t('subtitleTable.originalText')}</th>
-                <th className="px-4 py-2 text-xs font-medium text-gray-500 uppercase bg-gray-50">{t('subtitleTable.translation')}</th>
-                <th className="px-4 py-2 text-xs font-medium text-gray-500 uppercase w-24 text-center bg-gray-50">{t('subtitleTable.status')}</th>
-                <th className="px-4 py-2 text-xs font-medium text-gray-500 uppercase w-20 text-right bg-gray-50 last:rounded-tr-md">{t('subtitleTable.action')}</th>
+              <tr className="bg-background border-b border-border">
+                <th className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase w-12 bg-muted/50 first:rounded-tl-md">{t('subtitleTable.id')}</th>
+                <th className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase w-28 bg-muted/50">{t('subtitleTable.time')}</th>
+                <th className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase bg-muted/50">{t('subtitleTable.originalText')}</th>
+                <th className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase bg-muted/50">{t('subtitleTable.translation')}</th>
+                <th className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase w-24 text-center bg-muted/50">{t('subtitleTable.status')}</th>
+                <th className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase w-20 text-right bg-muted/50 last:rounded-tr-md">{t('subtitleTable.action')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-border">
               {subtitles.map((subtitle, index) => {
                 const batchIndex = Math.floor((subtitle.id - 1) / batchSize);
                 const isEven = index % 2 === 0;
@@ -445,28 +413,28 @@ export default function SubtitleTable({
                     ref={isPlaying ? highlightedRowRef : null}
                     onClick={() => handleRowClick(subtitle.id)}
                     className={`
-                      ${isEven ? 'bg-white' : 'bg-gray-50/50'} 
-                      ${retryingBatch === batchIndex && subtitle.status === "translating" ? "bg-blue-50/70" : ""}
+                      ${isEven ? 'bg-background' : 'bg-muted/30 dark:bg-muted/20'} 
+                      ${retryingBatch === batchIndex && subtitle.status === "translating" ? "bg-blue-50/70 dark:bg-blue-900/30" : ""}
                       ${isPlaying ? "highlighted" : ""}
-                      hover:bg-blue-50/30 transition-colors border-b border-gray-100
+                      hover:bg-muted/50 dark:hover:bg-muted/40 transition-colors border-b border-border
                       ${editingId !== subtitle.id ? "cursor-pointer" : ""}
                     `}
                   >
-                    <td className="px-4 py-2 align-top text-gray-700">
+                    <td className="px-4 py-2 align-top text-foreground">
                       {subtitle.id}
                       {subtitle.id % batchSize === 1 && (
-                        <span className="ml-1 text-xs text-gray-400">B{batchIndex + 1}</span>
+                        <span className="ml-1 text-xs text-muted-foreground">B{batchIndex + 1}</span>
                       )}
                     </td>
-                    <td className="px-4 py-2 align-top text-gray-500 text-xs whitespace-nowrap">
+                    <td className="px-4 py-2 align-top text-muted-foreground text-xs whitespace-nowrap">
                       <div>{subtitle.startTime}</div>
-                      <div className="text-gray-400">↓</div>
+                      <div className="text-muted-foreground/70">↓</div>
                       <div>{subtitle.endTime}</div>
                     </td>
-                    <td className="px-4 py-2 align-top text-gray-600">
+                    <td className="px-4 py-2 align-top text-foreground">
                       <div className="max-w-xs whitespace-pre-wrap break-words text-sm max-h-[120px] custom-scrollbar">{subtitle.text}</div>
                     </td>
-                    <td className="px-4 py-2 align-top text-gray-800 relative">
+                    <td className="px-4 py-2 align-top text-foreground relative">
                       {editingId === subtitle.id ? (
                         <div className="space-y-2">
                           <Textarea
@@ -482,7 +450,7 @@ export default function SubtitleTable({
                       ) : (
                         <div 
                           className={`max-w-xs whitespace-pre-wrap break-words max-h-[120px] custom-scrollbar ${
-                            subtitle.status === "error" ? "text-rose-600" : "text-gray-800"
+                            subtitle.status === "error" ? "text-rose-600 dark:text-rose-400" : "text-foreground"
                           }`}
                         >
                           {subtitle.status === "error" 
@@ -491,37 +459,45 @@ export default function SubtitleTable({
                                 retryAction={() => onRetry(subtitle.id)}
                               />
                             : subtitle.translatedText || (subtitle.status === "pending" ? 
-                                <span className="text-gray-400 italic text-sm">{t('subtitleTable.waitingToTranslate')}</span> : 
-                                <span className="text-blue-400 italic text-sm">{t('subtitleTable.translating')}</span>
+                                <span className="text-muted-foreground italic text-sm">{t('subtitleTable.waitingToTranslate')}</span> : 
+                                <span className="text-blue-500 dark:text-blue-400 italic text-sm">{t('subtitleTable.translating')}</span>
                               )}
                               
                           {/* Panel hiển thị các gợi ý */}
                           {isShowingSuggestions && (
-                            <div className="suggestion-panel" onClick={(e) => e.stopPropagation()}>
-                              <div className="px-3 py-2 bg-blue-50 border-b border-blue-100">
+                            <div 
+                              className="absolute right-5 z-50 w-[350px] rounded-lg shadow-lg overflow-hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
+                              onClick={(e) => e.stopPropagation()}
+                              style={{
+                                backgroundColor: 'var(--background)',
+                                borderColor: 'var(--border)',
+                                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                              }}
+                            >
+                              <div className="px-3 py-2 bg-blue-50 dark:bg-blue-950/50 border-b border-blue-100 dark:border-blue-800">
                                 <div className="flex justify-between items-center">
-                                  <h4 className="text-sm font-medium text-blue-800 flex items-center">
-                                    <Sparkles className="h-3.5 w-3.5 mr-1.5 text-blue-500" />
+                                  <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 flex items-center">
+                                    <Sparkles className="h-3.5 w-3.5 mr-1.5 text-blue-500 dark:text-blue-400" />
                                     {t('subtitleTable.aiSuggestions')}
                                   </h4>
                                   <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="h-6 w-6 p-0 rounded-full"
+                                    className="h-6 w-6 p-0 rounded-full text-blue-500 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50"
                                     onClick={closeSuggestions}
                                   >
                                     &times;
                                   </Button>
                                 </div>
-                                <p className="text-xs text-blue-600 mt-1">
+                                <p className="text-xs text-blue-600 dark:text-blue-300 mt-1">
                                   {t('subtitleTable.chooseSuggestion')}
                                 </p>
                               </div>
                               
                               {loadingSuggestions ? (
                                 <div className="py-8 text-center">
-                                  <Loader2 className="w-6 h-6 mx-auto mb-2 animate-spin text-blue-500" />
-                                  <p className="text-sm text-gray-500">{t('common.loading')}</p>
+                                  <Loader2 className="w-6 h-6 mx-auto mb-2 animate-spin text-blue-500 dark:text-blue-400" />
+                                  <p className="text-sm text-muted-foreground">{t('common.loading')}</p>
                                 </div>
                               ) : suggestions.length > 0 ? (
                                 <div>
@@ -535,15 +511,19 @@ export default function SubtitleTable({
                                     return (
                                       <div 
                                         key={`suggestion-${idx}`} 
-                                        className="suggestion-option hover:bg-gray-50"
+                                        className="border-b border-gray-200 dark:border-gray-700 p-3 cursor-pointer transition-colors bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 last:border-b-0"
                                         onClick={() => applyTranslationSuggestion(suggestion)}
                                       >
-                                        <div className={`suggestion-label label-${labelType}`}>
+                                        <div className={`inline-block text-xs font-medium px-2 py-1 rounded mb-2 ${
+                                          labelType === 'common' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                                          labelType === 'academic' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
+                                          'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
+                                        }`}>
                                           {labelText}
                                         </div>
-                                        <p className="text-sm text-gray-800 whitespace-pre-wrap">{suggestion}</p>
+                                        <p className="text-sm text-foreground whitespace-pre-wrap">{suggestion}</p>
                                         <div className="flex justify-between items-center mt-2">
-                                          <p className="text-xs text-blue-500">
+                                          <p className="text-xs text-blue-500 dark:text-blue-400">
                                             {t('subtitleTable.clickToApply')}
                                           </p>
                                           <Button 
@@ -564,7 +544,7 @@ export default function SubtitleTable({
                                 </div>
                               ) : (
                                 <div className="py-4 text-center">
-                                  <p className="text-sm text-gray-500">{t('subtitleTable.noSuggestions')}</p>
+                                  <p className="text-sm text-muted-foreground">{t('subtitleTable.noSuggestions')}</p>
                                 </div>
                               )}
                             </div>
@@ -585,7 +565,7 @@ export default function SubtitleTable({
                                 variant="ghost"
                                 onClick={() => handleEdit(subtitle.id, subtitle.translatedText)}
                                 disabled={translating}
-                                className="h-7 w-7 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                                className="h-7 w-7 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/50"
                                 title={t('common.edit')}
                               >
                                 <Edit className="h-3.5 w-3.5" />
@@ -601,7 +581,7 @@ export default function SubtitleTable({
                                     handleSuggestTranslation(subtitle.id, subtitle.text, subtitle.translatedText);
                                   }}
                                   disabled={translating || loadingSuggestions}
-                                  className="h-7 w-7 text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                                  className="h-7 w-7 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/50"
                                   title={t('subtitleTable.suggestBetterTranslation')}
                                 >
                                   <Sparkles className="h-3.5 w-3.5" />
@@ -615,7 +595,7 @@ export default function SubtitleTable({
                               variant="ghost"
                               onClick={() => onRetry(subtitle.id)}
                               disabled={translating || retryingBatch === batchIndex}
-                              className="h-7 w-7 text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+                              className="h-7 w-7 text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-900/50"
                               title={t('common.retry')}
                             >
                               <RotateCw className="h-3.5 w-3.5" />
@@ -631,14 +611,14 @@ export default function SubtitleTable({
           </table>
         </div>
         <div className="flex justify-between items-center mt-3 px-4">
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-muted-foreground">
             {t('subtitleTable.showing')} <span className="font-medium">{subtitles.length}</span> {t('subtitleTable.subtitles')}
           </div>
           <Button 
             variant="ghost" 
             size="sm" 
             onClick={() => setExpandedTable(!expandedTable)}
-            className="text-gray-500 hover:text-gray-700 px-2 py-1 h-8"
+            className="text-muted-foreground hover:text-foreground px-2 py-1 h-8"
           >
             {expandedTable ? (
               <><ChevronUp className="h-4 w-4 mr-1" /> {t('subtitleTable.collapseTable')}</>
@@ -646,7 +626,7 @@ export default function SubtitleTable({
               <><ChevronDown className="h-4 w-4 mr-1" /> {t('subtitleTable.expandTable')}</>
             )}
           </Button>
-          <div className="text-xs text-gray-500 text-right">
+          <div className="text-xs text-muted-foreground text-right">
             <span className="font-medium">{subtitles.filter(s => s.status === "translated").length}</span> {t('subtitleTable.translated')}, 
             <span className="font-medium ml-1">{subtitles.filter(s => s.status === "error").length}</span> {t('subtitleTable.errors')}
           </div>

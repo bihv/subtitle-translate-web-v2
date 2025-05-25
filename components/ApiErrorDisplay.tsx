@@ -34,17 +34,17 @@ export default function ApiErrorDisplay({
   const readableError = getReadableErrorMessage(error);
 
   return (
-    <div className="p-2 bg-rose-50 border border-rose-200 rounded flex items-start gap-2 text-sm">
-      <AlertTriangle className="text-rose-500 h-4 w-4 mt-0.5 flex-shrink-0" />
+    <div className="p-2 bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800 rounded flex items-start gap-2 text-sm">
+      <AlertTriangle className="text-rose-500 dark:text-rose-400 h-4 w-4 mt-0.5 flex-shrink-0" />
       <div className="flex-1">
-        <p className="text-rose-700 text-xs font-medium">Translation Error</p>
-        <p className="text-rose-600 text-xs mt-0.5">{readableError}</p>
+        <p className="text-rose-700 dark:text-rose-300 text-xs font-medium">Translation Error</p>
+        <p className="text-rose-600 dark:text-rose-400 text-xs mt-0.5">{readableError}</p>
         {retryAction && (
           <Button 
             size="sm"
             variant="ghost"
             onClick={retryAction}
-            className="mt-1 h-7 px-2 py-1 text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-100 flex items-center gap-1"
+            className="mt-1 h-7 px-2 py-1 text-xs text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/50 flex items-center gap-1"
           >
             <RotateCw className="h-3 w-3" />
             Retry

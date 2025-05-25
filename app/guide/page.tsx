@@ -233,13 +233,13 @@ export default function UserGuide() {
   return (
     <>
       {/* Fixed header */}
-      <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm transition-all duration-200 print:static print:border-none">
+      <header className="sticky top-0 z-50 w-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 shadow-sm transition-all duration-200 print:static print:border-none">
         <div className="container max-w-6xl mx-auto px-4 py-3.5 flex justify-between items-center">
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-gray-800 transition-colors">
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 transition-colors">
               {t('common.appTitle')} - {t('guide.title')}
             </h1>
-            <p className="text-sm text-gray-600 mt-0.5 transition-colors">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5 transition-colors">
               {t('guide.subtitle')}
             </p>
           </div>
@@ -269,11 +269,11 @@ export default function UserGuide() {
       </header>
 
       {/* Main content with sidebar */}
-      <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-3 md:p-6 pt-8 pb-16 print:bg-white print:p-0 print:pt-4">
+      <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-3 md:p-6 pt-8 pb-16 print:bg-white print:p-0 print:pt-4">
         <div className="w-full max-w-6xl mx-auto">
           {/* Back button - Fixed position */}
           <div className="guide-back-button print:hidden">
-            <Link href="/" className="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors">
+            <Link href="/" className="inline-flex items-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
               <ArrowLeft className="h-4 w-4 mr-1" />
               {t('guide.backToApp')}
             </Link>
@@ -320,12 +320,12 @@ export default function UserGuide() {
                   </div>
                   
                   <div className="w-full">
-                    <h3 className="text-lg font-medium mb-3">{t('guide.tocTitle')}</h3>
+                    <h3 className="text-lg font-medium mb-3 text-gray-800 dark:text-gray-200">{t('guide.tocTitle')}</h3>
                     <nav className="guide-toc-nav">
                       {/* Introduction */}
                       <button 
                         onClick={() => scrollToSection('introduction')}
-                        className={`w-full text-left px-3 py-2 text-sm rounded transition duration-200 guide-toc-item ${activeSection === 'introduction' ? 'active' : ''}`}
+                        className={`w-full text-left px-3 py-2 text-sm rounded transition duration-200 guide-toc-item ${activeSection === 'introduction' ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-medium' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
                       >
                         {t('guide.introTitle')}
                       </button>
@@ -336,7 +336,7 @@ export default function UserGuide() {
                           <div key={item.id} className="w-full space-y-1 mt-2">
                             <button 
                               onClick={() => scrollToSection(item.id)}
-                              className={`w-full text-left px-3 py-2 text-sm rounded transition duration-200 guide-toc-item ${activeSection === item.id ? 'active' : ''}`}
+                              className={`w-full text-left px-3 py-2 text-sm rounded transition duration-200 guide-toc-item ${activeSection === item.id ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-medium' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
                             >
                               {item.title}
                             </button>
@@ -348,7 +348,7 @@ export default function UserGuide() {
                                   <button
                                     key={subItem.id}
                                     onClick={() => scrollToSection(subItem.id)}
-                                    className="w-full text-left px-3 py-1.5 text-xs text-gray-700 rounded hover:bg-gray-100 transition duration-200"
+                                    className="w-full text-left px-3 py-1.5 text-xs text-gray-700 dark:text-gray-400 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition duration-200"
                                   >
                                     {subItem.title}
                                   </button>
@@ -365,16 +365,16 @@ export default function UserGuide() {
               
               {/* Mobile Sidebar - Shown only when opened */}
               <div 
-                className={`fixed inset-0 z-40 bg-black/50 ${sidebarOpen ? 'block' : 'hidden'} md:hidden`}
+                className={`fixed inset-0 z-40 bg-black/50 dark:bg-black/70 ${sidebarOpen ? 'block' : 'hidden'} md:hidden`}
                 onClick={() => setSidebarOpen(false)}
               >
                 <div 
-                  className="fixed left-0 top-0 h-full w-72 bg-white p-4 shadow-lg overflow-y-auto z-50 transition-transform transform-gpu"
+                  className="fixed left-0 top-0 h-full w-72 bg-white dark:bg-gray-900 p-4 shadow-lg overflow-y-auto z-50 transition-transform transform-gpu border-r border-gray-200 dark:border-gray-700"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {/* Mobile close button */}
                   <div className="flex justify-between items-center mb-4">
-                    <h3 className="font-medium">{t('guide.tocTitle')}</h3>
+                    <h3 className="font-medium text-gray-800 dark:text-gray-200">{t('guide.tocTitle')}</h3>
                     <Button 
                       variant="ghost" 
                       size="icon" 
@@ -411,7 +411,7 @@ export default function UserGuide() {
                       {/* Introduction */}
                       <button 
                         onClick={() => scrollToSection('introduction')}
-                        className={`w-full text-left px-3 py-2 text-sm rounded transition duration-200 ${activeSection === 'introduction' ? 'bg-blue-100 text-blue-700 font-medium' : 'hover:bg-gray-100'}`}
+                        className={`w-full text-left px-3 py-2 text-sm rounded transition duration-200 ${activeSection === 'introduction' ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-medium' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
                       >
                         {t('guide.introTitle')}
                       </button>
@@ -422,7 +422,7 @@ export default function UserGuide() {
                           <div key={item.id} className="w-full space-y-1 mt-1">
                             <button 
                               onClick={() => scrollToSection(item.id)}
-                              className={`w-full text-left px-3 py-2 text-sm rounded transition duration-200 ${activeSection === item.id ? 'bg-blue-100 text-blue-700 font-medium' : 'hover:bg-gray-100'}`}
+                              className={`w-full text-left px-3 py-2 text-sm rounded transition duration-200 ${activeSection === item.id ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-medium' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
                             >
                               {item.title}
                             </button>
@@ -434,7 +434,7 @@ export default function UserGuide() {
                                   <button
                                     key={subItem.id}
                                     onClick={() => scrollToSection(subItem.id)}
-                                    className="w-full text-left px-3 py-1.5 text-xs text-gray-700 rounded hover:bg-gray-100 transition duration-200"
+                                    className="w-full text-left px-3 py-1.5 text-xs text-gray-700 dark:text-gray-400 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition duration-200"
                                   >
                                     {subItem.title}
                                   </button>
@@ -460,12 +460,12 @@ export default function UserGuide() {
               </div>
 
               {/* Introduction */}
-              <Card id="introduction" className="mb-8 scroll-mt-24 border-blue-100 bg-blue-50/50">
+              <Card id="introduction" className="mb-8 scroll-mt-24 border-blue-100 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/30">
                 <CardHeader>
-                  <CardTitle className="text-xl text-blue-700">{t('guide.introTitle')}</CardTitle>
-                  <CardDescription>{t('guide.introDescription')}</CardDescription>
+                  <CardTitle className="text-xl text-blue-700 dark:text-blue-300">{t('guide.introTitle')}</CardTitle>
+                  <CardDescription className="dark:text-gray-400">{t('guide.introDescription')}</CardDescription>
                 </CardHeader>
-                <CardContent className="text-blue-700">
+                <CardContent className="text-blue-700 dark:text-blue-300">
                   <p className="mb-4">
                     {t('guide.introText')}
                   </p>
@@ -475,16 +475,16 @@ export default function UserGuide() {
               {/* Getting Started */}
               <Card id="getting-started" className="mb-8 scroll-mt-24">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Key className="h-5 w-5 text-blue-600" />
+                  <CardTitle className="flex items-center gap-2 dark:text-gray-100">
+                    <Key className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     {t('guide.section1')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div id="api-key">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.apiKeyTitle')}</h3>
-                    <p className="mb-2">{t('guide.apiKeyDescription')}</p>
-                    <ol className="list-decimal pl-5 space-y-2">
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.apiKeyTitle')}</h3>
+                    <p className="mb-2 dark:text-gray-300">{t('guide.apiKeyDescription')}</p>
+                    <ol className="list-decimal pl-5 space-y-2 dark:text-gray-300">
                       <li>{t('guide.apiKeyStep1')}</li>
                       <li>{t('guide.apiKeyStep2')}</li>
                       <li>{t('guide.apiKeyStep3')}</li>
@@ -493,9 +493,9 @@ export default function UserGuide() {
                   </div>
                   
                   <div id="model-selection">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.modelSelectionTitle')}</h3>
-                    <p>{t('guide.modelSelectionDescription')}</p>
-                    <ul className="list-disc pl-5 space-y-1 mt-2">
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.modelSelectionTitle')}</h3>
+                    <p className="dark:text-gray-300">{t('guide.modelSelectionDescription')}</p>
+                    <ul className="list-disc pl-5 space-y-1 mt-2 dark:text-gray-300">
                       <li><strong>Gemini 2.0 Flash:</strong> {t('guide.model20FlashDescription')}</li>
                       <li><strong>Gemini 2.5 Pro Experimental:</strong> {t('guide.model25ProDescription')}</li>
                     </ul>
@@ -506,25 +506,25 @@ export default function UserGuide() {
               {/* Uploading Subtitles */}
               <Card id="uploading-subtitles" className="mb-8 scroll-mt-24">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FileType className="h-5 w-5 text-blue-600" />
+                  <CardTitle className="flex items-center gap-2 dark:text-gray-100">
+                    <FileType className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     {t('guide.section2')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div id="upload-methods">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.uploadMethodsTitle')}</h3>
-                    <p className="mb-2">{t('guide.uploadMethodsDescription')}</p>
-                    <ul className="list-disc pl-5 space-y-2">
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.uploadMethodsTitle')}</h3>
+                    <p className="mb-2 dark:text-gray-300">{t('guide.uploadMethodsDescription')}</p>
+                    <ul className="list-disc pl-5 space-y-2 dark:text-gray-300">
                       <li><strong>{t('guide.uploadMethod1Title')}</strong>: {t('guide.uploadMethod1Description')}</li>
                       <li><strong>{t('guide.uploadMethod2Title')}</strong>: {t('guide.uploadMethod2Description')}</li>
                     </ul>
                   </div>
                   
-                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-md">
+                  <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-md">
                     <div className="flex items-start">
-                      <Info className="h-5 w-5 text-amber-500 mt-0.5 mr-2 flex-shrink-0" />
-                      <p className="text-sm text-amber-700">{t('guide.supportedFormatsNote')}</p>
+                      <Info className="h-5 w-5 text-amber-500 dark:text-amber-400 mt-0.5 mr-2 flex-shrink-0" />
+                      <p className="text-sm text-amber-700 dark:text-amber-300">{t('guide.supportedFormatsNote')}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -533,26 +533,26 @@ export default function UserGuide() {
               {/* Translation Settings */}
               <Card id="translation-settings" className="mb-8 scroll-mt-24">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Languages className="h-5 w-5 text-blue-600" />
+                  <CardTitle className="flex items-center gap-2 dark:text-gray-100">
+                    <Languages className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     {t('guide.section3')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div id="target-language">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.targetLanguageTitle')}</h3>
-                    <p>{t('guide.targetLanguageDescription')}</p>
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.targetLanguageTitle')}</h3>
+                    <p className="dark:text-gray-300">{t('guide.targetLanguageDescription')}</p>
                   </div>
                   
                   <div id="custom-prompt">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.customPromptTitle')}</h3>
-                    <p>{t('guide.customPromptDescription')}</p>
-                    <div className="mt-2 p-3 bg-gray-100 rounded-md">
-                      <code className="text-sm whitespace-pre-wrap">
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.customPromptTitle')}</h3>
+                    <p className="dark:text-gray-300">{t('guide.customPromptDescription')}</p>
+                    <div className="mt-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-md">
+                      <code className="text-sm whitespace-pre-wrap dark:text-gray-200">
                         {t('guide.customPromptExample')}
                       </code>
                     </div>
-                    <p className="mt-2 text-sm text-gray-600">{t('guide.customPromptTip')}</p>
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{t('guide.customPromptTip')}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -560,21 +560,21 @@ export default function UserGuide() {
               {/* Translation Process */}
               <Card id="translating-process" className="mb-8 scroll-mt-24">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Play className="h-5 w-5 text-blue-600" />
+                  <CardTitle className="flex items-center gap-2 dark:text-gray-100">
+                    <Play className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     {t('guide.section4')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div id="start-translation">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.startTranslationTitle')}</h3>
-                    <p>{t('guide.startTranslationDescription')}</p>
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.startTranslationTitle')}</h3>
+                    <p className="dark:text-gray-300">{t('guide.startTranslationDescription')}</p>
                   </div>
                   
                   <div id="translation-progress">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.translationProgressTitle')}</h3>
-                    <p>{t('guide.translationProgressDescription')}</p>
-                    <ul className="list-disc pl-5 space-y-1 mt-2">
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.translationProgressTitle')}</h3>
+                    <p className="dark:text-gray-300">{t('guide.translationProgressDescription')}</p>
+                    <ul className="list-disc pl-5 space-y-1 mt-2 dark:text-gray-300">
                       <li><strong>{t('guide.statusPending')}</strong>: {t('guide.statusPendingDescription')}</li>
                       <li><strong>{t('guide.statusTranslating')}</strong>: {t('guide.statusTranslatingDescription')}</li>
                       <li><strong>{t('guide.statusTranslated')}</strong>: {t('guide.statusTranslatedDescription')}</li>
@@ -583,9 +583,9 @@ export default function UserGuide() {
                   </div>
                   
                   <div id="translation-control">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.translationControlTitle')}</h3>
-                    <p>{t('guide.translationControlDescription')}</p>
-                    <ul className="list-disc pl-5 space-y-1 mt-2">
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.translationControlTitle')}</h3>
+                    <p className="dark:text-gray-300">{t('guide.translationControlDescription')}</p>
+                    <ul className="list-disc pl-5 space-y-1 mt-2 dark:text-gray-300">
                       <li><strong>{t('guide.pauseResumeTitle')}</strong>: {t('guide.pauseResumeDescription')}</li>
                       <li><strong>{t('guide.stopTitle')}</strong>: {t('guide.stopDescription')}</li>
                     </ul>
@@ -596,16 +596,16 @@ export default function UserGuide() {
               {/* Editing Subtitles */}
               <Card id="editing-subtitles" className="mb-8 scroll-mt-24">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Edit className="h-5 w-5 text-blue-600" />
+                  <CardTitle className="flex items-center gap-2 dark:text-gray-100">
+                    <Edit className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     {t('guide.section5')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div id="manual-edit">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.manualEditTitle')}</h3>
-                    <p>{t('guide.manualEditDescription')}</p>
-                    <ol className="list-decimal pl-5 space-y-1 mt-2">
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.manualEditTitle')}</h3>
+                    <p className="dark:text-gray-300">{t('guide.manualEditDescription')}</p>
+                    <ol className="list-decimal pl-5 space-y-1 mt-2 dark:text-gray-300">
                       <li>{t('guide.editStep1')}</li>
                       <li>{t('guide.editStep2')}</li>
                       <li>{t('guide.editStep3')}</li>
@@ -613,22 +613,22 @@ export default function UserGuide() {
                   </div>
                   
                   <div id="improve-translation">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.improveTranslationTitle')}</h3>
-                    <p>{t('guide.improveTranslationDescription')}</p>
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.improveTranslationTitle')}</h3>
+                    <p className="dark:text-gray-300">{t('guide.improveTranslationDescription')}</p>
                     <div className="flex items-center mt-2">
-                      <Sparkles className="h-4 w-4 text-amber-500 mr-2" />
-                      <p className="text-sm">{t('guide.aiSuggestionTip')}</p>
+                      <Sparkles className="h-4 w-4 text-amber-500 dark:text-amber-400 mr-2" />
+                      <p className="text-sm dark:text-gray-300">{t('guide.aiSuggestionTip')}</p>
                     </div>
                   </div>
 
                   <div id="retry-failed">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.retryFailedTitle')}</h3>
-                    <p>{t('guide.retryFailedDescription')}</p>
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.retryFailedTitle')}</h3>
+                    <p className="dark:text-gray-300">{t('guide.retryFailedDescription')}</p>
                     <div className="mt-2 flex items-start">
                       <div className="mr-3 mt-0.5">
-                        <RotateCw className="h-4 w-4 text-blue-600" />
+                        <RotateCw className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                       </div>
-                      <p className="text-sm">{t('guide.retryButtonDescription')}</p>
+                      <p className="text-sm dark:text-gray-300">{t('guide.retryButtonDescription')}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -637,25 +637,25 @@ export default function UserGuide() {
               {/* Exporting Subtitles */}
               <Card id="exporting-subtitles" className="mb-8 scroll-mt-24">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Download className="h-5 w-5 text-blue-600" />
+                  <CardTitle className="flex items-center gap-2 dark:text-gray-100">
+                    <Download className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     {t('guide.section6')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div id="export-options">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.exportOptionsTitle')}</h3>
-                    <p>{t('guide.exportOptionsDescription')}</p>
-                    <ul className="list-disc pl-5 space-y-2 mt-2">
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.exportOptionsTitle')}</h3>
+                    <p className="dark:text-gray-300">{t('guide.exportOptionsDescription')}</p>
+                    <ul className="list-disc pl-5 space-y-2 mt-2 dark:text-gray-300">
                       <li><strong>{t('guide.normalExportTitle')}</strong>: {t('guide.normalExportDescription')}</li>
                       <li><strong>{t('guide.bilingualExportTitle')}</strong>: {t('guide.bilingualExportDescription')}</li>
                     </ul>
                   </div>
                   
-                  <div className="p-3 bg-blue-50 border border-blue-200 rounded-md">
+                  <div className="p-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-md">
                     <div className="flex items-start">
-                      <Info className="h-5 w-5 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
-                      <p className="text-sm text-blue-700">{t('guide.exportFormatTip')}</p>
+                      <Info className="h-5 w-5 text-blue-500 dark:text-blue-400 mt-0.5 mr-2 flex-shrink-0" />
+                      <p className="text-sm text-blue-700 dark:text-blue-300">{t('guide.exportFormatTip')}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -664,75 +664,75 @@ export default function UserGuide() {
               {/* Troubleshooting */}
               <Card id="troubleshooting" className="mb-8 scroll-mt-24">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <AlertTriangle className="h-5 w-5 text-amber-500" />
+                  <CardTitle className="flex items-center gap-2 dark:text-gray-100">
+                    <AlertTriangle className="h-5 w-5 text-amber-500 dark:text-amber-400" />
                     {t('guide.section7')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div id="common-issues">
-                    <h3 className="font-medium text-lg mb-2">{t('guide.commonIssuesTitle')}</h3>
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.commonIssuesTitle')}</h3>
                     
                     <div className="space-y-3 mt-4">
                       {/* Issue 1 */}
-                      <div id="issue-1" className="border border-gray-200 rounded-md overflow-hidden">
+                      <div id="issue-1" className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                         <button 
                           onClick={() => toggleIssue(1)}
-                          className="w-full p-3 bg-gray-50 flex justify-between items-center text-left hover:bg-gray-100 transition-colors"
+                          className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         >
-                          <h4 className="font-medium">{t('guide.issue1Title')}</h4>
-                          {openIssues[1] ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                          <h4 className="font-medium dark:text-gray-200">{t('guide.issue1Title')}</h4>
+                          {openIssues[1] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                         </button>
                         {openIssues[1] && (
-                          <div className="p-3 text-sm">
+                          <div className="p-3 text-sm dark:text-gray-300">
                             <p>{t('guide.issue1Solution')}</p>
                           </div>
                         )}
                       </div>
                       
                       {/* Issue 2 */}
-                      <div id="issue-2" className="border border-gray-200 rounded-md overflow-hidden">
+                      <div id="issue-2" className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                         <button 
                           onClick={() => toggleIssue(2)}
-                          className="w-full p-3 bg-gray-50 flex justify-between items-center text-left hover:bg-gray-100 transition-colors"
+                          className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         >
-                          <h4 className="font-medium">{t('guide.issue2Title')}</h4>
-                          {openIssues[2] ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                          <h4 className="font-medium dark:text-gray-200">{t('guide.issue2Title')}</h4>
+                          {openIssues[2] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                         </button>
                         {openIssues[2] && (
-                          <div className="p-3 text-sm">
+                          <div className="p-3 text-sm dark:text-gray-300">
                             <p>{t('guide.issue2Solution')}</p>
                           </div>
                         )}
                       </div>
                       
                       {/* Issue 3 */}
-                      <div id="issue-3" className="border border-gray-200 rounded-md overflow-hidden">
+                      <div id="issue-3" className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                         <button 
                           onClick={() => toggleIssue(3)}
-                          className="w-full p-3 bg-gray-50 flex justify-between items-center text-left hover:bg-gray-100 transition-colors"
+                          className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         >
-                          <h4 className="font-medium">{t('guide.issue3Title')}</h4>
-                          {openIssues[3] ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                          <h4 className="font-medium dark:text-gray-200">{t('guide.issue3Title')}</h4>
+                          {openIssues[3] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                         </button>
                         {openIssues[3] && (
-                          <div className="p-3 text-sm">
+                          <div className="p-3 text-sm dark:text-gray-300">
                             <p>{t('guide.issue3Solution')}</p>
                           </div>
                         )}
                       </div>
                       
                       {/* Issue 4 */}
-                      <div id="issue-4" className="border border-gray-200 rounded-md overflow-hidden">
+                      <div id="issue-4" className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                         <button 
                           onClick={() => toggleIssue(4)}
-                          className="w-full p-3 bg-gray-50 flex justify-between items-center text-left hover:bg-gray-100 transition-colors"
+                          className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         >
-                          <h4 className="font-medium">{t('guide.issue4Title')}</h4>
-                          {openIssues[4] ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                          <h4 className="font-medium dark:text-gray-200">{t('guide.issue4Title')}</h4>
+                          {openIssues[4] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                         </button>
                         {openIssues[4] && (
-                          <div className="p-3 text-sm">
+                          <div className="p-3 text-sm dark:text-gray-300">
                             <p>{t('guide.issue4Solution')}</p>
                           </div>
                         )}
@@ -745,89 +745,89 @@ export default function UserGuide() {
               {/* FAQ Section */}
               <Card id="faq" className="mb-8 scroll-mt-24">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Info className="h-5 w-5 text-blue-600" />
+                  <CardTitle className="flex items-center gap-2 dark:text-gray-100">
+                    <Info className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     {t('guide.faqTitle')}
                   </CardTitle>
-                  <CardDescription>{t('guide.faqDescription')}</CardDescription>
+                  <CardDescription className="dark:text-gray-400">{t('guide.faqDescription')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
                     {/* FAQ Item 1 */}
-                    <div className="border border-gray-200 rounded-md overflow-hidden">
+                    <div className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                       <button 
                         onClick={() => toggleFaq(1)}
-                        className="w-full p-3 bg-gray-50 flex justify-between items-center text-left hover:bg-gray-100 transition-colors"
+                        className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       >
-                        <h3 className="font-medium">{t('guide.faq1Question')}</h3>
-                        {openFaqs[1] ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                        <h3 className="font-medium dark:text-gray-200">{t('guide.faq1Question')}</h3>
+                        {openFaqs[1] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                       </button>
                       {openFaqs[1] && (
-                        <div className="p-3 text-gray-600">
+                        <div className="p-3 text-gray-600 dark:text-gray-300">
                           <p>{t('guide.faq1Answer')}</p>
                         </div>
                       )}
                     </div>
                     
                     {/* FAQ Item 2 */}
-                    <div className="border border-gray-200 rounded-md overflow-hidden">
+                    <div className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                       <button 
                         onClick={() => toggleFaq(2)}
-                        className="w-full p-3 bg-gray-50 flex justify-between items-center text-left hover:bg-gray-100 transition-colors"
+                        className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       >
-                        <h3 className="font-medium">{t('guide.faq2Question')}</h3>
-                        {openFaqs[2] ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                        <h3 className="font-medium dark:text-gray-200">{t('guide.faq2Question')}</h3>
+                        {openFaqs[2] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                       </button>
                       {openFaqs[2] && (
-                        <div className="p-3 text-gray-600">
+                        <div className="p-3 text-gray-600 dark:text-gray-300">
                           <p>{t('guide.faq2Answer')}</p>
                         </div>
                       )}
                     </div>
                     
                     {/* FAQ Item 3 */}
-                    <div className="border border-gray-200 rounded-md overflow-hidden">
+                    <div className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                       <button 
                         onClick={() => toggleFaq(3)}
-                        className="w-full p-3 bg-gray-50 flex justify-between items-center text-left hover:bg-gray-100 transition-colors"
+                        className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       >
-                        <h3 className="font-medium">{t('guide.faq3Question')}</h3>
-                        {openFaqs[3] ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                        <h3 className="font-medium dark:text-gray-200">{t('guide.faq3Question')}</h3>
+                        {openFaqs[3] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                       </button>
                       {openFaqs[3] && (
-                        <div className="p-3 text-gray-600">
+                        <div className="p-3 text-gray-600 dark:text-gray-300">
                           <p>{t('guide.faq3Answer')}</p>
                         </div>
                       )}
                     </div>
                     
                     {/* FAQ Item 4 */}
-                    <div className="border border-gray-200 rounded-md overflow-hidden">
+                    <div className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                       <button 
                         onClick={() => toggleFaq(4)}
-                        className="w-full p-3 bg-gray-50 flex justify-between items-center text-left hover:bg-gray-100 transition-colors"
+                        className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       >
-                        <h3 className="font-medium">{t('guide.faq4Question')}</h3>
-                        {openFaqs[4] ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                        <h3 className="font-medium dark:text-gray-200">{t('guide.faq4Question')}</h3>
+                        {openFaqs[4] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                       </button>
                       {openFaqs[4] && (
-                        <div className="p-3 text-gray-600">
+                        <div className="p-3 text-gray-600 dark:text-gray-300">
                           <p>{t('guide.faq4Answer')}</p>
                         </div>
                       )}
                     </div>
                     
                     {/* FAQ Item 5 */}
-                    <div className="border border-gray-200 rounded-md overflow-hidden">
+                    <div className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                       <button 
                         onClick={() => toggleFaq(5)}
-                        className="w-full p-3 bg-gray-50 flex justify-between items-center text-left hover:bg-gray-100 transition-colors"
+                        className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       >
-                        <h3 className="font-medium">{t('guide.faq5Question')}</h3>
-                        {openFaqs[5] ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                        <h3 className="font-medium dark:text-gray-200">{t('guide.faq5Question')}</h3>
+                        {openFaqs[5] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                       </button>
                       {openFaqs[5] && (
-                        <div className="p-3 text-gray-600">
+                        <div className="p-3 text-gray-600 dark:text-gray-300">
                           <p>{t('guide.faq5Answer')}</p>
                         </div>
                       )}
@@ -839,11 +839,11 @@ export default function UserGuide() {
               {/* Help and Feedback */}
               <Card className="mb-8">
                 <CardHeader>
-                  <CardTitle>{t('guide.helpTitle')}</CardTitle>
+                  <CardTitle className="dark:text-gray-100">{t('guide.helpTitle')}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="mb-4">{t('guide.helpText')}</p>
-                  <p className="text-sm text-gray-600">{t('guide.feedbackText')}</p>
+                  <p className="mb-4 dark:text-gray-300">{t('guide.helpText')}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{t('guide.feedbackText')}</p>
                 </CardContent>
               </Card>
             </div>
@@ -854,7 +854,7 @@ export default function UserGuide() {
       {/* Back to top button */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-6 right-6 p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-opacity duration-300 flex items-center justify-center print:hidden ${
+        className={`fixed bottom-6 right-6 p-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center print:hidden ${
           showBackToTop ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         aria-label={t('guideUi.backToTop')}
@@ -863,7 +863,7 @@ export default function UserGuide() {
       </button>
       
       {/* Print-only footer */}
-      <footer className="hidden print:block mt-8 text-center text-sm text-gray-500 border-t border-gray-200 pt-4">
+      <footer className="hidden print:block mt-8 text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-4">
         <p>{t('common.appTitle')} © {new Date().getFullYear()}</p>
         <p className="mt-1">{t('guideUi.printedGuide')}</p>
       </footer>

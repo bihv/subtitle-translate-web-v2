@@ -106,28 +106,28 @@ export default function ApiKeyInput({ onApiKeyChange }: ApiKeyInputProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300">
+    <div className="bg-background rounded-lg shadow-sm border border-border overflow-hidden transition-all duration-300">
       <div 
-        className="p-4 flex items-start justify-between cursor-pointer hover:bg-gray-50"
+        className="p-4 flex items-start justify-between cursor-pointer hover:bg-muted/50 transition-colors"
         onClick={toggleCollapse}
       >
         <div className="flex items-start gap-3">
-          <Key className="w-5 h-5 text-blue-500 mt-1" />
+          <Key className="w-5 h-5 text-primary mt-1" />
           <div>
-            <h2 className="text-lg font-medium">{t('apiKey.title')}</h2>
+            <h2 className="text-lg font-medium text-foreground">{t('apiKey.title')}</h2>
             {isKeyValid === true && isCollapsed ? (
-              <p className="text-sm text-green-600 flex items-center">
+              <p className="text-sm text-green-600 dark:text-green-400 flex items-center">
                 <CheckCircle2 className="h-4 w-4 mr-1" />
                 {t('apiKey.configuredAndReady')}
               </p>
             ) : (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-muted-foreground">
                 {t('apiKey.description')}
                 <a 
                   href="https://aistudio.google.com/app/apikey" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline inline-flex items-center ml-1"
+                  className="text-primary hover:underline inline-flex items-center ml-1"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {t('apiKey.getKey')} <ExternalLink className="w-3 h-3 ml-1" />
@@ -139,7 +139,7 @@ export default function ApiKeyInput({ onApiKeyChange }: ApiKeyInputProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="h-8 w-8 rounded-full"
+          className="h-8 w-8 rounded-full text-muted-foreground hover:text-foreground"
           onClick={(e) => {
             e.stopPropagation();
             toggleCollapse();
@@ -150,7 +150,7 @@ export default function ApiKeyInput({ onApiKeyChange }: ApiKeyInputProps) {
       </div>
       
       {!isCollapsed && (
-        <div className="px-4 pb-4 pt-1 space-y-3 border-t border-gray-100">
+        <div className="px-4 pb-4 pt-1 space-y-3 border-t border-border">
           <div className="relative">
             <Input
               type={showKey ? "text" : "password"}
@@ -170,14 +170,14 @@ export default function ApiKeyInput({ onApiKeyChange }: ApiKeyInputProps) {
           </div>
           
           {isKeyValid === true && (
-            <div className="flex items-center text-green-600 text-sm">
+            <div className="flex items-center text-green-600 dark:text-green-400 text-sm">
               <CheckCircle2 className="h-4 w-4 mr-1" />
               {t('apiKey.isValid')}
             </div>
           )}
           
           {isKeyValid === false && (
-            <div className="flex items-center text-red-600 text-sm">
+            <div className="flex items-center text-red-600 dark:text-red-400 text-sm">
               <AlertCircle className="h-4 w-4 mr-1" />
               {t('apiKey.isInvalid')}
             </div>
@@ -191,7 +191,7 @@ export default function ApiKeyInput({ onApiKeyChange }: ApiKeyInputProps) {
             />
             <label
               htmlFor="save-key"
-              className="text-sm text-gray-600 leading-none cursor-pointer"
+              className="text-sm text-muted-foreground leading-none cursor-pointer"
             >
               {t('apiKey.saveInBrowser')}
             </label>

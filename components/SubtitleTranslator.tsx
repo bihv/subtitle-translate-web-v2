@@ -1079,11 +1079,11 @@ Yêu cầu cụ thể cho mỗi phiên bản:
         <div className="container mx-auto px-4 py-8 max-w-7xl">
             <div className="space-y-4">
                 {/* Hướng dẫn tuần tự các bước sử dụng */}
-                <div className="bg-blue-50 border border-blue-200 rounded-md p-4 flex items-start gap-3">
-                    <Globe className="h-6 w-6 text-blue-500 mt-1 flex-shrink-0" />
+                <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-md p-4 flex items-start gap-3">
+                    <Globe className="h-6 w-6 text-blue-500 dark:text-blue-400 mt-1 flex-shrink-0" />
                     <div>
-                        <div className="font-semibold text-blue-800 text-base mb-1">{t('guide.introTitle')}</div>
-                        <ol className="list-decimal list-inside text-blue-700 text-sm space-y-1">
+                        <div className="font-semibold text-blue-800 dark:text-blue-200 text-base mb-1">{t('guide.introTitle')}</div>
+                        <ol className="list-decimal list-inside text-blue-700 dark:text-blue-300 text-sm space-y-1">
                             <li><span className="font-medium">{t('apiKey.title')}</span>: {t('apiKey.description')}</li>
                             <li><span className="font-medium">{t('fileUpload.title')}</span>: {t('fileUpload.description')}</li>
                             <li><span className="font-medium">{t('translationSettings.title')}</span>: {t('translationSettings.description')}</li>
@@ -1092,8 +1092,8 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                             <li><span className="font-medium">{t('preview.title')}</span>: {t('preview.description')}</li>
                             <li><span className="font-medium">{t('export.exportTranslated')}</span>: {t('guide.exportOptionsDescription')}</li>
                         </ol>
-                        <div className="mt-2 text-xs text-blue-600">
-                          <Link href="/guide" className="underline text-blue-700 hover:text-blue-900 font-medium">{t('guide.title')}</Link> — {t('guide.subtitle')}
+                        <div className="mt-2 text-xs text-blue-600 dark:text-blue-400">
+                          <Link href="/guide" className="underline text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-blue-100 font-medium">{t('guide.title')}</Link> — {t('guide.subtitle')}
                         </div>
                     </div>
                 </div>
@@ -1160,8 +1160,8 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                     <div
                                                         ref={dropZoneRef}
                                                         className={`border-2 border-dashed rounded-md p-4 sm:p-6 text-center cursor-pointer transition-colors
-                              ${isDragging ? 'border-blue-400 bg-blue-50/50' : ''}
-                              ${validationError && !file ? 'border-rose-300 bg-rose-50/50' : 'border-gray-300 hover:bg-gray-50'}
+                              ${isDragging ? 'border-blue-400 bg-blue-50/50 dark:border-blue-500 dark:bg-blue-950/30' : ''}
+                              ${validationError && !file ? 'border-rose-300 bg-rose-50/50 dark:border-rose-600 dark:bg-rose-950/30' : 'border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800/50'}
                             `}
                                                         onClick={() => fileInputRef.current?.click()}
                                                         onDragEnter={handleDragEnter}
@@ -1177,23 +1177,23 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                             onChange={handleFileChange}
                                                             disabled={translating}
                                                         />
-                                                        <div className="text-sm text-gray-500">
+                                                        <div className="text-sm text-gray-500 dark:text-gray-400">
                                                             {isDragging ? (
-                                                                <p className="text-blue-500 font-medium">{t('fileUpload.dropFileHere')}</p>
+                                                                <p className="text-blue-500 dark:text-blue-400 font-medium">{t('fileUpload.dropFileHere')}</p>
                                                             ) : (
                                                                 <div>
-                                                                    <p>{t('fileUpload.dragAndDropHere')}</p>
-                                                                    <p className="text-xs mt-1 text-gray-400">{t('fileUpload.orClickToSelect')}</p>
+                                                                    <p className="dark:text-gray-300">{t('fileUpload.dragAndDropHere')}</p>
+                                                                    <p className="text-xs mt-1 text-gray-400 dark:text-gray-500">{t('fileUpload.orClickToSelect')}</p>
                                                                 </div>
                                                             )}
                                                         </div>
                                                     </div>
 
                                                     {file && (
-                                                        <div className="flex justify-between items-center text-sm p-2 bg-gray-50 rounded">
+                                                        <div className="flex justify-between items-center text-sm p-2 bg-gray-50 dark:bg-gray-800 rounded">
                                                             <div className="truncate">
-                                                                <div className="font-medium">{t('fileUpload.fileSelected')} {fileName}</div>
-                                                                <div className="text-xs text-gray-500">{formatParams(t('fileUpload.formatDetected'), { format: subtitleFormat.toUpperCase() })}</div>
+                                                                <div className="font-medium dark:text-gray-200">{t('fileUpload.fileSelected')} {fileName}</div>
+                                                                <div className="text-xs text-gray-500 dark:text-gray-400">{formatParams(t('fileUpload.formatDetected'), { format: subtitleFormat.toUpperCase() })}</div>
                                                             </div>
                                                             <Button
                                                                 variant="ghost"
@@ -1208,7 +1208,7 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                     )}
 
                                                     {validationError && !file && (
-                                                        <div className="text-xs text-rose-600 flex items-center">
+                                                        <div className="text-xs text-rose-600 dark:text-rose-400 flex items-center">
                                                             <AlertCircle className="h-3 w-3 mr-1" />
                                                             {validationError}
                                                         </div>
@@ -1218,16 +1218,16 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                         )}
                                         {isSettingsCollapsed && file && (
                                             <CardContent>
-                                                <div className="flex justify-between items-center text-sm p-2 bg-gray-50 rounded">
+                                                <div className="flex justify-between items-center text-sm p-2 bg-gray-50 dark:bg-gray-800 rounded">
                                                     <div className="truncate">
-                                                        <span className="font-medium">{t('fileUpload.fileSelected')}</span> {fileName}
+                                                        <span className="font-medium dark:text-gray-200">{t('fileUpload.fileSelected')}</span> <span className="dark:text-gray-300">{fileName}</span>
                                                     </div>
                                                 </div>
                                             </CardContent>
                                         )}
                                         {isSettingsCollapsed && !file && (
                                             <CardContent>
-                                                <div className="text-sm text-gray-500 text-center py-2">
+                                                <div className="text-sm text-gray-500 dark:text-gray-400 text-center py-2">
                                                     {t('fileUpload.noFileSelected')}
                                                 </div>
                                             </CardContent>
@@ -1435,11 +1435,11 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                     <div className="flex flex-col gap-2">
                                                         {/* Format selection */}
                                                         <div className="flex items-center gap-2">
-                                                            <label className="text-xs text-gray-500">{t('export.exportFormat')}</label>
+                                                            <label className="text-xs text-gray-500 dark:text-gray-400">{t('export.exportFormat')}</label>
                                                             <select 
                                                                 value={exportFormat}
                                                                 onChange={(e) => setExportFormat(e.target.value as SubtitleFormat | 'original')}
-                                                                className="text-xs border rounded px-1 py-0.5 bg-white"
+                                                                className="text-xs border rounded px-1 py-0.5 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
                                                                 disabled={!subtitles.some(s => s.status === "translated")}
                                                             >
                                                                 <option value="original">{t('export.keepOriginalFormat')} ({subtitleFormat.toUpperCase()})</option>

@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n/I18nContext";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { KeyboardShortcuts } from "@/components/KeyboardShortcuts";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const geistSans = Geist({
@@ -35,9 +37,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <I18nProvider>
-          {children}
-        </I18nProvider>
+        <ThemeProvider defaultTheme="system">
+          <I18nProvider>
+            <KeyboardShortcuts />
+            {children}
+          </I18nProvider>
+        </ThemeProvider>
         <GoogleAnalytics />
       </body>
     </html>
