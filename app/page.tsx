@@ -5,6 +5,7 @@ import TranslatorSkeleton from '@/components/TranslatorSkeleton';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { ThemeShortcutHint } from '@/components/ThemeShortcutHint';
+import GuideSummary from '@/components/GuideSummary';
 import { useI18n } from '@/lib/i18n/I18nContext';
 import { useSessionTracking } from '@/lib/analytics';
 import Link from 'next/link';
@@ -51,9 +52,29 @@ export default function Home() {
 
       {/* Main content */}
       <main className="min-h-screen bg-gradient-to-b from-background to-muted/20 p-3 md:p-6 pt-8">
-        <div className="w-full max-w-6xl mx-auto">
-          <SubtitleTranslator />
+        {/* Guide Summary Section */}
+        <section className="w-full max-w-6xl mx-auto mb-16">
+          <GuideSummary />
+        </section>
+        
+        {/* Separator */}
+        <div className="w-full max-w-6xl mx-auto mb-8">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-border/30"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-6 py-2 text-muted-foreground/60 font-medium">
+                {t('common.translationTool')}
+              </span>
+            </div>
+          </div>
         </div>
+        
+        {/* Translator Section */}
+        <section id="translator" className="w-full max-w-6xl mx-auto scroll-mt-20">
+          <SubtitleTranslator />
+        </section>
         <ThemeShortcutHint />
       </main>
     </>
