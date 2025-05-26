@@ -64,6 +64,7 @@ interface ParsedSubtitle {
 }
 
 const BATCH_SIZE = 10; // Number of subtitles to translate in a batch
+const CUSTOM_PROMPT_STORAGE_KEY = "custom_prompt"; // Storage key for custom prompt
 const MAX_BATCH_SIZE = 30; // Maximum number of subtitles in one large batch
 const RATE_LIMIT_DELAY = 2000; // Delay between batches in milliseconds
 
@@ -74,9 +75,8 @@ export default function SubtitleTranslator() {
     const [subtitles, setSubtitles] = useState<SubtitleItem[]>([]);
     const [translating, setTranslating] = useState<boolean>(false);
     const [targetLanguage, setTargetLanguage] = useState<string>("Vietnamese");
-    const [customPrompt, setCustomPrompt] = useState<string>(
-        t('translationSettings.customPromptDefault')
-    );
+    const [customPrompt, setCustomPrompt] = useState<string>("");
+    const [customPromptLoaded, setCustomPromptLoaded] = useState<boolean>(false);
     const [translationProgress, setTranslationProgress] = useState<number>(0);
     const [apiKeyProvided, setApiKeyProvided] = useState<boolean>(false);
     const [selectedModel, setSelectedModel] = useState<string>(getModel());
@@ -115,10 +115,34 @@ export default function SubtitleTranslator() {
         console.log(`Pause state changed to: ${isPaused}`);
     }, [isPaused]);
 
-    // Update custom prompt when language changes
+    // Load custom prompt from localStorage when component mounts
     useEffect(() => {
-        setCustomPrompt(formatParams(t('translationSettings.customPromptDefault'), { language: targetLanguage }));
-    }, [t, formatParams, targetLanguage]);
+        if (typeof window !== "undefined") {
+            const savedPrompt = localStorage.getItem(CUSTOM_PROMPT_STORAGE_KEY);
+            if (savedPrompt) {
+                setCustomPrompt(savedPrompt);
+            }
+            // If no saved prompt, keep customPrompt empty (default state)
+            setCustomPromptLoaded(true);
+        }
+    }, []);
+
+    // Save custom prompt to localStorage when it changes (debounced)
+    useEffect(() => {
+        if (customPromptLoaded && typeof window !== "undefined") {
+            const timeoutId = setTimeout(() => {
+                // Only save if user has entered a custom prompt
+                if (customPrompt.trim()) {
+                    localStorage.setItem(CUSTOM_PROMPT_STORAGE_KEY, customPrompt);
+                } else {
+                    // Remove from localStorage if custom prompt is empty
+                    localStorage.removeItem(CUSTOM_PROMPT_STORAGE_KEY);
+                }
+            }, 1000); // 1 second debounce
+
+            return () => clearTimeout(timeoutId);
+        }
+    }, [customPrompt, customPromptLoaded]);
 
     // Theo dõi sự thay đổi ngôn ngữ để đánh dấu phụ đề cần dịch lại
     const [previousLanguage, setPreviousLanguage] = useState<string>(targetLanguage);
@@ -207,34 +231,6 @@ export default function SubtitleTranslator() {
         console.log(`🎯 Model changed to: ${model}`);
         setOpenRouterModel(model); // Update local state
         saveOpenRouterModel(model); // Save to OpenRouter API module
-    };
-
-    // Translation wrapper function that works with both providers
-    const translateTexts = async (
-        texts: string[], 
-        targetLanguage: string, 
-        prompt: string,
-        context?: string
-    ) => {
-        if (aiProvider === 'gemini') {
-            return await translateWithGemini({
-                texts,
-                targetLanguage,
-                prompt,
-                context,
-                model: selectedModel
-            });
-        } else if (aiProvider === 'openrouter') {
-            // OpenRouter now supports batch translation!
-            return await translateWithOpenRouterBatch(
-                texts,
-                targetLanguage,
-                prompt,
-                context
-            );
-        } else {
-            throw new Error('Invalid AI provider selected');
-        }
     };
 
     // Helper function to get the display name for the current model
@@ -433,6 +429,44 @@ export default function SubtitleTranslator() {
             } else {
                 setValidationError(t('fileUpload.invalidFormat'));
             }
+        }
+    };
+
+    // Helper function to get the effective prompt to use for translation
+    const getEffectivePrompt = () => {
+        // If user has entered a custom prompt, use it
+        if (customPrompt.trim()) {
+            return customPrompt;
+        }
+        // Otherwise, use the default prompt
+        return formatParams(t('translationSettings.customPromptDefault'), { language: targetLanguage });
+    };
+
+    // Translation wrapper function that works with both providers
+    const translateTexts = async (
+        texts: string[], 
+        targetLanguage: string, 
+        prompt: string,
+        context?: string
+    ) => {
+        if (aiProvider === 'gemini') {
+            return await translateWithGemini({
+                texts,
+                targetLanguage,
+                prompt,
+                context,
+                model: selectedModel
+            });
+        } else if (aiProvider === 'openrouter') {
+            // OpenRouter now supports batch translation!
+            return await translateWithOpenRouterBatch(
+                texts,
+                targetLanguage,
+                prompt,
+                context
+            );
+        } else {
+            throw new Error('Invalid AI provider selected');
         }
     };
 
@@ -703,7 +737,7 @@ export default function SubtitleTranslator() {
             const translatedResults = await translateTexts(
                 textsToTranslate,
                 targetLanguage,
-                customPrompt,
+                getEffectivePrompt(),
                 context
             );
 
@@ -829,7 +863,7 @@ export default function SubtitleTranslator() {
             const translatedResult = await translateTexts(
                 [subtitle.text],
                 targetLanguage,
-                customPrompt,
+                getEffectivePrompt(),
                 contextString ? `Here are some previous translations for context:\n${contextString}` : ''
             );
 
@@ -1469,12 +1503,31 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                     />
 
                                                     <div className="space-y-2 md:col-span-2">
-                                                        <label className="text-sm font-medium text-gray-700">
-                                                            {t('translationSettings.customPrompt')}
-                                                        </label>
+                                                        <div className="flex items-center justify-between">
+                                                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                                {t('translationSettings.customPrompt')}
+                                                            </label>
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                onClick={() => {
+                                                                    // Clear the custom prompt to use default
+                                                                    setCustomPrompt("");
+                                                                    // Also remove from localStorage to reset customization
+                                                                    if (typeof window !== "undefined") {
+                                                                        localStorage.removeItem(CUSTOM_PROMPT_STORAGE_KEY);
+                                                                    }
+                                                                }}
+                                                                disabled={translating}
+                                                                className="text-xs h-6 px-2"
+                                                            >
+                                                                Reset
+                                                            </Button>
+                                                        </div>
                                                         <Textarea
                                                             value={customPrompt}
                                                             onChange={(e) => setCustomPrompt(e.target.value)}
+                                                            placeholder={formatParams(t('translationSettings.customPromptDefault'), { language: targetLanguage })}
                                                             className="min-h-[80px] resize-y max-h-[200px] custom-scrollbar"
                                                             disabled={translating}
                                                         />
@@ -1607,7 +1660,7 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                     <TokenEstimatorDisplay
                                         subtitles={subtitles}
                                         targetLanguage={targetLanguage}
-                                        customPrompt={customPrompt}
+                                        customPrompt={getEffectivePrompt()}
                                         modelId={aiProvider === 'gemini' ? selectedModel : openRouterModel}
                                         aiProvider={aiProvider}
                                         isVisible={showTokenEstimate}
