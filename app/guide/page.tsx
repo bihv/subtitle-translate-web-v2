@@ -156,7 +156,9 @@ export default function UserGuide() {
         id: 'getting-started',
         title: t('guide.section1'),
         subItems: [
+          { id: 'ai-provider', title: t('guide.aiProviderSelectionTitle') },
           { id: 'api-key', title: t('guide.apiKeyTitle') },
+          { id: 'openrouter-setup', title: t('guide.openrouterSetupTitle') },
           { id: 'model-selection', title: t('guide.modelSelectionTitle') }
         ]
       },
@@ -469,6 +471,31 @@ export default function UserGuide() {
                   <p className="mb-4">
                     {t('guide.introText')}
                   </p>
+                  
+                  {/* New Features Highlight */}
+                  <div className="grid md:grid-cols-2 gap-4 mt-6">
+                    {/* OpenRouter Integration */}
+                    <div className="bg-white dark:bg-gray-800/50 p-4 rounded-lg border border-blue-200 dark:border-blue-700">
+                      <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        {t('guide.multipleAiProvidersTitle')}
+                      </h4>
+                      <p className="text-sm text-blue-600 dark:text-blue-400">
+                        {t('guide.multipleAiProvidersDescription')}
+                      </p>
+                    </div>
+                    
+                    {/* Dark Mode */}
+                    <div className="bg-white dark:bg-gray-800/50 p-4 rounded-lg border border-blue-200 dark:border-blue-700">
+                      <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 flex items-center gap-2">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                        {t('guide.darkModeSupportTitle')}
+                      </h4>
+                      <p className="text-sm text-blue-600 dark:text-blue-400">
+                        {t('guide.darkModeSupportDescription')}
+                      </p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -480,7 +507,54 @@ export default function UserGuide() {
                     {t('guide.section1')}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-6">
+                  
+                  {/* AI Provider Selection */}
+                  <div id="ai-provider">
+                    <h3 className="font-medium text-lg mb-3 dark:text-gray-200">{t('guide.aiProviderSelectionTitle')}</h3>
+                    <p className="mb-3 dark:text-gray-300">{t('guide.aiProviderSelectionDescription')}</p>
+                    
+                    <div className="grid md:grid-cols-2 gap-4 mb-4">
+                      {/* Gemini Card */}
+                      <div className="border border-blue-200 dark:border-blue-700 rounded-lg p-4 bg-blue-50/50 dark:bg-blue-950/30">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                          <h4 className="font-medium text-blue-700 dark:text-blue-300">{t('guide.geminiProviderTitle')}</h4>
+                        </div>
+                        <p className="text-sm text-blue-600 dark:text-blue-400 mb-2">{t('guide.geminiProviderDescription')}</p>
+                        <ul className="text-xs text-blue-600 dark:text-blue-400 space-y-1">
+                          {t('guide.geminiProviderFeatures').split('|').map((feature, index) => (
+                            <li key={index}>• {feature}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      {/* OpenRouter Card */}
+                      <div className="border border-green-200 dark:border-green-700 rounded-lg p-4 bg-green-50/50 dark:bg-green-950/30">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                          <h4 className="font-medium text-green-700 dark:text-green-300">{t('guide.openrouterProviderTitle')}</h4>
+                        </div>
+                        <p className="text-sm text-green-600 dark:text-green-400 mb-2">{t('guide.openrouterProviderDescription')}</p>
+                        <ul className="text-xs text-green-600 dark:text-green-400 space-y-1">
+                          {t('guide.openrouterProviderFeatures').split('|').map((feature, index) => (
+                            <li key={index}>• {feature}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-md">
+                      <div className="flex items-start">
+                        <Info className="h-5 w-5 text-amber-500 dark:text-amber-400 mt-0.5 mr-2 flex-shrink-0" />
+                        <p className="text-sm text-amber-700 dark:text-amber-300">
+                          <strong>{t('common.appTitle')}:</strong> {t('guide.providerRecommendation')}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* API Key Setup */}
                   <div id="api-key">
                     <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.apiKeyTitle')}</h3>
                     <p className="mb-2 dark:text-gray-300">{t('guide.apiKeyDescription')}</p>
@@ -492,13 +566,65 @@ export default function UserGuide() {
                     </ol>
                   </div>
                   
+                  {/* OpenRouter Setup */}
+                  <div id="openrouter-setup">
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.openrouterSetupTitle')}</h3>
+                    <p className="mb-2 dark:text-gray-300">{t('guide.openrouterSetupDescription')}</p>
+                    <ol className="list-decimal pl-5 space-y-2 dark:text-gray-300">
+                      <li>{t('guide.openrouterStep1')}</li>
+                      <li>{t('guide.openrouterStep2')}</li>
+                      <li>{t('guide.openrouterStep3')}</li>
+                      <li>{t('guide.openrouterStep4')}</li>
+                      <li>{t('guide.openrouterStep5')}</li>
+                    </ol>
+                    
+                    <div className="mt-3 p-3 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-md">
+                      <div className="flex items-start">
+                        <Info className="h-5 w-5 text-green-500 dark:text-green-400 mt-0.5 mr-2 flex-shrink-0" />
+                        <div className="text-sm text-green-700 dark:text-green-300">
+                          <p className="font-medium mb-1">{t('guide.openrouterBenefitsTitle')}</p>
+                          <ul className="space-y-1">
+                            <li>• {t('guide.openrouterBenefit1')}</li>
+                            <li>• {t('guide.openrouterBenefit2')}</li>
+                            <li>• {t('guide.openrouterBenefit3')}</li>
+                            <li>• {t('guide.openrouterBenefit4')}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
                   <div id="model-selection">
                     <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.modelSelectionTitle')}</h3>
-                    <p className="dark:text-gray-300">{t('guide.modelSelectionDescription')}</p>
-                    <ul className="list-disc pl-5 space-y-1 mt-2 dark:text-gray-300">
-                      <li><strong>Gemini 2.0 Flash:</strong> {t('guide.model20FlashDescription')}</li>
-                      <li><strong>Gemini 2.5 Pro Experimental:</strong> {t('guide.model25ProDescription')}</li>
-                    </ul>
+                    <p className="mb-3 dark:text-gray-300">{t('guide.modelSelectionDescription')}</p>
+                    
+                    {/* Gemini Models */}
+                    <div className="mb-4">
+                      <h4 className="font-medium text-blue-700 dark:text-blue-300 mb-2">{t('guide.geminiModelsTitle')}</h4>
+                      <ul className="list-disc pl-5 space-y-1 dark:text-gray-300">
+                        <li><strong>Gemini 2.0 Flash:</strong> {t('guide.model20FlashDescription')}</li>
+                        <li><strong>Gemini 2.5 Pro Experimental:</strong> {t('guide.model25ProDescription')}</li>
+                      </ul>
+                    </div>
+                    
+                    {/* OpenRouter Models */}
+                    <div>
+                      <h4 className="font-medium text-green-700 dark:text-green-300 mb-2">{t('guide.openrouterModelsTitle')}</h4>
+                      <ul className="list-disc pl-5 space-y-1 dark:text-gray-300">
+                        <li><strong>Free Models:</strong> {t('guide.freeModelsDesc')}</li>
+                        <li><strong>Premium Models:</strong> {t('guide.premiumModelsDesc')}</li>
+                        <li><strong>Custom Models:</strong> {t('guide.customModelsDesc')}</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-md">
+                      <div className="flex items-start">
+                        <Info className="h-5 w-5 text-blue-500 dark:text-blue-400 mt-0.5 mr-2 flex-shrink-0" />
+                        <p className="text-sm text-blue-700 dark:text-blue-300">
+                          <strong>Model Selection Tip:</strong> {t('guide.modelSelectionTip')}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -542,6 +668,27 @@ export default function UserGuide() {
                   <div id="target-language">
                     <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.targetLanguageTitle')}</h3>
                     <p className="dark:text-gray-300">{t('guide.targetLanguageDescription')}</p>
+                  </div>
+                  
+                  {/* AI Provider Selection in Settings */}
+                  <div>
+                    <h3 className="font-medium text-lg mb-2 dark:text-gray-200">{t('guide.aiProviderModelSelectionTitle')}</h3>
+                    <p className="dark:text-gray-300 mb-3">{t('guide.aiProviderSettingsDescription')}</p>
+                    <ol className="list-decimal pl-5 space-y-2 dark:text-gray-300">
+                      <li>{t('guide.aiProviderStep1')}</li>
+                      <li>{t('guide.aiProviderStep2')}</li>
+                      <li>{t('guide.aiProviderStep3')}</li>
+                      <li>{t('guide.aiProviderStep4')}</li>
+                    </ol>
+                    
+                    <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-md">
+                      <div className="flex items-start">
+                        <Info className="h-5 w-5 text-blue-500 dark:text-blue-400 mt-0.5 mr-2 flex-shrink-0" />
+                        <p className="text-sm text-blue-700 dark:text-blue-300">
+                          <strong>Pro Tip:</strong> {t('guide.aiProviderProTip')}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                   
                   <div id="custom-prompt">
@@ -706,18 +853,24 @@ export default function UserGuide() {
                         )}
                       </div>
                       
-                      {/* Issue 3 */}
+                      {/* Issue 3 - New: OpenRouter Credits */}
                       <div id="issue-3" className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                         <button 
                           onClick={() => toggleIssue(3)}
                           className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         >
-                          <h4 className="font-medium dark:text-gray-200">{t('guide.issue3Title')}</h4>
+                          <h4 className="font-medium dark:text-gray-200">{t('guide.openrouterCreditsIssueTitle')}</h4>
                           {openIssues[3] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                         </button>
                         {openIssues[3] && (
                           <div className="p-3 text-sm dark:text-gray-300">
-                            <p>{t('guide.issue3Solution')}</p>
+                            <p className="mb-2">{t('guide.openrouterCreditsDescription')}</p>
+                            <ul className="list-disc pl-5 space-y-1">
+                              <li>{t('guide.openrouterCreditsSolution1')}</li>
+                              <li>{t('guide.openrouterCreditsSolution2')}</li>
+                              <li>{t('guide.openrouterCreditsSolution3')}</li>
+                              <li>{t('guide.openrouterCreditsSolution4')}</li>
+                            </ul>
                           </div>
                         )}
                       </div>
@@ -728,12 +881,50 @@ export default function UserGuide() {
                           onClick={() => toggleIssue(4)}
                           className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                         >
-                          <h4 className="font-medium dark:text-gray-200">{t('guide.issue4Title')}</h4>
+                          <h4 className="font-medium dark:text-gray-200">{t('guide.issue3Title')}</h4>
                           {openIssues[4] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
                         </button>
                         {openIssues[4] && (
                           <div className="p-3 text-sm dark:text-gray-300">
+                            <p>{t('guide.issue3Solution')}</p>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Issue 5 */}
+                      <div id="issue-5" className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
+                        <button 
+                          onClick={() => toggleIssue(5)}
+                          className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        >
+                          <h4 className="font-medium dark:text-gray-200">{t('guide.issue4Title')}</h4>
+                          {openIssues[5] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
+                        </button>
+                        {openIssues[5] && (
+                          <div className="p-3 text-sm dark:text-gray-300">
                             <p>{t('guide.issue4Solution')}</p>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Issue 6 - New: Dark Mode Issues */}
+                      <div id="issue-6" className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
+                        <button 
+                          onClick={() => toggleIssue(6)}
+                          className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        >
+                          <h4 className="font-medium dark:text-gray-200">{t('guide.darkModeIssueTitle')}</h4>
+                          {openIssues[6] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
+                        </button>
+                        {openIssues[6] && (
+                          <div className="p-3 text-sm dark:text-gray-300">
+                            <p className="mb-2">{t('guide.darkModeIssueDescription')}</p>
+                            <ul className="list-disc pl-5 space-y-1">
+                              <li>{t('guide.darkModeIssue1')}</li>
+                              <li>{t('guide.darkModeIssue2')}</li>
+                              <li>{t('guide.darkModeIssue3')}</li>
+                              <li>{t('guide.darkModeIssue4')}</li>
+                            </ul>
                           </div>
                         )}
                       </div>
@@ -785,7 +976,7 @@ export default function UserGuide() {
                       )}
                     </div>
                     
-                    {/* FAQ Item 3 */}
+                    {/* FAQ Item 3 - New: OpenRouter vs Gemini */}
                     <div className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
                       <button 
                         onClick={() => toggleFaq(3)}
@@ -796,7 +987,12 @@ export default function UserGuide() {
                       </button>
                       {openFaqs[3] && (
                         <div className="p-3 text-gray-600 dark:text-gray-300">
-                          <p>{t('guide.faq3Answer')}</p>
+                          <p className="mb-2">
+                            <strong>{t('guide.geminiProviderTitle')}:</strong> {t('guide.faq3AnswerGemini')}
+                          </p>
+                          <p>
+                            <strong>{t('guide.openrouterProviderTitle')}:</strong> {t('guide.faq3AnswerOpenRouter')}
+                          </p>
                         </div>
                       )}
                     </div>
@@ -832,6 +1028,45 @@ export default function UserGuide() {
                         </div>
                       )}
                     </div>
+                    
+                    {/* FAQ Item 6 - New: Dark Mode */}
+                    <div className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
+                      <button 
+                        onClick={() => toggleFaq(6)}
+                        className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      >
+                        <h3 className="font-medium dark:text-gray-200">{t('guide.faq6Question')}</h3>
+                        {openFaqs[6] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
+                      </button>
+                      {openFaqs[6] && (
+                        <div className="p-3 text-gray-600 dark:text-gray-300">
+                          <p className="mb-2">
+                            {t('guide.faq6Description')}
+                          </p>
+                          <ul className="list-disc pl-5 space-y-1">
+                            <li>{t('guide.faq6Method1')}</li>
+                            <li>{t('guide.faq6Method2')}</li>
+                            <li>{t('guide.faq6Method3')}</li>
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* FAQ Item 7 */}
+                    <div className="border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
+                      <button 
+                        onClick={() => toggleFaq(7)}
+                        className="w-full p-3 bg-gray-50 dark:bg-gray-800 flex justify-between items-center text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                      >
+                        <h3 className="font-medium dark:text-gray-200">{t('guide.faq7Question')}</h3>
+                        {openFaqs[7] ? <ChevronUp className="h-4 w-4 dark:text-gray-400" /> : <ChevronDown className="h-4 w-4 dark:text-gray-400" />}
+                      </button>
+                      {openFaqs[7] && (
+                        <div className="p-3 text-gray-600 dark:text-gray-300">
+                          <p>{t('guide.faq7Answer')}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -843,6 +1078,18 @@ export default function UserGuide() {
                 </CardHeader>
                 <CardContent>
                   <p className="mb-4 dark:text-gray-300">{t('guide.helpText')}</p>
+                  
+                  {/* Quick Tips */}
+                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 p-4 rounded-lg border border-blue-200 dark:border-blue-700 mb-4">
+                    <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">{t('guide.quickTipsTitle')}</h4>
+                    <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                      <li>• {t('guide.quickTip1')}</li>
+                      <li>• {t('guide.quickTip2')}</li>
+                      <li>• {t('guide.quickTip3')}</li>
+                      <li>• {t('guide.quickTip4')}</li>
+                    </ul>
+                  </div>
+                  
                   <p className="text-sm text-gray-600 dark:text-gray-400">{t('guide.feedbackText')}</p>
                 </CardContent>
               </Card>

@@ -7,6 +7,19 @@ const vi = {
     save: "Lưu",
     cancel: "Hủy",
     retry: "Thử lại",
+    modelSelectionDescription: "Chọn mô hình phù hợp dựa trên nhu cầu dịch của bạn:",
+    geminiModelsTitle: "Các mô hình Gemini:",
+    openrouterModelsTitle: "Các mô hình OpenRouter:",
+    freeModelsDesc: "WizardLM-2 8x22B, Llama 3.1 8B - Tuyệt vời cho các tác vụ dịch thuật chung",
+    premiumModelsDesc: "GPT-4o, Claude 3.5 Sonnet - Chất lượng cao hơn cho nội dung phức tạp",
+    customModelsDesc: "Truy cập các mô hình mới nhất khi chúng có sẵn",
+    modelSelectionTip: "Đối với hầu hết các tác vụ dịch phụ đề, các mô hình miễn phí hoạt động rất tốt. Sử dụng mô hình cao cấp cho nội dung phức tạp cần hiểu biết sắc thái.",
+    
+    modelProDescription: "Cân bằng tốt giữa tốc độ và chất lượng cho hầu hết các bản dịch phụ đề",
+    model15ProDescription: "Chất lượng cao hơn cho nội dung phức tạp hoặc có nhiều sắc thái với khả năng hiểu ngữ cảnh tốt hơn",
+    model15FlashDescription: "Lựa chọn nhanh nhất cho các bản dịch đơn giản và tệp lớn",
+    model20FlashDescription: "Được tối ưu hóa cho tốc độ với chất lượng tốt, hoàn hảo cho hầu hết các tệp phụ đề và xử lý hiệu quả",
+    model25ProDescription: "Mô hình thử nghiệm tiên tiến với chất lượng dịch thuật vượt trội và hiểu ngữ cảnh cho nội dung phức tạp",
     retryAll: "Thử lại tất cả",
     retrying: "Đang thử lại...",
     export: "Xuất",
@@ -195,6 +208,12 @@ const vi = {
     introTitle: "Chào mừng đến với SubtitleAI",
     introDescription: "Giải pháp tất cả trong một cho việc dịch phụ đề",
     introText: "Hướng dẫn này sẽ giúp bạn hiểu cách sử dụng SubtitleAI để dịch tệp phụ đề hiệu quả bằng công nghệ Gemini AI của Google. Hãy theo dõi các phần dưới đây để tìm hiểu từng khía cạnh của quá trình dịch.",
+    
+    // Feature highlights
+    multipleAiProvidersTitle: "Nhiều nhà cung cấp AI",
+    multipleAiProvidersDescription: "Truy cập Google Gemini và OpenRouter với nhiều mô hình AI (GPT-4, Claude, Llama) để có chất lượng dịch thuật và tùy chọn giá tốt nhất.",
+    darkModeSupportTitle: "Hỗ trợ chế độ tối",
+    darkModeSupportDescription: "Trải nghiệm xem thoải mái với chuyển đổi theme tối/sáng tự động và phát hiện tùy chọn hệ thống.",
     backToApp: "Quay lại ứng dụng",
     tocTitle: "Mục lục",
     section1: "Bắt đầu",
@@ -207,6 +226,23 @@ const vi = {
     section8: "Câu hỏi thường gặp",
     
     // Getting Started Section
+    aiProviderSelectionTitle: "Lựa chọn AI Provider", 
+    aiProviderSelectionDescription: "SubtitleAI hỗ trợ hai nhà cung cấp AI để dịch:",
+    geminiProviderTitle: "Google Gemini",
+    geminiProviderDescription: "API trực tiếp từ Google, hiệu suất cao",
+    geminiProviderFeatures: "Dịch chất lượng cao|Tốc độ xử lý nhanh|Nhiều tùy chọn model|Có gói miễn phí",
+    openrouterProviderTitle: "OpenRouter",
+    openrouterProviderDescription: "Truy cập nhiều model AI với giá cạnh tranh",
+    openrouterProviderFeatures: "Nhiều model AI (GPT, Claude, Llama)|Giá cạnh tranh|Có model miễn phí|Thanh toán theo sử dụng",
+    providerRecommendation: "Bắt đầu với Gemini để dễ thiết lập và chất lượng tốt. Thử OpenRouter nếu bạn muốn truy cập các model AI khác nhau hoặc cần tùy chọn giá cụ thể.",
+    
+    geminiModelsTitle: "Các mô hình Gemini:",
+    openrouterModelsTitle: "Các mô hình OpenRouter:",
+    freeModelsDesc: "WizardLM-2 8x22B, Llama 3.1 8B - Tuyệt vời cho các tác vụ dịch thuật chung",
+    premiumModelsDesc: "GPT-4o, Claude 3.5 Sonnet - Chất lượng cao hơn cho nội dung phức tạp",
+    customModelsDesc: "Truy cập các mô hình mới nhất khi chúng có sẵn",
+    modelSelectionTip: "Đối với hầu hết các tác vụ dịch phụ đề, các mô hình miễn phí hoạt động rất tốt. Sử dụng mô hình cao cấp cho nội dung phức tạp cần hiểu biết sắc thái.",
+    
     apiKeyTitle: "Thiết lập khóa API Gemini",
     apiKeyDescription: "Để sử dụng SubtitleAI, bạn cần có khóa API Gemini của Google.",
     apiKeyStep1: "Truy cập trang web Google AI Studio (https://ai.google.dev/)",
@@ -214,8 +250,21 @@ const vi = {
     apiKeyStep3: "Điều hướng đến phần API và tạo khóa API",
     apiKeyStep4: "Sao chép khóa và dán vào trường Khóa API trong SubtitleAI",
     
+    openrouterSetupTitle: "Thiết lập OpenRouter",
+    openrouterSetupDescription: "Để sử dụng OpenRouter làm nhà cung cấp AI:",
+    openrouterStep1: "Truy cập OpenRouter.ai và tạo tài khoản",
+    openrouterStep2: "Điều hướng đến phần API Keys trong dashboard của bạn",
+    openrouterStep3: "Tạo khóa API mới cho ứng dụng của bạn",
+    openrouterStep4: "Sao chép khóa và dán vào trường OpenRouter API Key trong SubtitleAI",
+    openrouterStep5: "Chọn \"OpenRouter\" làm nhà cung cấp AI",
+    openrouterBenefitsTitle: "Lợi ích của OpenRouter:",
+    openrouterBenefit1: "Truy cập nhiều model AI (GPT-4, Claude, Llama, v.v.)",
+    openrouterBenefit2: "Model miễn phí như WizardLM-2 8x22B và Llama 3.1 8B",
+    openrouterBenefit3: "Giá cả minh bạch, cạnh tranh",
+    openrouterBenefit4: "Hệ thống thanh toán bằng credits",
+    
     modelSelectionTitle: "Lựa chọn mô hình AI",
-    modelSelectionDescription: "Chọn mô hình Gemini phù hợp dựa trên nhu cầu dịch của bạn:",
+    modelSelectionDescription: "Chọn mô hình phù hợp dựa trên nhu cầu dịch của bạn:",
     modelProDescription: "Cân bằng tốt giữa tốc độ và chất lượng cho hầu hết các bản dịch phụ đề",
     model15ProDescription: "Chất lượng cao hơn cho nội dung phức tạp hoặc có nhiều sắc thái với khả năng hiểu ngữ cảnh tốt hơn",
     model15FlashDescription: "Lựa chọn nhanh nhất cho các bản dịch đơn giản và tệp lớn",
@@ -231,7 +280,15 @@ const vi = {
     uploadMethod2Description: "Kéo tệp phụ đề trực tiếp từ trình quản lý tệp và thả vào khu vực tải lên",
     supportedFormatsNote: "Các định dạng hiện được hỗ trợ: tệp phụ đề SRT, VTT và ASS",
     
-    // Translation Settings Section
+    // Translation Settings Section  
+    aiProviderModelSelectionTitle: "Lựa chọn AI Provider & Model",
+    aiProviderSettingsDescription: "Trước khi bắt đầu dịch, hãy đảm bảo:",
+    aiProviderStep1: "Chọn nhà cung cấp AI ưa thích (Gemini hoặc OpenRouter)",
+    aiProviderStep2: "Chọn mô hình phù hợp dựa trên yêu cầu chất lượng và chi phí",
+    aiProviderStep3: "Xác minh khóa API hoạt động và có đủ credits",
+    aiProviderStep4: "Xem lại ước tính sử dụng token để lập kế hoạch chi phí",
+    aiProviderProTip: "Bạn có thể chuyển đổi giữa các nhà cung cấp bất kỳ lúc nào. Các mô hình miễn phí trên OpenRouter rất tốt để thử nghiệm, trong khi Gemini cung cấp hiệu suất ổn định.",
+    
     targetLanguageTitle: "Chọn ngôn ngữ đích",
     targetLanguageDescription: "Chọn ngôn ngữ bạn muốn dịch phụ đề sang từ menu thả xuống. Bạn có thể chọn các ngôn ngữ phổ biến hoặc nhập một ngôn ngữ cụ thể không có trong danh sách.",
     
@@ -295,15 +352,34 @@ const vi = {
     issue2Title: "Lỗi dịch",
     issue2Solution: "Nếu nhiều phụ đề không dịch được, có thể do giới hạn tần suất. Hãy thử dùng nút 'Tạm dừng' trong vài giây, sau đó 'Tiếp tục'. Bạn cũng có thể thử lại các nhóm thất bại sau khi đợi một lúc.",
     
+    openrouterCreditsIssueTitle: "Vấn đề Credits OpenRouter",
+    openrouterCreditsDescription: "Nếu bạn thấy cảnh báo về credits âm hoặc số dư không đủ:",
+    openrouterCreditsSolution1: "Kiểm tra số dư tài khoản OpenRouter tại openrouter.ai",
+    openrouterCreditsSolution2: "Sử dụng các mô hình miễn phí như WizardLM-2 8x22B hoặc Llama 3.1 8B để tránh phí",
+    openrouterCreditsSolution3: "Thêm credits vào tài khoản OpenRouter nếu muốn sử dụng mô hình cao cấp",
+    openrouterCreditsSolution4: "Chuyển sang nhà cung cấp Gemini nếu không muốn quản lý credits",
+    
     issue3Title: "Ký tự không được hỗ trợ",
     issue3Solution: "Nếu bản dịch của bạn hiển thị các ký tự bị thiếu hoặc không chính xác, hãy đảm bảo bạn đã chọn đúng ngôn ngữ đích. Một số ký tự đặc biệt có thể không hiển thị đúng trong một số định dạng phụ đề.",
     
     issue4Title: "Hiệu suất chậm",
     issue4Solution: "Đối với tệp phụ đề lớn, hãy cân nhắc chọn mô hình Gemini 1.5 Flash được tối ưu hóa cho tốc độ. Chia nhỏ các tệp rất lớn thành các phần nhỏ hơn cũng có thể giúp ích.",
     
+    darkModeIssueTitle: "Vấn đề Theme/Dark Mode",
+    darkModeIssueDescription: "Nếu bạn gặp vấn đề chuyển đổi theme hoặc lỗi hiển thị:",
+    darkModeIssue1: "Thử làm mới trang - tùy chọn theme được lưu trong trình duyệt của bạn",
+    darkModeIssue2: "Xóa cache trình duyệt nếu theme hiển thị bị lỗi",
+    darkModeIssue3: "Sử dụng phím tắt Ctrl + Shift + T để chuyển đổi theme",
+    darkModeIssue4: "Kiểm tra xem trình duyệt của bạn có hỗ trợ các tính năng CSS hiện đại không",
+    
     // Help and Feedback
     helpTitle: "Cần thêm trợ giúp?",
     helpText: "Hướng dẫn này bao gồm chức năng cơ bản của SubtitleAI. Đối với các tính năng nâng cao hơn hoặc các câu hỏi cụ thể, vui lòng tham khảo tài liệu hoặc liên hệ hỗ trợ.",
+    quickTipsTitle: "Mẹo nhanh:",
+    quickTip1: "Sử dụng Ctrl + Shift + T để nhanh chóng chuyển đổi giữa theme sáng và tối",
+    quickTip2: "Thử các mô hình miễn phí OpenRouter như WizardLM-2 8x22B để dịch hiệu quả về chi phí",
+    quickTip3: "Sử dụng trình ước tính token để xem trước chi phí trước khi bắt đầu dịch",
+    quickTip4: "Xuất ở định dạng song ngữ cho mục đích học ngôn ngữ",
     feedbackText: "Chúng tôi liên tục cải thiện SubtitleAI dựa trên phản hồi của người dùng. Nếu bạn có đề xuất hoặc gặp vấn đề không được đề cập trong hướng dẫn này, vui lòng cho chúng tôi biết.",
     
     // FAQ Section
@@ -316,14 +392,24 @@ const vi = {
     faq2Question: "Sử dụng SubtitleAI tốn bao nhiêu tiền?",
     faq2Answer: "SubtitleAI là công cụ miễn phí. Tuy nhiên, bạn cần khóa API Gemini của Google, có thể phát sinh chi phí tùy thuộc vào mức sử dụng và chính sách giá của Google. Người dùng mới thường được cấp tín dụng miễn phí khi đăng ký.",
     
-    faq3Question: "Tôi có thể dịch nhiều tệp cùng lúc không?",
-    faq3Answer: "Hiện tại, SubtitleAI xử lý từng tệp một. Chúng tôi khuyên bạn nên hoàn thành một bản dịch trước khi bắt đầu bản dịch khác để có hiệu suất tối ưu.",
+    faq3Question: "Sự khác biệt giữa Gemini và OpenRouter là gì?",
+    faq3AnswerGemini: "Truy cập trực tiếp các mô hình AI của Google. Chất lượng cao, xử lý nhanh và bao gồm gói miễn phí. Tốt nhất cho hầu hết người dùng muốn độ tin cậy và hiệu suất.",
+    faq3AnswerOpenRouter: "Truy cập nhiều mô hình AI (GPT-4, Claude, Llama, v.v.) thông qua một API. Cung cấp cả mô hình miễn phí và cao cấp với giá cạnh tranh. Tốt cho người dùng muốn thử các mô hình AI khác nhau hoặc cần khả năng cụ thể.",
     
-    faq4Question: "Những ngôn ngữ nào được hỗ trợ?",
-    faq4Answer: "SubtitleAI hỗ trợ dịch từ và sang hầu hết các ngôn ngữ mà Gemini AI hỗ trợ, bao gồm hầu hết các ngôn ngữ chính trên toàn thế giới.",
+    faq4Question: "Tôi có thể dịch nhiều tệp cùng lúc không?",
+    faq4Answer: "Hiện tại, SubtitleAI xử lý từng tệp một. Chúng tôi khuyên bạn nên hoàn thành một bản dịch trước khi bắt đầu bản dịch khác để có hiệu suất tối ưu.",
     
-    faq5Question: "Tôi có thể sử dụng SubtitleAI khi không có kết nối internet không?",
-    faq5Answer: "Không, SubtitleAI yêu cầu kết nối internet để giao tiếp với API Gemini của Google cho việc dịch thuật."
+    faq5Question: "Những ngôn ngữ nào được hỗ trợ?",
+    faq5Answer: "SubtitleAI hỗ trợ dịch từ và sang hầu hết các ngôn ngữ mà Gemini AI hỗ trợ, bao gồm hầu hết các ngôn ngữ chính trên toàn thế giới.",
+    
+    faq6Question: "Làm thế nào để chuyển đổi giữa chế độ sáng và tối?",
+    faq6Description: "SubtitleAI hỗ trợ cả theme sáng và tối. Bạn có thể chuyển đổi giữa chúng bằng:",
+    faq6Method1: "Nhấp vào nút chuyển đổi theme ở góc trên bên phải của giao diện",
+    faq6Method2: "Sử dụng phím tắt Ctrl + Shift + T",
+    faq6Method3: "Ứng dụng tự động tuân theo tùy chọn chế độ tối/sáng của hệ thống của bạn",
+    
+    faq7Question: "Tôi có thể sử dụng SubtitleAI khi không có kết nối internet không?",
+    faq7Answer: "Không, SubtitleAI yêu cầu kết nối internet để giao tiếp với API Gemini của Google cho việc dịch thuật."
   },
   
   // Token Estimate translations
