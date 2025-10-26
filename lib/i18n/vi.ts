@@ -238,7 +238,13 @@ const vi = {
     dropVideoHere: "Thả video của bạn vào đây...",
     invalidVideoType: "Loại tệp không hợp lệ. Vui lòng chọn tệp video.",
     dragAndDropVideo: "Kéo và thả tệp video vào đây",
-    fullScreenSubtitleTip: "Phụ đề vẫn hiển thị trong chế độ toàn màn hình."
+    fullScreenSubtitleTip: "Phụ đề vẫn hiển thị trong chế độ toàn màn hình.",
+    uploadFile: "Tải lên tệp",
+    enterUrl: "Nhập URL",
+    videoUrlPlaceholder: "Nhập URL video (http:// hoặc https://)",
+    loadVideo: "Tải video",
+    urlRequired: "Vui lòng nhập URL video",
+    invalidUrl: "URL không hợp lệ. Vui lòng nhập URL hợp lệ."
   },
   guide: {
     title: "Hướng dẫn sử dụng",

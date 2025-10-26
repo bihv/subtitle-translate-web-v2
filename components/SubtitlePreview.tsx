@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SubtitleItem } from "@/components/SubtitleTranslator";
 import { useI18n } from "@/lib/i18n/I18nContext";
-import { Upload, Clock } from "lucide-react";
+import { Upload, Clock, Link, FileVideo } from "lucide-react";
 
 interface SubtitlePreviewProps {
   subtitles: SubtitleItem[];
@@ -40,6 +40,11 @@ export default function SubtitlePreview({
   const [originalVttUrl, setOriginalVttUrl] = useState<string | null>(null);
   const [bilingualVttUrl, setBilingualVttUrl] = useState<string | null>(null);
   const [activeSubtitleId, setActiveSubtitleId] = useState<number | null>(null);
+  
+  // New states for URL input functionality
+  const [inputMode, setInputMode] = useState<'file' | 'url'>('file');
+  const [videoUrlInput, setVideoUrlInput] = useState<string>('');
+  const [urlError, setUrlError] = useState<string>('');
 
   // Hàm chuyển đổi phụ đề sang định dạng WebVTT
   const convertSubtitlesToVTT = (
@@ -164,14 +169,54 @@ export default function SubtitlePreview({
     }
 
     // Rút lại URL cũ để tránh rò rỉ bộ nhớ
-    if (videoUrl) {
+    if (videoUrl && videoUrl.startsWith('blob:')) {
       URL.revokeObjectURL(videoUrl);
     }
 
     setLoading(true);
     setVideoName(file.name);
+    setUrlError('');
     const newUrl = URL.createObjectURL(file);
     setVideoUrl(newUrl);
+  };
+
+  // Handle URL input
+  const handleVideoUrl = () => {
+    if (!videoUrlInput.trim()) {
+      setUrlError(t('preview.urlRequired'));
+      return;
+    }
+
+    // Basic URL validation
+    try {
+      const url = new URL(videoUrlInput.trim());
+      if (!['http:', 'https:'].includes(url.protocol)) {
+        setUrlError(t('preview.invalidUrl'));
+        return;
+      }
+    } catch {
+      setUrlError(t('preview.invalidUrl'));
+      return;
+    }
+
+    // Clean up previous blob URL if exists
+    if (videoUrl && videoUrl.startsWith('blob:')) {
+      URL.revokeObjectURL(videoUrl);
+    }
+
+    setLoading(true);
+    setUrlError('');
+    setVideoName(videoUrlInput.trim());
+    setVideoUrl(videoUrlInput.trim());
+  };
+
+  // Handle input mode change
+  const handleInputModeChange = (mode: 'file' | 'url') => {
+    setInputMode(mode);
+    setUrlError('');
+    if (mode === 'file') {
+      setVideoUrlInput('');
+    }
   };
 
   // Drag and drop handlers
@@ -306,35 +351,96 @@ export default function SubtitlePreview({
 
   return (
     <div className="space-y-3">
-      <div 
-        className={`border-2 rounded-md transition-colors relative ${
-          isDragging ? "border-blue-400 bg-blue-50" : "border-gray-200 border-dashed"
-        }`}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-      >
-        <div className="p-3 text-center">
-          <input
-            type="file"
-            id="video-upload"
-            accept="video/*"
-            onChange={handleVideoUpload}
-            className="hidden"
-          />
-          <label 
-            htmlFor="video-upload" 
-            className="cursor-pointer flex flex-col items-center justify-center py-2"
+      {/* Toggle between file upload and URL input */}
+      <div className="flex justify-center">
+        <div className="inline-flex rounded-md border border-gray-200 bg-white p-1">
+          <button
+            onClick={() => handleInputModeChange('file')}
+            className={`flex items-center px-3 py-1.5 text-sm font-medium rounded transition-colors ${
+              inputMode === 'file'
+                ? 'bg-blue-500 text-white shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
+            }`}
           >
-            <Upload className="h-5 w-5 mb-1 text-gray-400" />
-            <p className="text-sm text-gray-500">
-              {isDragging ? t('preview.dropVideoHere') : t('preview.dragAndDropVideo')}
-            </p>
-            <p className="text-xs text-gray-400 mt-1">{t('fileUpload.orClickToSelect')}</p>
-          </label>
+            <FileVideo className="h-4 w-4 mr-1.5" />
+            {t('preview.uploadFile')}
+          </button>
+          <button
+            onClick={() => handleInputModeChange('url')}
+            className={`flex items-center px-3 py-1.5 text-sm font-medium rounded transition-colors ${
+              inputMode === 'url'
+                ? 'bg-blue-500 text-white shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <Link className="h-4 w-4 mr-1.5" />
+            {t('preview.enterUrl')}
+          </button>
         </div>
       </div>
+
+      {/* File upload interface */}
+      {inputMode === 'file' && (
+        <div 
+          className={`border-2 rounded-md transition-colors relative ${
+            isDragging ? "border-blue-400 bg-blue-50" : "border-gray-200 border-dashed"
+          }`}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          <div className="p-3 text-center">
+            <input
+              type="file"
+              id="video-upload"
+              accept="video/*"
+              onChange={handleVideoUpload}
+              className="hidden"
+            />
+            <label 
+              htmlFor="video-upload" 
+              className="cursor-pointer flex flex-col items-center justify-center py-2"
+            >
+              <Upload className="h-5 w-5 mb-1 text-gray-400" />
+              <p className="text-sm text-gray-500">
+                {isDragging ? t('preview.dropVideoHere') : t('preview.dragAndDropVideo')}
+              </p>
+              <p className="text-xs text-gray-400 mt-1">{t('fileUpload.orClickToSelect')}</p>
+            </label>
+          </div>
+        </div>
+      )}
+
+      {/* URL input interface */}
+      {inputMode === 'url' && (
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <Input
+              type="url"
+              placeholder={t('preview.videoUrlPlaceholder')}
+              value={videoUrlInput}
+              onChange={(e) => setVideoUrlInput(e.target.value)}
+              className={`flex-1 ${urlError ? 'border-red-500' : ''}`}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleVideoUrl();
+                }
+              }}
+            />
+            <Button 
+              onClick={handleVideoUrl}
+              disabled={!videoUrlInput.trim()}
+              className="whitespace-nowrap"
+            >
+              {t('preview.loadVideo')}
+            </Button>
+          </div>
+          {urlError && (
+            <p className="text-sm text-red-500">{urlError}</p>
+          )}
+        </div>
+      )}
 
       <div className="flex justify-between items-center">
         {videoName && (
@@ -408,4 +514,4 @@ export default function SubtitlePreview({
       </div>
     </div>
   );
-} 
+}

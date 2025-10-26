@@ -237,7 +237,13 @@ const en = {
     dropVideoHere: "Drop your video here...",
     invalidVideoType: "Invalid file type. Please select a video file.",
     dragAndDropVideo: "Drag and drop video file here",
-    fullScreenSubtitleTip: "Subtitles will still be displayed in fullscreen mode."
+    fullScreenSubtitleTip: "Subtitles will still be displayed in fullscreen mode.",
+    uploadFile: "Upload File",
+    enterUrl: "Enter URL",
+    videoUrlPlaceholder: "Enter video URL (http:// or https://)",
+    loadVideo: "Load Video",
+    urlRequired: "Please enter a video URL",
+    invalidUrl: "Invalid URL. Please enter a valid URL."
   },
   guide: {
     title: "User Guide",
