@@ -31,8 +31,8 @@ export interface ModelOption {
 // Danh sách các model có sẵn hỗ trợ dịch thuật text-to-text
 export const AVAILABLE_MODELS: ModelOption[] = [
   {
-    id: "gemini-2.5-pro-exp-03-25",
-    name: "Gemini 2.5 Pro Experimental",
+    id: "gemini-2.5-pro",
+    name: "Gemini 2.5 Pro",
     description: {
       vi: "Mô hình tiên tiến nhất, phù hợp cho dịch thuật chất lượng cao",
       en: "Most advanced model, suitable for high-quality translations"
