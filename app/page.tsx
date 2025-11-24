@@ -9,12 +9,12 @@ import GuideSummary from '@/components/GuideSummary';
 import { useI18n } from '@/lib/i18n/I18nContext';
 import { useSessionTracking } from '@/lib/analytics';
 import Link from 'next/link';
-import { BookOpen, Palette } from 'lucide-react';
+import { BookOpen, Palette, Heart } from 'lucide-react';
 
 // Import the SubtitleTranslator component dynamically with SSR disabled
 const SubtitleTranslator = dynamic(
   () => import('@/components/SubtitleTranslator'),
-  { 
+  {
     ssr: false, // This ensures the component only renders on the client
     loading: () => <TranslatorSkeleton /> // Show a skeleton while loading
   }
@@ -22,10 +22,10 @@ const SubtitleTranslator = dynamic(
 
 export default function Home() {
   const { t } = useI18n();
-  
+
   // Kích hoạt theo dõi phiên làm việc
   useSessionTracking();
-  
+
   return (
     <>
       {/* Fixed header */}
@@ -44,6 +44,10 @@ export default function Home() {
               <BookOpen className="h-4 w-4 mr-1" />
               {t('guide.title')}
             </Link>
+            <Link href="/donate" className="flex items-center text-sm text-pink-500 hover:text-pink-600 transition-colors">
+              <Heart className="h-4 w-4 mr-1" fill="currentColor" />
+              {t('donate.title')}
+            </Link>
             <ThemeToggle />
             <LanguageSwitcher />
           </div>
@@ -56,7 +60,7 @@ export default function Home() {
         <section className="w-full max-w-6xl mx-auto mb-16">
           <GuideSummary />
         </section>
-        
+
         {/* Separator */}
         <div className="w-full max-w-6xl mx-auto mb-8">
           <div className="relative">
@@ -70,7 +74,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        
+
         {/* Translator Section */}
         <section id="translator" className="w-full max-w-6xl mx-auto scroll-mt-20">
           <SubtitleTranslator />

@@ -7,14 +7,14 @@ const en = {
     save: "Save",
     cancel: "Cancel",
     retry: "Retry",
-     modelSelectionDescription: "Choose the appropriate model based on your translation needs:",
+    modelSelectionDescription: "Choose the appropriate model based on your translation needs:",
     geminiModelsTitle: "Gemini Models:",
     openrouterModelsTitle: "OpenRouter Models:",
     freeModelsDesc: "WizardLM-2 8x22B, Llama 3.1 8B - Great for general translation tasks",
     premiumModelsDesc: "GPT-4o, Claude 3.5 Sonnet - Higher quality for complex content",
     customModelsDesc: "Access to latest models as they become available",
     modelSelectionTip: "For most subtitle translation tasks, free models work excellently. Use premium models for complex content requiring nuanced understanding.",
-    
+
     modelProDescription: "Good balance of speed and quality for most subtitle translations",
     model15ProDescription: "Higher quality for complex or nuanced content with better context understanding",
     model15FlashDescription: "Fastest option for simple translations and large files",
@@ -107,7 +107,7 @@ const en = {
     selectModel: "Select model",
     pricing: "Pricing",
     pricingPrompt: "Input",
-    pricingCompletion: "Output", 
+    pricingCompletion: "Output",
     perToken: "/token",
     context: "Context",
     tokens: "tokens",
@@ -251,11 +251,11 @@ const en = {
     introTitle: "Welcome to SubtitleAI",
     introDescription: "Your all-in-one solution for subtitle translation",
     introText: "This guide will help you understand how to use SubtitleAI to translate subtitle files effectively using Google's Gemini AI technology. Follow the sections below to learn each aspect of the translation process.",
-    
+
     // Feature highlights
     multipleAiProvidersTitle: "Multiple AI Providers",
     multipleAiProvidersDescription: "Access Google Gemini and OpenRouter with multiple AI models (GPT-4, Claude, Llama) for the best translation quality and pricing options.",
-    darkModeSupportTitle: "Dark Mode Support", 
+    darkModeSupportTitle: "Dark Mode Support",
     darkModeSupportDescription: "Comfortable viewing experience with automatic dark/light theme switching and system preference detection.",
     backToApp: "Back to application",
     tocTitle: "Table of Contents",
@@ -267,9 +267,9 @@ const en = {
     section6: "Exporting Subtitles",
     section7: "Troubleshooting",
     section8: "Frequently Asked Questions",
-    
+
     // Getting Started Section
-    aiProviderSelectionTitle: "AI Provider Selection", 
+    aiProviderSelectionTitle: "AI Provider Selection",
     aiProviderSelectionDescription: "SubtitleAI supports two AI providers for translation:",
     geminiProviderTitle: "Google Gemini",
     geminiProviderDescription: "Direct API from Google, high performance",
@@ -278,14 +278,14 @@ const en = {
     openrouterProviderDescription: "Access multiple AI models at competitive prices",
     openrouterProviderFeatures: "Multiple AI models (GPT, Claude, Llama)|Competitive pricing|Free models available|Pay-per-use billing",
     providerRecommendation: "Start with Gemini for ease of setup and great quality. Try OpenRouter if you want access to different AI models or need specific pricing options.",
-    
+
     apiKeyTitle: "Setting up your Gemini API Key",
     apiKeyDescription: "To use SubtitleAI, you'll need a Google Gemini API key.",
     apiKeyStep1: "Visit the Google AI Studio website (https://ai.google.dev/)",
     apiKeyStep2: "Create or sign in to your Google account",
     apiKeyStep3: "Navigate to the API section and generate an API key",
     apiKeyStep4: "Copy the key and paste it into the API Key field in SubtitleAI",
-    
+
     openrouterSetupTitle: "OpenRouter Setup",
     openrouterSetupDescription: "To use OpenRouter as your AI provider:",
     openrouterStep1: "Visit OpenRouter.ai and create an account",
@@ -298,7 +298,7 @@ const en = {
     openrouterBenefit2: "Free models like WizardLM-2 8x22B and Llama 3.1 8B",
     openrouterBenefit3: "Transparent, competitive pricing",
     openrouterBenefit4: "Credits-based billing system",
-    
+
     modelSelectionTitle: "Selecting an AI Model",
     modelSelectionDescription: "Choose the appropriate model based on your translation needs:",
     geminiModelsTitle: "Gemini Models:",
@@ -312,7 +312,7 @@ const en = {
     model15FlashDescription: "Fastest option for simple translations and large files",
     model20FlashDescription: "Optimized for speed with good quality, perfect for most subtitle files and efficient processing",
     model25ProDescription: "Advanced experimental model with superior translation quality and context understanding for complex content",
-    
+
     // Uploading Subtitles Section
     uploadMethodsTitle: "How to Upload Subtitle Files",
     uploadMethodsDescription: "There are two ways to upload your subtitle files:",
@@ -321,7 +321,7 @@ const en = {
     uploadMethod2Title: "Drag and Drop",
     uploadMethod2Description: "Drag your subtitle file directly from your file explorer and drop it into the upload area",
     supportedFormatsNote: "Currently supported formats: SRT, VTT, and ASS subtitle files",
-    
+
     // Translation Settings Section  
     aiProviderModelSelectionTitle: "AI Provider & Model Selection",
     aiProviderSettingsDescription: "Before starting translation, make sure to:",
@@ -330,19 +330,19 @@ const en = {
     aiProviderStep3: "Verify your API key is working and has sufficient credits",
     aiProviderStep4: "Review the token usage estimate for cost planning",
     aiProviderProTip: "You can switch between providers anytime. Free models on OpenRouter are great for testing, while Gemini offers consistent performance.",
-    
+
     targetLanguageTitle: "Selecting the Target Language",
     targetLanguageDescription: "Choose the language you want to translate your subtitles into from the dropdown menu. You can select common languages or type a specific language not listed.",
-    
+
     customPromptTitle: "Customizing Translation Prompts",
     customPromptDescription: "Fine-tune how Gemini AI translates your subtitles by modifying the prompt template. This can help achieve better translations for specific content types.",
     customPromptExample: "Translate the following subtitles to {language}. Maintain the original tone, style, and nuances. Keep it concise to fit subtitle timing.",
     customPromptTip: "For specific content types (e.g., technical, formal, humor), consider adding relevant instructions to the prompt.",
-    
+
     // Translation Process Section
     startTranslationTitle: "Starting the Translation",
     startTranslationDescription: "Once you've uploaded your subtitle file and configured your settings, click the 'Start Translation' button to begin the translation process.",
-    
+
     translationProgressTitle: "Understanding Translation Progress",
     translationProgressDescription: "During translation, each subtitle line will show one of these statuses:",
     statusPending: "Pending",
@@ -353,29 +353,29 @@ const en = {
     statusTranslatedDescription: "Successfully translated",
     statusError: "Error",
     statusErrorDescription: "Failed to translate due to an error",
-    
+
     translationControlTitle: "Controlling the Translation Process",
     translationControlDescription: "You can manage the ongoing translation process using these controls:",
     pauseResumeTitle: "Pause/Resume",
     pauseResumeDescription: "Temporarily halt the translation process and continue later without losing progress",
     stopTitle: "Stop",
     stopDescription: "Completely stop the translation process (cannot be resumed)",
-    
+
     // Editing Subtitles Section
     manualEditTitle: "Manually Editing Translations",
     manualEditDescription: "You can edit any translated subtitle to correct or improve it:",
     editStep1: "Click the 'Edit' button next to the subtitle you want to modify",
     editStep2: "Make your changes in the text area that appears",
     editStep3: "Click 'Save' to apply your changes or 'Cancel' to discard them",
-    
+
     improveTranslationTitle: "AI-Assisted Translation Improvements",
     improveTranslationDescription: "For subtitles that don't sound quite right, you can use the AI suggestions feature to get alternative translations.",
     aiSuggestionTip: "Click the sparkle icon to get AI suggestions for better translations",
-    
+
     retryFailedTitle: "Retrying Failed Translations",
     retryFailedDescription: "If some subtitles fail to translate, you can retry them individually or in batches:",
     retryButtonDescription: "Click the retry button next to a failed subtitle or use the batch retry option at the top of the failed batch",
-    
+
     // Exporting Subtitles Section
     exportOptionsTitle: "Exporting Your Translated Subtitles",
     exportOptionsDescription: "Once you've completed translating and editing your subtitles, you can export them in different formats:",
@@ -384,36 +384,36 @@ const en = {
     bilingualExportTitle: "Bilingual Export",
     bilingualExportDescription: "Export both original and translated text in each subtitle, ideal for language learning",
     exportFormatTip: "You can choose to export in the original format of your subtitle file or select a specific format (SRT, VTT, ASS)",
-    
+
     // Troubleshooting Section
     commonIssuesTitle: "Common Issues and Solutions",
-    
+
     issue1Title: "API Key Errors",
     issue1Solution: "If you see errors related to your API key, verify that it's entered correctly and that your Gemini API quota hasn't been exceeded. You might need to create a new key if the current one is invalid.",
-    
+
     issue2Title: "Translation Failures",
     issue2Solution: "If multiple subtitles fail to translate, it could be due to rate limiting. Try using the 'Pause' button for a few seconds, then 'Resume'. You can also retry failed batches after waiting.",
-    
+
     openrouterCreditsIssueTitle: "OpenRouter Credits Issues",
     openrouterCreditsDescription: "If you see warnings about negative credits or insufficient balance:",
     openrouterCreditsSolution1: "Check your OpenRouter account balance at openrouter.ai",
     openrouterCreditsSolution2: "Use free models like WizardLM-2 8x22B or Llama 3.1 8B to avoid charges",
     openrouterCreditsSolution3: "Add credits to your OpenRouter account if you want to use premium models",
     openrouterCreditsSolution4: "Switch to Gemini provider if you prefer not to manage credits",
-    
+
     issue3Title: "Unsupported Characters",
     issue3Solution: "If your translations show missing or incorrect characters, ensure you've selected the correct target language. Some special characters might not display properly in certain subtitle formats.",
-    
+
     issue4Title: "Slow Performance",
     issue4Solution: "For large subtitle files, consider selecting the Gemini 1.5 Flash model which is optimized for speed. Breaking up very large files into smaller segments can also help.",
-    
+
     darkModeIssueTitle: "Theme/Dark Mode Issues",
     darkModeIssueDescription: "If you experience theme switching issues or visual glitches:",
     darkModeIssue1: "Try refreshing the page - theme preferences are saved in your browser",
     darkModeIssue2: "Clear your browser cache if themes appear broken",
     darkModeIssue3: "Use the keyboard shortcut Ctrl + Shift + T to toggle themes",
     darkModeIssue4: "Check if your browser supports modern CSS features",
-    
+
     // Help and Feedback
     helpTitle: "Need More Help?",
     helpText: "This guide covers the basic functionality of SubtitleAI. For more advanced features or specific questions, please refer to the documentation or contact support.",
@@ -423,37 +423,37 @@ const en = {
     quickTip3: "Use the token estimator to preview costs before starting translation",
     quickTip4: "Export in bilingual format for language learning purposes",
     feedbackText: "We're constantly improving SubtitleAI based on user feedback. If you have suggestions or encounter issues not covered in this guide, please let us know.",
-    
+
     // FAQ Section
     faqTitle: "Frequently Asked Questions",
     faqDescription: "Quick answers to common questions about SubtitleAI",
-    
+
     faq1Question: "Is my API key secure?",
     faq1Answer: "Yes, your Gemini API key is stored locally in your browser and never sent to our servers. It is only used to communicate directly with Google's API services.",
-    
+
     faq2Question: "How much does it cost to use SubtitleAI?",
     faq2Answer: "SubtitleAI is a free tool. However, you need a Google Gemini API key which may incur costs depending on your usage and Google's pricing policy. New users typically get free credits when signing up.",
-    
+
     faq3Question: "What's the difference between Gemini and OpenRouter?",
     faq3AnswerGemini: "Direct access to Google's AI models. High quality, fast processing, and includes free tier. Best for most users who want reliability and performance.",
     faq3AnswerOpenRouter: "Access to multiple AI models (GPT-4, Claude, Llama, etc.) through one API. Offers both free and premium models with competitive pricing. Good for users who want to try different AI models or need specific capabilities.",
-    
+
     faq4Question: "Can I translate multiple files simultaneously?",
     faq4Answer: "Currently, SubtitleAI processes one file at a time. We recommend finishing one translation before starting another for optimal performance.",
-    
+
     faq5Question: "What languages are supported?",
     faq5Answer: "SubtitleAI supports translation to and from virtually any language that Gemini AI supports, which includes most major languages worldwide.",
-    
+
     faq6Question: "How do I switch between light and dark mode?",
     faq6Description: "SubtitleAI supports both light and dark themes. You can switch between them by:",
     faq6Method1: "Clicking the theme toggle button in the top-right corner of the interface",
     faq6Method2: "Using the keyboard shortcut Ctrl + Shift + T",
     faq6Method3: "The app automatically respects your system's dark/light mode preference",
-    
+
     faq7Question: "Can I use SubtitleAI offline?",
     faq7Answer: "No, SubtitleAI requires an internet connection to communicate with Google's Gemini API for translations.",
   },
-  
+
   // Token Estimate translations
   tokenEstimate: {
     show: "Show tokens",
@@ -480,7 +480,7 @@ const en = {
     builtInPricing: "Built-in pricing rates for",
     disclaimer: "* Estimates are approximate and may vary based on actual usage. Does not include tokens for prompts and other factors."
   },
-  
+
   // New translations for enhanced guide UI
   guideUi: {
     searchPlaceholder: "Search in guide...",
@@ -488,6 +488,36 @@ const en = {
     backToTop: "Back to top",
     printGuide: "Print guide",
     printedGuide: "Printed from SubtitleAI Guide"
+  },
+
+  donate: {
+    title: "Support SubtitleAI",
+    subtitle: "Help us keep this tool free and continuously improving",
+    heroTitle: "Your Support Matters",
+    heroDescription: "SubtitleAI is a free tool created with passion to help people break language barriers. Your donation helps cover server costs and development time, allowing us to add more features and keep the service running for everyone.",
+    whyDonate: "Why Donate?",
+    reason1Title: "Keep it Free",
+    reason1Description: "Help us maintain free access for everyone",
+    reason2Title: "New Features",
+    reason2Description: "Support development of new capabilities",
+    reason3Title: "Buy Coffee for Dev",
+    reason3Description: "Appreciate the effort and time invested",
+    scanQrTitle: "Scan QR Code to Donate",
+    scanQrDescription: "Use your banking app to scan the QR code below",
+    bankInfoTitle: "Bank Account Information",
+    bankName: "Bank Name",
+    accountNumber: "Account Number",
+    accountHolder: "Account Holder",
+    bankNameValue: "TPBank",
+    accountNumberValue: "00001969705",
+    accountHolderValue: "HO VAN BI",
+    thankYouTitle: "Thank You! 🙏",
+    thankYouMessage: "Every donation, no matter how small, makes a huge difference. Your support allows us to continue improving SubtitleAI and keep it accessible to everyone worldwide.",
+    otherWays: "Other Ways to Support",
+    shareWithFriends: "Share with friends and colleagues",
+    reportBugs: "Report bugs and suggest features",
+    leaveReview: "Leave a positive review",
+    backToApp: "Back to Application"
   },
 };
 

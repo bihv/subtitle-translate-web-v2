@@ -14,7 +14,7 @@ const vi = {
     premiumModelsDesc: "GPT-4o, Claude 3.5 Sonnet - Chất lượng cao hơn cho nội dung phức tạp",
     customModelsDesc: "Truy cập các mô hình mới nhất khi chúng có sẵn",
     modelSelectionTip: "Đối với hầu hết các tác vụ dịch phụ đề, các mô hình miễn phí hoạt động rất tốt. Sử dụng mô hình cao cấp cho nội dung phức tạp cần hiểu biết sắc thái.",
-    
+
     modelProDescription: "Cân bằng tốt giữa tốc độ và chất lượng cho hầu hết các bản dịch phụ đề",
     model15ProDescription: "Chất lượng cao hơn cho nội dung phức tạp hoặc có nhiều sắc thái với khả năng hiểu ngữ cảnh tốt hơn",
     model15FlashDescription: "Lựa chọn nhanh nhất cho các bản dịch đơn giản và tệp lớn",
@@ -252,7 +252,7 @@ const vi = {
     introTitle: "Chào mừng đến với SubtitleAI",
     introDescription: "Giải pháp tất cả trong một cho việc dịch phụ đề",
     introText: "Hướng dẫn này sẽ giúp bạn hiểu cách sử dụng SubtitleAI để dịch tệp phụ đề hiệu quả bằng công nghệ Gemini AI của Google. Hãy theo dõi các phần dưới đây để tìm hiểu từng khía cạnh của quá trình dịch.",
-    
+
     // Feature highlights
     multipleAiProvidersTitle: "Nhiều nhà cung cấp AI",
     multipleAiProvidersDescription: "Truy cập Google Gemini và OpenRouter với nhiều mô hình AI (GPT-4, Claude, Llama) để có chất lượng dịch thuật và tùy chọn giá tốt nhất.",
@@ -268,9 +268,9 @@ const vi = {
     section6: "Xuất phụ đề",
     section7: "Xử lý sự cố",
     section8: "Câu hỏi thường gặp",
-    
+
     // Getting Started Section
-    aiProviderSelectionTitle: "Lựa chọn AI Provider", 
+    aiProviderSelectionTitle: "Lựa chọn AI Provider",
     aiProviderSelectionDescription: "SubtitleAI hỗ trợ hai nhà cung cấp AI để dịch:",
     geminiProviderTitle: "Google Gemini",
     geminiProviderDescription: "API trực tiếp từ Google, hiệu suất cao",
@@ -279,21 +279,21 @@ const vi = {
     openrouterProviderDescription: "Truy cập nhiều model AI với giá cạnh tranh",
     openrouterProviderFeatures: "Nhiều model AI (GPT, Claude, Llama)|Giá cạnh tranh|Có model miễn phí|Thanh toán theo sử dụng",
     providerRecommendation: "Bắt đầu với Gemini để dễ thiết lập và chất lượng tốt. Thử OpenRouter nếu bạn muốn truy cập các model AI khác nhau hoặc cần tùy chọn giá cụ thể.",
-    
+
     geminiModelsTitle: "Các mô hình Gemini:",
     openrouterModelsTitle: "Các mô hình OpenRouter:",
     freeModelsDesc: "WizardLM-2 8x22B, Llama 3.1 8B - Tuyệt vời cho các tác vụ dịch thuật chung",
     premiumModelsDesc: "GPT-4o, Claude 3.5 Sonnet - Chất lượng cao hơn cho nội dung phức tạp",
     customModelsDesc: "Truy cập các mô hình mới nhất khi chúng có sẵn",
     modelSelectionTip: "Đối với hầu hết các tác vụ dịch phụ đề, các mô hình miễn phí hoạt động rất tốt. Sử dụng mô hình cao cấp cho nội dung phức tạp cần hiểu biết sắc thái.",
-    
+
     apiKeyTitle: "Thiết lập khóa API Gemini",
     apiKeyDescription: "Để sử dụng SubtitleAI, bạn cần có khóa API Gemini của Google.",
     apiKeyStep1: "Truy cập trang web Google AI Studio (https://ai.google.dev/)",
     apiKeyStep2: "Tạo hoặc đăng nhập vào tài khoản Google của bạn",
     apiKeyStep3: "Điều hướng đến phần API và tạo khóa API",
     apiKeyStep4: "Sao chép khóa và dán vào trường Khóa API trong SubtitleAI",
-    
+
     openrouterSetupTitle: "Thiết lập OpenRouter",
     openrouterSetupDescription: "Để sử dụng OpenRouter làm nhà cung cấp AI:",
     openrouterStep1: "Truy cập OpenRouter.ai và tạo tài khoản",
@@ -306,7 +306,7 @@ const vi = {
     openrouterBenefit2: "Model miễn phí như WizardLM-2 8x22B và Llama 3.1 8B",
     openrouterBenefit3: "Giá cả minh bạch, cạnh tranh",
     openrouterBenefit4: "Hệ thống thanh toán bằng credits",
-    
+
     modelSelectionTitle: "Lựa chọn mô hình AI",
     modelSelectionDescription: "Chọn mô hình phù hợp dựa trên nhu cầu dịch của bạn:",
     modelProDescription: "Cân bằng tốt giữa tốc độ và chất lượng cho hầu hết các bản dịch phụ đề",
@@ -314,7 +314,7 @@ const vi = {
     model15FlashDescription: "Lựa chọn nhanh nhất cho các bản dịch đơn giản và tệp lớn",
     model20FlashDescription: "Được tối ưu hóa cho tốc độ với chất lượng tốt, hoàn hảo cho hầu hết các tệp phụ đề và xử lý hiệu quả",
     model25ProDescription: "Mô hình thử nghiệm tiên tiến với chất lượng dịch thuật vượt trội và hiểu ngữ cảnh cho nội dung phức tạp",
-    
+
     // Uploading Subtitles Section
     uploadMethodsTitle: "Cách tải lên tệp phụ đề",
     uploadMethodsDescription: "Có hai cách để tải lên tệp phụ đề của bạn:",
@@ -323,7 +323,7 @@ const vi = {
     uploadMethod2Title: "Kéo và thả",
     uploadMethod2Description: "Kéo tệp phụ đề trực tiếp từ trình quản lý tệp và thả vào khu vực tải lên",
     supportedFormatsNote: "Các định dạng hiện được hỗ trợ: tệp phụ đề SRT, VTT và ASS",
-    
+
     // Translation Settings Section  
     aiProviderModelSelectionTitle: "Lựa chọn AI Provider & Model",
     aiProviderSettingsDescription: "Trước khi bắt đầu dịch, hãy đảm bảo:",
@@ -332,19 +332,19 @@ const vi = {
     aiProviderStep3: "Xác minh khóa API hoạt động và có đủ credits",
     aiProviderStep4: "Xem lại ước tính sử dụng token để lập kế hoạch chi phí",
     aiProviderProTip: "Bạn có thể chuyển đổi giữa các nhà cung cấp bất kỳ lúc nào. Các mô hình miễn phí trên OpenRouter rất tốt để thử nghiệm, trong khi Gemini cung cấp hiệu suất ổn định.",
-    
+
     targetLanguageTitle: "Chọn ngôn ngữ đích",
     targetLanguageDescription: "Chọn ngôn ngữ bạn muốn dịch phụ đề sang từ menu thả xuống. Bạn có thể chọn các ngôn ngữ phổ biến hoặc nhập một ngôn ngữ cụ thể không có trong danh sách.",
-    
+
     customPromptTitle: "Tùy chỉnh prompt dịch",
     customPromptDescription: "Tinh chỉnh cách Gemini AI dịch phụ đề bằng cách sửa đổi mẫu prompt. Điều này có thể giúp đạt được bản dịch tốt hơn cho các loại nội dung cụ thể.",
     customPromptExample: "Dịch phụ đề sau sang {language}. Giữ nguyên giọng điệu, phong cách và sắc thái ban đầu. Giữ ngắn gọn để phù hợp với thời gian phụ đề.",
     customPromptTip: "Đối với các loại nội dung cụ thể (ví dụ: kỹ thuật, trang trọng, hài hước), hãy cân nhắc thêm hướng dẫn liên quan vào prompt.",
-    
+
     // Translation Process Section
     startTranslationTitle: "Bắt đầu dịch",
     startTranslationDescription: "Sau khi đã tải lên tệp phụ đề và cấu hình cài đặt, nhấp vào nút 'Bắt đầu dịch' để bắt đầu quá trình dịch.",
-    
+
     translationProgressTitle: "Hiểu trạng thái dịch",
     translationProgressDescription: "Trong quá trình dịch, mỗi dòng phụ đề sẽ hiển thị một trong các trạng thái sau:",
     statusPending: "Đang chờ",
@@ -355,29 +355,29 @@ const vi = {
     statusTranslatedDescription: "Đã dịch thành công",
     statusError: "Lỗi",
     statusErrorDescription: "Không thể dịch do lỗi",
-    
+
     translationControlTitle: "Điều khiển quá trình dịch",
     translationControlDescription: "Bạn có thể quản lý quá trình dịch đang diễn ra bằng các điều khiển sau:",
     pauseResumeTitle: "Tạm dừng/Tiếp tục",
     pauseResumeDescription: "Tạm dừng quá trình dịch và tiếp tục sau mà không bị mất tiến độ",
     stopTitle: "Dừng",
     stopDescription: "Dừng hoàn toàn quá trình dịch (không thể tiếp tục)",
-    
+
     // Editing Subtitles Section
     manualEditTitle: "Chỉnh sửa bản dịch thủ công",
     manualEditDescription: "Bạn có thể chỉnh sửa bất kỳ phụ đề đã dịch nào để sửa lỗi hoặc cải thiện chất lượng:",
     editStep1: "Nhấp vào nút 'Sửa' bên cạnh phụ đề bạn muốn sửa đổi",
     editStep2: "Thực hiện thay đổi trong khung văn bản xuất hiện",
     editStep3: "Nhấp 'Lưu' để áp dụng thay đổi hoặc 'Hủy' để loại bỏ chúng",
-    
+
     improveTranslationTitle: "Cải thiện bản dịch với trợ giúp của AI",
     improveTranslationDescription: "Đối với các phụ đề không chính xác, bạn có thể sử dụng tính năng gợi ý AI để nhận các bản dịch thay thế.",
     aiSuggestionTip: "Nhấp vào biểu tượng tia sáng để nhận gợi ý AI cho bản dịch tốt hơn",
-    
+
     retryFailedTitle: "Thử lại các bản dịch thất bại",
     retryFailedDescription: "Nếu một số phụ đề không dịch được, bạn có thể thử lại chúng riêng lẻ hoặc theo nhóm:",
     retryButtonDescription: "Nhấp vào nút thử lại bên cạnh phụ đề bị lỗi hoặc sử dụng tùy chọn thử lại nhóm ở trên cùng của nhóm bị lỗi",
-    
+
     // Exporting Subtitles Section
     exportOptionsTitle: "Xuất phụ đề đã dịch",
     exportOptionsDescription: "Sau khi hoàn thành việc dịch và chỉnh sửa phụ đề, bạn có thể xuất chúng ở các định dạng khác nhau:",
@@ -386,36 +386,36 @@ const vi = {
     bilingualExportTitle: "Xuất song ngữ",
     bilingualExportDescription: "Xuất cả văn bản gốc và bản dịch trong mỗi phụ đề, lý tưởng cho việc học ngôn ngữ",
     exportFormatTip: "Bạn có thể chọn xuất ở định dạng gốc của tệp phụ đề hoặc chọn một định dạng cụ thể (SRT, VTT, ASS)",
-    
+
     // Troubleshooting Section
     commonIssuesTitle: "Các vấn đề thường gặp và giải pháp",
-    
+
     issue1Title: "Lỗi khóa API",
     issue1Solution: "Nếu bạn thấy lỗi liên quan đến khóa API, hãy xác minh rằng khóa đã được nhập chính xác và hạn ngạch API Gemini của bạn chưa bị vượt quá. Bạn có thể cần tạo khóa mới nếu khóa hiện tại không hợp lệ.",
-    
+
     issue2Title: "Lỗi dịch",
     issue2Solution: "Nếu nhiều phụ đề không dịch được, có thể do giới hạn tần suất. Hãy thử dùng nút 'Tạm dừng' trong vài giây, sau đó 'Tiếp tục'. Bạn cũng có thể thử lại các nhóm thất bại sau khi đợi một lúc.",
-    
+
     openrouterCreditsIssueTitle: "Vấn đề Credits OpenRouter",
     openrouterCreditsDescription: "Nếu bạn thấy cảnh báo về credits âm hoặc số dư không đủ:",
     openrouterCreditsSolution1: "Kiểm tra số dư tài khoản OpenRouter tại openrouter.ai",
     openrouterCreditsSolution2: "Sử dụng các mô hình miễn phí như WizardLM-2 8x22B hoặc Llama 3.1 8B để tránh phí",
     openrouterCreditsSolution3: "Thêm credits vào tài khoản OpenRouter nếu muốn sử dụng mô hình cao cấp",
     openrouterCreditsSolution4: "Chuyển sang nhà cung cấp Gemini nếu không muốn quản lý credits",
-    
+
     issue3Title: "Ký tự không được hỗ trợ",
     issue3Solution: "Nếu bản dịch của bạn hiển thị các ký tự bị thiếu hoặc không chính xác, hãy đảm bảo bạn đã chọn đúng ngôn ngữ đích. Một số ký tự đặc biệt có thể không hiển thị đúng trong một số định dạng phụ đề.",
-    
+
     issue4Title: "Hiệu suất chậm",
     issue4Solution: "Đối với tệp phụ đề lớn, hãy cân nhắc chọn mô hình Gemini 1.5 Flash được tối ưu hóa cho tốc độ. Chia nhỏ các tệp rất lớn thành các phần nhỏ hơn cũng có thể giúp ích.",
-    
+
     darkModeIssueTitle: "Vấn đề Theme/Dark Mode",
     darkModeIssueDescription: "Nếu bạn gặp vấn đề chuyển đổi theme hoặc lỗi hiển thị:",
     darkModeIssue1: "Thử làm mới trang - tùy chọn theme được lưu trong trình duyệt của bạn",
     darkModeIssue2: "Xóa cache trình duyệt nếu theme hiển thị bị lỗi",
     darkModeIssue3: "Sử dụng phím tắt Ctrl + Shift + T để chuyển đổi theme",
     darkModeIssue4: "Kiểm tra xem trình duyệt của bạn có hỗ trợ các tính năng CSS hiện đại không",
-    
+
     // Help and Feedback
     helpTitle: "Cần thêm trợ giúp?",
     helpText: "Hướng dẫn này bao gồm chức năng cơ bản của SubtitleAI. Đối với các tính năng nâng cao hơn hoặc các câu hỏi cụ thể, vui lòng tham khảo tài liệu hoặc liên hệ hỗ trợ.",
@@ -425,37 +425,37 @@ const vi = {
     quickTip3: "Sử dụng trình ước tính token để xem trước chi phí trước khi bắt đầu dịch",
     quickTip4: "Xuất ở định dạng song ngữ cho mục đích học ngôn ngữ",
     feedbackText: "Chúng tôi liên tục cải thiện SubtitleAI dựa trên phản hồi của người dùng. Nếu bạn có đề xuất hoặc gặp vấn đề không được đề cập trong hướng dẫn này, vui lòng cho chúng tôi biết.",
-    
+
     // FAQ Section
     faqTitle: "Câu hỏi thường gặp",
     faqDescription: "Câu trả lời nhanh cho các câu hỏi phổ biến về SubtitleAI",
-    
+
     faq1Question: "Khóa API của tôi có an toàn không?",
     faq1Answer: "Có, khóa API Gemini của bạn được lưu trữ cục bộ trong trình duyệt của bạn và không bao giờ được gửi đến máy chủ của chúng tôi. Nó chỉ được sử dụng để giao tiếp trực tiếp với dịch vụ API của Google.",
-    
+
     faq2Question: "Sử dụng SubtitleAI tốn bao nhiêu tiền?",
     faq2Answer: "SubtitleAI là công cụ miễn phí. Tuy nhiên, bạn cần khóa API Gemini của Google, có thể phát sinh chi phí tùy thuộc vào mức sử dụng và chính sách giá của Google. Người dùng mới thường được cấp tín dụng miễn phí khi đăng ký.",
-    
+
     faq3Question: "Sự khác biệt giữa Gemini và OpenRouter là gì?",
     faq3AnswerGemini: "Truy cập trực tiếp các mô hình AI của Google. Chất lượng cao, xử lý nhanh và bao gồm gói miễn phí. Tốt nhất cho hầu hết người dùng muốn độ tin cậy và hiệu suất.",
     faq3AnswerOpenRouter: "Truy cập nhiều mô hình AI (GPT-4, Claude, Llama, v.v.) thông qua một API. Cung cấp cả mô hình miễn phí và cao cấp với giá cạnh tranh. Tốt cho người dùng muốn thử các mô hình AI khác nhau hoặc cần khả năng cụ thể.",
-    
+
     faq4Question: "Tôi có thể dịch nhiều tệp cùng lúc không?",
     faq4Answer: "Hiện tại, SubtitleAI xử lý từng tệp một. Chúng tôi khuyên bạn nên hoàn thành một bản dịch trước khi bắt đầu bản dịch khác để có hiệu suất tối ưu.",
-    
+
     faq5Question: "Những ngôn ngữ nào được hỗ trợ?",
     faq5Answer: "SubtitleAI hỗ trợ dịch từ và sang hầu hết các ngôn ngữ mà Gemini AI hỗ trợ, bao gồm hầu hết các ngôn ngữ chính trên toàn thế giới.",
-    
+
     faq6Question: "Làm thế nào để chuyển đổi giữa chế độ sáng và tối?",
     faq6Description: "SubtitleAI hỗ trợ cả theme sáng và tối. Bạn có thể chuyển đổi giữa chúng bằng:",
     faq6Method1: "Nhấp vào nút chuyển đổi theme ở góc trên bên phải của giao diện",
     faq6Method2: "Sử dụng phím tắt Ctrl + Shift + T",
     faq6Method3: "Ứng dụng tự động tuân theo tùy chọn chế độ tối/sáng của hệ thống của bạn",
-    
+
     faq7Question: "Tôi có thể sử dụng SubtitleAI khi không có kết nối internet không?",
     faq7Answer: "Không, SubtitleAI yêu cầu kết nối internet để giao tiếp với API Gemini của Google cho việc dịch thuật."
   },
-  
+
   // Token Estimate translations
   tokenEstimate: {
     show: "Hiện token",
@@ -482,7 +482,7 @@ const vi = {
     builtInPricing: "Giá tích hợp cho",
     disclaimer: "* Ước tính là gần đúng và có thể thay đổi dựa trên việc sử dụng thực tế. Chưa bao gồm token cho prompt và các yếu tố khác.",
   },
-  
+
   // New translations for enhanced guide UI
   guideUi: {
     searchPlaceholder: "Tìm kiếm trong hướng dẫn...",
@@ -490,6 +490,36 @@ const vi = {
     backToTop: "Về đầu trang",
     printGuide: "In hướng dẫn",
     printedGuide: "In từ Hướng dẫn SubtitleAI"
+  },
+
+  donate: {
+    title: "Ủng hộ SubtitleAI",
+    subtitle: "Giúp chúng tôi duy trì công cụ miễn phí và liên tục cải tiến",
+    heroTitle: "Sự ủng hộ của bạn rất quan trọng",
+    heroDescription: "SubtitleAI là công cụ miễn phí được tạo ra với đam mê để giúp mọi người phá vỡ rào cản ngôn ngữ. Sự đóng góp của bạn giúp chi trả chi phí máy chủ và thời gian phát triển, cho phép chúng tôi thêm nhiều tính năng hơn và duy trì dịch vụ cho tất cả mọi người.",
+    whyDonate: "Tại sao nên ủng hộ?",
+    reason1Title: "Giữ miễn phí",
+    reason1Description: "Giúp chúng tôi duy trì truy cập miễn phí cho tất cả mọi người",
+    reason2Title: "Tính năng mới",
+    reason2Description: "Hỗ trợ phát triển các khả năng mới",
+    reason3Title: "Cà phê cho dev",
+    reason3Description: "Ghi nhận công sức và thời gian bỏ ra",
+    scanQrTitle: "Quét mã QR để ủng hộ",
+    scanQrDescription: "Sử dụng ứng dụng ngân hàng để quét mã QR bên dưới",
+    bankInfoTitle: "Thông tin tài khoản ngân hàng",
+    bankName: "Ngân hàng",
+    accountNumber: "Số tài khoản",
+    accountHolder: "Chủ tài khoản",
+    bankNameValue: "TPBank",
+    accountNumberValue: "00001969705",
+    accountHolderValue: "HO VAN BI",
+    thankYouTitle: "Cảm ơn bạn! 🙏",
+    thankYouMessage: "Mọi khoản đóng góp, dù nhỏ hay lớn, đều tạo ra sự khác biệt lớn. Sự hỗ trợ của bạn cho phép chúng tôi tiếp tục cải thiện SubtitleAI và giữ cho nó có thể truy cập được cho mọi người trên toàn thế giới.",
+    otherWays: "Cách khác để ủng hộ",
+    shareWithFriends: "Chia sẻ với bạn bè và đồng nghiệp",
+    reportBugs: "Báo cáo lỗi và đề xuất tính năng",
+    leaveReview: "Để lại đánh giá tích cực",
+    backToApp: "Quay lại ứng dụng"
   },
 };
 
