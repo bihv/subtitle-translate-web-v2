@@ -9,7 +9,7 @@ import GuideSummary from '@/components/GuideSummary';
 import { useI18n } from '@/lib/i18n/I18nContext';
 import { useSessionTracking } from '@/lib/analytics';
 import Link from 'next/link';
-import { BookOpen, Palette, Heart } from 'lucide-react';
+import { BookOpen, Palette, Heart, Mail } from 'lucide-react';
 
 // Import the SubtitleTranslator component dynamically with SSR disabled
 const SubtitleTranslator = dynamic(
@@ -47,6 +47,10 @@ export default function Home() {
             <Link href="/donate" className="flex items-center text-sm text-pink-500 hover:text-pink-600 transition-colors">
               <Heart className="h-4 w-4 mr-1" fill="currentColor" />
               {t('donate.title')}
+            </Link>
+            <Link href="/contact" className="flex items-center text-sm text-blue-500 hover:text-blue-600 transition-colors">
+              <Mail className="h-4 w-4 mr-1" />
+              {t('contact.title')}
             </Link>
             <ThemeToggle />
             <LanguageSwitcher />

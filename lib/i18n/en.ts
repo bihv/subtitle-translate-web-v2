@@ -519,6 +519,29 @@ const en = {
     leaveReview: "Leave a positive review",
     backToApp: "Back to Application"
   },
+
+  contact: {
+    title: "Contact",
+    subtitle: "Get in touch with us",
+    heroTitle: "We're Here to Help",
+    heroDescription: "Have questions, feedback, or just want to say hi? Reach out to us through any of the channels below.",
+    getInTouch: "Get in Touch",
+    githubTitle: "GitHub",
+    githubDescription: "View source code, report bugs, contribute to the project",
+    githubUrl: "https://github.com/bihv/subtitle-translate-web-v2",
+    emailTitle: "Email",
+    emailDescription: "Send us an email directly for any inquiries",
+    emailAddress: "hobi2908@gmail.com",
+    facebookTitle: "Facebook",
+    facebookDescription: "Connect and follow for latest updates",
+    facebookUrl: "https://www.facebook.com/profile.php?id=61583815667935",
+    visitPage: "Visit Page",
+    sendEmail: "Send Email",
+    viewOnGithub: "View on GitHub",
+    backToApp: "Back to Application",
+    feedbackTitle: "💬 We value your feedback!",
+    feedbackDescription: "Your suggestions help us improve SubtitleAI. Whether it's a bug report, feature request, or just a friendly hello, we'd love to hear from you!"
+  },
 };
 
 export default en;
