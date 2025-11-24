@@ -1,7 +1,7 @@
 {
   "name": "SubtitleAI",
   "short_name": "SubtitleAI",
-  "description": "Translate subtitles from SRT files using Gemini AI",
+  "description": "Translate subtitles from SRT files using AI",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -20,4 +20,4 @@
       "purpose": "any maskable"
     }
   ]
-} 
+}

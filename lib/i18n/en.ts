@@ -2,7 +2,7 @@
 const en = {
   common: {
     appTitle: "SubtitleAI",
-    appDescription: "Translate subtitles from SRT files using Gemini AI",
+    appDescription: "Translate subtitles from SRT files using AI",
     loading: "Loading...",
     save: "Save",
     cancel: "Cancel",

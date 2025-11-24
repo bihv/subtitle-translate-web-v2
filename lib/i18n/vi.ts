@@ -2,7 +2,7 @@
 const vi = {
   common: {
     appTitle: "SubtitleAI",
-    appDescription: "Dịch phụ đề từ tệp SRT sử dụng Gemini AI",
+    appDescription: "Dịch phụ đề từ tệp SRT sử dụng AI",
     loading: "Đang tải...",
     save: "Lưu",
     cancel: "Hủy",
