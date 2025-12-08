@@ -45,11 +45,27 @@ export const AVAILABLE_MODELS: ModelOption[] = [
       vi: "Hiệu suất nhanh và cân bằng, phù hợp cho dịch thuật thông thường",
       en: "Fast and balanced performance, suitable for routine translations"
     }
+  },
+  {
+    id: "gemini-2.5-flash",
+    name: "Gemini 2.5 Flash",
+    description: {
+      vi: "Nhanh nhất với khả năng suy luận nâng cao, context 1M token",
+      en: "Fastest with advanced reasoning, 1M token context"
+    }
+  },
+  {
+    id: "gemma-3-27b-it",
+    name: "Gemma 3 27B",
+    description: {
+      vi: "Mô hình mã nguồn mở của Google, hiệu suất tốt với kích thước nhỏ gọn",
+      en: "Google's open-source model, good performance with compact size"
+    }
   }
 ];
 
 // Default model - sử dụng model miễn phí làm mặc định
-export const DEFAULT_MODEL = "gemini-2.0-flash";
+export const DEFAULT_MODEL = "gemma-3-27b-it";
 
 interface ModelSelectorProps {
   onModelChange: (modelId: string) => void;
@@ -59,11 +75,11 @@ interface ModelSelectorProps {
 export default function ModelSelector({ onModelChange, className = "" }: ModelSelectorProps) {
   const { t, locale = 'vi' } = useI18n();
   const [currentModel, setCurrentModel] = useState<string>(DEFAULT_MODEL);
-  
+
   // Tải model từ localStorage khi component được khởi tạo
   useEffect(() => {
     const savedModel = localStorage.getItem(STORAGE_KEY);
-    
+
     if (savedModel) {
       setCurrentModel(savedModel);
       onModelChange(savedModel);
@@ -78,7 +94,7 @@ export default function ModelSelector({ onModelChange, className = "" }: ModelSe
 
   // Lấy thông tin model hiện tại
   const currentModelInfo = AVAILABLE_MODELS.find(m => m.id === currentModel) || AVAILABLE_MODELS[0];
-  
+
   // Xác định ngôn ngữ hiển thị, mặc định là tiếng Việt nếu không có
   const currentLanguage = locale === 'en' ? 'en' : 'vi';
 
