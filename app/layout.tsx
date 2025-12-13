@@ -16,6 +16,42 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const metadata: Metadata = {
+  title: {
+    default: "SubtitleAI - Free AI Subtitle Translator",
+    template: "%s | SubtitleAI",
+  },
+  description: "Easily translate SRT, VTT, ASS subtitles into multiple languages using AI (Gemini, GPT). Free, fast, and accurate subtitle translation tool.",
+  keywords: ["subtitle translator", "ai subtitle", "srt translator", "translate subtitles", "gemini ai", "subtitle translation"],
+  authors: [{ name: "SubtitleAI Team" }],
+  creator: "SubtitleAI Team",
+  openGraph: {
+    title: "SubtitleAI - Free AI Subtitle Translator",
+    description: "Easily translate SRT subtitles into multiple languages with AI. Perfect for movies, educational videos, entertainment, and much more!",
+    url: "https://translate.io.vn/",
+    siteName: "SubtitleAI",
+    images: [
+      {
+        url: "https://translate.io.vn/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "SubtitleAI - AI Subtitle Translator",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SubtitleAI - Free AI Subtitle Translator",
+    description: "Easily translate SRT subtitles into multiple languages with AI. Perfect for movies, educational videos, entertainment, and much more!",
+    images: ["https://translate.io.vn/og-image.jpg"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -23,17 +59,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta property="og:title" content="SubtitleAI" />
-        <meta property="og:description" content="Easily translate SRT subtitles into multiple languages with AI. Perfect for movies, educational videos, entertainment, and much more!" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://translate.io.vn/" />
-        <meta property="og:image" content="https://translate.io.vn/og-image.jpg" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="SubtitleAI" />
-        <meta name="twitter:description" content="Easily translate SRT subtitles into multiple languages with AI. Perfect for movies, educational videos, entertainment, and much more!" />
-        <meta name="twitter:image" content="https://translate.io.vn/og-image.jpg" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

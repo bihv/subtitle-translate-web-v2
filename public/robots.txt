@@ -1,12 +1,17 @@
-# https://www.robotstxt.org/robotstxt.html
+# *
 User-agent: *
 Allow: /
+Disallow: /api/*
+Disallow: /_next/*
+Disallow: /admin/*
 
-# Không cho phép tìm kiếm trên các đường dẫn quản lý và API
-Disallow: /api/
-Disallow: /_next/
-Disallow: /admin/
+# Googlebot
+User-agent: Googlebot
+Allow: /
 
-# Đường dẫn sitemap
+# Host
+Host: https://translate.io.vn
+
+# Sitemaps
 Sitemap: https://translate.io.vn/sitemap.xml
-Sitemap: https://translate.io.vn/server-sitemap.xml 
+Sitemap: https://translate.io.vn/server-sitemap.xml
