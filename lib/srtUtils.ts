@@ -21,12 +21,19 @@ export function parse(content: string): SrtItem[] {
     const id = parseInt(lines[0].trim(), 10);
     if (isNaN(id)) return; // Skip if ID is not a number
 
-    // Second line is the timestamp
-    const timeMatch = lines[1].match(/(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})/);
+    // Second line is the timestamp (support 1 or 2 digits for hours)
+    const timeMatch = lines[1].match(/(\d{1,2}:\d{2}:\d{2},\d{3}) --> (\d{1,2}:\d{2}:\d{2},\d{3})/);
     if (!timeMatch) return; // Skip if timestamp format is invalid
 
-    const startTime = timeMatch[1];
-    const endTime = timeMatch[2];
+    // Normalize time format to 2 digits for hours
+    const normalizeTime = (time: string): string => {
+      const parts = time.split(':');
+      parts[0] = parts[0].padStart(2, '0');
+      return parts.join(':');
+    };
+
+    const startTime = normalizeTime(timeMatch[1]);
+    const endTime = normalizeTime(timeMatch[2]);
 
     // Remaining lines are the subtitle text
     const text = lines.slice(2).join("\n");
