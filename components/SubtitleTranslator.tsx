@@ -23,28 +23,28 @@ import { saveAs } from "file-saver";
 import { ChevronDown, ChevronUp, Globe, AlertCircle, PauseCircle, PlayCircle, StopCircle, X, Maximize, Minimize, Eye, EyeOff } from "lucide-react";
 import { useI18n } from "@/lib/i18n/I18nContext";
 import SubtitlePreview from "@/components/SubtitlePreview";
-import { 
-  parseSubtitle, 
-  stringifySubtitle, 
-  detectFormat, 
-  getAcceptAttribute, 
-  getFileExtension,
-  SubtitleFormat,
-  SubtitleItem as SubtitleItemBase,
-  getSupportedExtensions
+import {
+    parseSubtitle,
+    stringifySubtitle,
+    detectFormat,
+    getAcceptAttribute,
+    getFileExtension,
+    SubtitleFormat,
+    SubtitleItem as SubtitleItemBase,
+    getSupportedExtensions
 } from '@/lib/subtitleUtils';
-import { 
-  trackFileUpload, 
-  trackTranslation, 
-  trackExport, 
-  trackError,
-  trackEvent,
-  trackTranslateButtonClick,
-  trackModelSelection,
-  trackProviderSwitch,
-  getGeminiModelType,
-  getOpenRouterModelType,
-  createDetailedModelKey
+import {
+    trackFileUpload,
+    trackTranslation,
+    trackExport,
+    trackError,
+    trackEvent,
+    trackTranslateButtonClick,
+    trackModelSelection,
+    trackProviderSwitch,
+    getGeminiModelType,
+    getOpenRouterModelType,
+    createDetailedModelKey
 } from '@/lib/analytics';
 import Link from "next/link";
 
@@ -102,7 +102,7 @@ export default function SubtitleTranslator() {
     const [subtitleFormat, setSubtitleFormat] = useState<SubtitleFormat>('srt');
     const [exportFormat, setExportFormat] = useState<SubtitleFormat | 'original'>('original');
     const [showTokenEstimate, setShowTokenEstimate] = useState<boolean>(true);
-    
+
     // AI Provider state
     const [aiProvider, setAiProvider] = useState<AIProvider>('gemini');
     const [openRouterApiKey, setOpenRouterApiKey] = useState<string>(getOpenRouterApiKey());
@@ -191,7 +191,7 @@ export default function SubtitleTranslator() {
     const handleOpenRouterApiKeyChange = (apiKey: string) => {
         setOpenRouterApiKey(apiKey); // Set in local state
         saveOpenRouterApiKey(apiKey); // Set in openrouterApi module
-        
+
         // Clear validation error if API key is provided
         if (!!apiKey && validationError?.includes("OpenRouter API key")) {
             setValidationError(null);
@@ -203,14 +203,14 @@ export default function SubtitleTranslator() {
         const previousProvider = aiProvider;
         const previousModel = previousProvider === 'gemini' ? selectedModel : openRouterModel;
         const newModel = provider === 'gemini' ? selectedModel : openRouterModel;
-        
+
         // Track provider switch
         if (previousProvider !== provider) {
             trackProviderSwitch(previousProvider, provider, previousModel, newModel);
         }
-        
+
         setAiProvider(provider);
-        
+
         // Clear validation errors when switching providers
         setValidationError(null);
     };
@@ -218,16 +218,16 @@ export default function SubtitleTranslator() {
     // Handle OpenRouter model change
     const handleOpenRouterModelChange = (model: string) => {
         const previousModel = openRouterModel;
-        
+
         // Find model pricing info for analytics
         const modelData = openRouterModels.find((m: any) => m.id === model);
         const previousModelData = openRouterModels.find((m: any) => m.id === previousModel);
-        
+
         const modelType = getOpenRouterModelType(model, modelData?.pricing);
-        
+
         // Track model selection change
         trackModelSelection('openrouter', previousModel, model, modelType);
-        
+
         console.log(`🎯 Model changed to: ${model}`);
         setOpenRouterModel(model); // Update local state
         saveOpenRouterModel(model); // Save to OpenRouter API module
@@ -251,10 +251,10 @@ export default function SubtitleTranslator() {
         const previousModel = selectedModel;
         const previousModelType = getGeminiModelType(previousModel);
         const newModelType = getGeminiModelType(modelId);
-        
+
         // Track model selection change
         trackModelSelection('gemini', previousModel, modelId, newModelType);
-        
+
         setModel(modelId);
         setSelectedModel(modelId);
         console.log(`Model changed to: ${modelId}`);
@@ -350,13 +350,13 @@ export default function SubtitleTranslator() {
             }));
 
             setSubtitles(subtitleItems);
-            
+
             // Theo dõi sự kiện tải file
             trackFileUpload(format, selectedFile.size);
         } catch (error) {
             console.error(`Error parsing the ${format.toUpperCase()} file:`, error);
             setValidationError(t('fileUpload.invalidFormat'));
-            
+
             // Theo dõi lỗi
             trackError('file_parsing', `Error parsing ${format} file: ${error instanceof Error ? error.message : String(error)}`);
         }
@@ -444,8 +444,8 @@ export default function SubtitleTranslator() {
 
     // Translation wrapper function that works with both providers
     const translateTexts = async (
-        texts: string[], 
-        targetLanguage: string, 
+        texts: string[],
+        targetLanguage: string,
         prompt: string,
         context?: string
     ) => {
@@ -496,15 +496,15 @@ export default function SubtitleTranslator() {
 
         // Xác định model và provider hiện tại cho analytics
         const currentModel = aiProvider === 'gemini' ? selectedModel : openRouterModel;
-        const modelType = aiProvider === 'gemini' 
+        const modelType = aiProvider === 'gemini'
             ? getGeminiModelType(currentModel)
             : getOpenRouterModelType(currentModel);
 
         // Theo dõi sự kiện nhấn nút dịch (button click tracking)
         trackTranslateButtonClick(
-            'auto', 
-            targetLanguage, 
-            subtitles.length, 
+            'auto',
+            targetLanguage,
+            subtitles.length,
             aiProvider,
             currentModel,
             modelType
@@ -742,16 +742,18 @@ export default function SubtitleTranslator() {
             );
 
             // Update subtitles with translations
+            const failedSubtitles: SubtitleItem[] = [];
             batch.forEach((subtitle, index) => {
                 const translationResult = translatedResults[index];
 
-                if (translationResult && !translationResult.error) {
+                if (translationResult && !translationResult.error && translationResult.text) {
                     subtitle.translatedText = translationResult.text;
                     subtitle.status = "translated";
                     subtitle.error = undefined;
                 } else {
                     subtitle.status = "error";
-                    subtitle.error = translationResult?.error || "Unknown error";
+                    subtitle.error = translationResult?.error || "Missing translation";
+                    failedSubtitles.push(subtitle);
                 }
             });
 
@@ -766,6 +768,50 @@ export default function SubtitleTranslator() {
                 });
                 return newSubtitles;
             });
+
+            // Auto-retry failed subtitles individually (missing translations)
+            if (failedSubtitles.length > 0 && failedSubtitles.length < batch.length) {
+                console.log(`🔄 Auto-retrying ${failedSubtitles.length} missing translations individually...`);
+
+                for (const failedSub of failedSubtitles) {
+                    try {
+                        // Get context from nearby translated subtitles
+                        const nearbyTranslated = allSubtitles
+                            .filter(s => s.status === "translated" && s.translatedText && Math.abs(s.id - failedSub.id) <= 3)
+                            .slice(0, 3);
+
+                        const retryContext = nearbyTranslated.length > 0
+                            ? t('translationSettings.contextPrompt') + "\n" + nearbyTranslated.map(s => `${s.id}. ${s.text} → ${s.translatedText}`).join("\n")
+                            : "";
+
+                        const retryResult = await translateTexts(
+                            [failedSub.text],
+                            targetLanguage,
+                            getEffectivePrompt(),
+                            retryContext
+                        );
+
+                        if (retryResult[0] && !retryResult[0].error && retryResult[0].text) {
+                            failedSub.translatedText = retryResult[0].text;
+                            failedSub.status = "translated";
+                            failedSub.error = undefined;
+                            console.log(`✅ Retry successful for subtitle ${failedSub.id}`);
+
+                            // Update state
+                            setSubtitles(prev => {
+                                const newSubtitles = [...prev];
+                                const idx = newSubtitles.findIndex(s => s.id === failedSub.id);
+                                if (idx !== -1) {
+                                    newSubtitles[idx] = failedSub;
+                                }
+                                return newSubtitles;
+                            });
+                        }
+                    } catch (retryError) {
+                        console.error(`❌ Retry failed for subtitle ${failedSub.id}:`, retryError);
+                    }
+                }
+            }
 
             // Update progress
             setTranslationProgress(prev => {
@@ -787,18 +833,18 @@ export default function SubtitleTranslator() {
                 // Kiểm tra xem batch này đã tồn tại trong failedBatches chưa
                 const batchExists = prev.some(existingBatch => {
                     if (!existingBatch.items.length) return false;
-                    
+
                     const existingFirstId = existingBatch.items[0]?.id;
                     const existingBatchIndex = Math.floor((existingFirstId - 1) / BATCH_SIZE);
-                    
+
                     return existingBatchIndex === actualBatchIndex;
                 });
-                
+
                 // Chỉ thêm vào nếu batch chưa tồn tại
                 if (!batchExists) {
                     return [...prev, { index: actualBatchIndex, items: [...batch] }];
                 }
-                
+
                 return prev;
             });
 
@@ -809,12 +855,12 @@ export default function SubtitleTranslator() {
             });
 
             // Theo dõi lỗi dịch
-            trackError('translation_batch', 
-                error instanceof Error ? error.message : String(error), 
-                { 
-                    batchIndex: batch[0].id, 
-                    subtitleCount: batch.length, 
-                    targetLanguage 
+            trackError('translation_batch',
+                error instanceof Error ? error.message : String(error),
+                {
+                    batchIndex: batch[0].id,
+                    subtitleCount: batch.length,
+                    targetLanguage
                 }
             );
         }
@@ -826,19 +872,19 @@ export default function SubtitleTranslator() {
         if (id === currentPlayingSubtitleId) {
             return; // Already selected, no need to retry translation
         }
-        
+
         // Set the current playing subtitle immediately for navigation purposes
         setCurrentPlayingSubtitleId(id);
-        
+
         // Only proceed with retry if the status is error
         const subtitleIndex = subtitles.findIndex(sub => sub.id === id);
         if (subtitleIndex === -1) return;
-        
+
         const subtitle = subtitles[subtitleIndex];
         if (subtitle.status !== "error") {
             return; // Just navigation, not a retry
         }
-        
+
         // If it's an actual retry (status is error), proceed with retry logic
         const updatedSubtitles = [...subtitles];
         updatedSubtitles[subtitleIndex].status = "translating";
@@ -907,8 +953,8 @@ export default function SubtitleTranslator() {
             setSubtitles([...updatedSubtitles]);
 
             // Theo dõi lỗi thử lại
-            trackError('retry_subtitle', 
-                error instanceof Error ? error.message : String(error), 
+            trackError('retry_subtitle',
+                error instanceof Error ? error.message : String(error),
                 { subtitleId: id }
             );
         }
@@ -936,7 +982,7 @@ export default function SubtitleTranslator() {
         // Create and download the file
         const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
         saveAs(blob, newFileName);
-        
+
         // Theo dõi sự kiện xuất file
         trackExport(formatToUse, subtitles.length, targetLanguage, false);
     };
@@ -976,7 +1022,7 @@ export default function SubtitleTranslator() {
         // Create and download the file
         const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
         saveAs(blob, newFileName);
-        
+
         // Theo dõi sự kiện xuất file song ngữ
         trackExport(formatToUse, subtitles.length, targetLanguage, true);
     };
@@ -996,7 +1042,7 @@ export default function SubtitleTranslator() {
     const refreshFailedBatches = () => {
         // Lọc lại các batch lỗi dựa trên trạng thái hiện tại của subtitles
         const errorBatches: { [key: number]: SubtitleItem[] } = {};
-        
+
         // Nhóm các subtitle lỗi theo batch
         subtitles.forEach(sub => {
             if (sub.status === "error") {
@@ -1007,15 +1053,15 @@ export default function SubtitleTranslator() {
                 errorBatches[batchIndex].push(sub);
             }
         });
-        
+
         // Chuyển đổi sang định dạng mảng failedBatches
         const newFailedBatches = Object.entries(errorBatches).map(([batchIndex, items]) => ({
             index: parseInt(batchIndex),
             items
         }));
-        
+
         // Cập nhật state nếu có sự thay đổi
-        if (JSON.stringify(newFailedBatches.map(b => b.index)) !== 
+        if (JSON.stringify(newFailedBatches.map(b => b.index)) !==
             JSON.stringify(failedBatches.map(b => b.index))) {
             setFailedBatches(newFailedBatches);
         }
@@ -1024,10 +1070,10 @@ export default function SubtitleTranslator() {
     // Retry a batch of subtitles
     const handleRetryBatch = async (batchIndex: number) => {
         console.log(`Starting retry for batch ${batchIndex}`);
-        
+
         // Làm mới danh sách batch lỗi trước khi thử tìm
         refreshFailedBatches();
-        
+
         // Kiểm tra xem có batch lỗi nào không
         if (!failedBatches || failedBatches.length === 0) {
             console.warn("Không có batch lỗi nào để thử lại");
@@ -1045,28 +1091,28 @@ export default function SubtitleTranslator() {
         // Chú ý: batchIndex là vị trí của batch, nhưng batch.index có thể không trùng khớp
         const batchToRetry = failedBatches.find(batch => {
             if (!batch || batch.items.length === 0) return false;
-            
+
             const firstItemId = batch.items[0]?.id;
             const calculatedIndex = Math.floor((firstItemId - 1) / BATCH_SIZE);
-            
+
             // So sánh trực tiếp calculated index với batchIndex được truyền vào
             return calculatedIndex === batchIndex;
         });
-        
+
         if (!batchToRetry) {
             console.warn(`Batch với index ${batchIndex} không tìm thấy trong danh sách failedBatches`);
-            
+
             // Cập nhật lại UI để không hiển thị các batch không còn tồn tại
             const batchExists = subtitles.some(sub => {
                 const subBatchIndex = Math.floor((sub.id - 1) / BATCH_SIZE);
                 return subBatchIndex === batchIndex && sub.status === "error";
             });
-            
+
             if (!batchExists) {
                 console.log("Batch không còn lỗi trong danh sách subtitles, cập nhật UI");
                 // Refresh UI nếu cần
             }
-            
+
             return Promise.resolve(); // Trả về resolved promise để không gây lỗi UI
         }
 
@@ -1091,8 +1137,8 @@ export default function SubtitleTranslator() {
 
         try {
             // Track analytics for retry batch
-            trackEvent('retry_batch', { 
-                batchIndex, 
+            trackEvent('retry_batch', {
+                batchIndex,
                 itemCount: batchToRetry.items.length,
             });
 
@@ -1106,11 +1152,11 @@ export default function SubtitleTranslator() {
                     // Kiểm tra xem batch này có phải là batch chúng ta vừa retry không
                     // bằng cách so sánh ID của item đầu tiên
                     if (!batch || batch.items.length === 0) return true; // giữ lại các batch rỗng (hiếm khi xảy ra)
-                    
+
                     // Dựa vào firstItemId để xác định batch
                     const firstItemIdOfBatch = batch.items[0].id;
                     const firstItemIdOfRetried = batchToRetry.items[0].id;
-                    
+
                     // Giữ lại các batch khác với batch vừa retry
                     return firstItemIdOfBatch !== firstItemIdOfRetried;
                 });
@@ -1118,7 +1164,7 @@ export default function SubtitleTranslator() {
 
             // Làm mới danh sách các batch lỗi để đảm bảo tính nhất quán
             setTimeout(refreshFailedBatches, 500);
-            
+
             return Promise.resolve();
         } catch (error) {
             console.error(`Error retrying batch ${batchIndex}:`, error);
@@ -1134,11 +1180,11 @@ export default function SubtitleTranslator() {
                     // Kiểm tra xem batch này có phải là batch chúng ta vừa retry không
                     // bằng cách so sánh ID của item đầu tiên
                     if (!batch || batch.items.length === 0) return batch; // giữ nguyên các batch rỗng
-                    
+
                     // Dựa vào firstItemId để xác định batch
                     const firstItemIdOfBatch = batch.items[0].id;
                     const firstItemIdOfRetried = batchToRetry.items[0].id;
-                    
+
                     // Nếu đây là batch đang retry, cập nhật thông báo lỗi
                     if (firstItemIdOfBatch === firstItemIdOfRetried) {
                         return {
@@ -1149,21 +1195,21 @@ export default function SubtitleTranslator() {
                             }))
                         };
                     }
-                    
+
                     // Giữ nguyên các batch khác
                     return batch;
                 })
             );
 
             // Track error for analytics
-            trackError('retry_batch_failed', 
+            trackError('retry_batch_failed',
                 error instanceof Error ? error.message : String(error),
                 { batchIndex }
             );
 
             // Làm mới danh sách các batch lỗi để đảm bảo tính nhất quán
             setTimeout(refreshFailedBatches, 500);
-            
+
             return Promise.reject(error);
         }
     };
@@ -1190,7 +1236,7 @@ export default function SubtitleTranslator() {
         try {
             // Xác định ngôn ngữ nguồn dựa trên ngôn ngữ đích
             const sourceLanguage = targetLanguage === "Vietnamese" ? "English" : "Vietnamese";
-            
+
             // Tạo prompt riêng cho gợi ý bản dịch tốt hơn
             const suggestPrompt = `Hãy đưa ra 3 phiên bản dịch HOÀN TOÀN KHÁC NHAU cho đoạn văn bản sau, mỗi phiên bản với phong cách và cách diễn đạt riêng biệt.
 
@@ -1209,9 +1255,9 @@ Yêu cầu cụ thể cho mỗi phiên bản:
 
             // Đánh dấu đang dịch phụ đề này
             setCurrentTranslatingItemId(id);
-            
+
             let suggestions: string[] = [];
-            
+
             if (aiProvider === 'gemini') {
                 // Gọi API Gemini để lấy gợi ý
                 const response = await translateWithGemini({
@@ -1220,12 +1266,12 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                     prompt: suggestPrompt,
                     model: selectedModel
                 });
-                
+
                 if (response[0]?.error) {
                     throw new Error(response[0].error);
                 }
-                
-                for(let i = 0; i < 3; i++) {
+
+                for (let i = 0; i < 3; i++) {
                     if (response[i]?.text) {
                         suggestions.push(response[i].text);
                     }
@@ -1237,7 +1283,7 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                     `Translate this to ${targetLanguage} using formal, academic language: "${originalText}"`,
                     `Translate this to ${targetLanguage} using creative, natural expression: "${originalText}"`
                 ];
-                
+
                 for (const prompt of prompts) {
                     const result = await translateWithOpenRouter(originalText, targetLanguage);
                     if (result.success) {
@@ -1245,17 +1291,17 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                     }
                 }
             }
-            
+
             // Nếu vẫn không tìm thấy, trả về bản dịch hiện tại
             if (suggestions.length === 0) {
                 suggestions.push(currentTranslation);
             }
-            
+
             // Đảm bảo luôn có đủ 3 phiên bản
             while (suggestions.length < 3) {
                 suggestions.push(currentTranslation);
             }
-            
+
             return suggestions;
         } catch (error) {
             console.error("Error suggesting better translations:", error);
@@ -1303,17 +1349,17 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                 {/* AI Provider and API Key Configuration */}
                 <ClientOnly>
                     <div className="space-y-4 mb-4">
-                        <AIProviderSelector 
+                        <AIProviderSelector
                             value={aiProvider}
                             onProviderChange={handleAiProviderChange}
                         />
-                        
+
                         {aiProvider === 'gemini' && (
                             <ApiKeyInput onApiKeyChange={handleApiKeyChange} />
                         )}
-                        
+
                         {aiProvider === 'openrouter' && (
-                            <OpenRouterApiKeyInput 
+                            <OpenRouterApiKeyInput
                                 value={openRouterApiKey}
                                 onApiKeyChange={handleOpenRouterApiKeyChange}
                             />
@@ -1489,14 +1535,14 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                             onModelChange={handleModelChange}
                                                         />
                                                     )}
-                                                    
+
                                                     {aiProvider === 'openrouter' && (
                                                         <OpenRouterModelSelector
                                                             value={openRouterModel}
                                                             onModelChange={handleOpenRouterModelChange}
                                                         />
                                                     )}
-                                                    
+
                                                     <LanguageSelector
                                                         value={targetLanguage}
                                                         onChange={setTargetLanguage}
@@ -1698,7 +1744,7 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                         {/* Format selection */}
                                                         <div className="flex items-center gap-2">
                                                             <label className="text-xs text-gray-500 dark:text-gray-400">{t('export.exportFormat')}</label>
-                                                            <select 
+                                                            <select
                                                                 value={exportFormat}
                                                                 onChange={(e) => setExportFormat(e.target.value as SubtitleFormat | 'original')}
                                                                 className="text-xs border rounded px-1 py-0.5 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -1710,7 +1756,7 @@ Yêu cầu cụ thể cho mỗi phiên bản:
                                                                 <option value="ass">ASS</option>
                                                             </select>
                                                         </div>
-                                                        
+
                                                         {/* Export buttons */}
                                                         <div className="flex flex-wrap gap-2">
                                                             <Button

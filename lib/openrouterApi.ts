@@ -122,10 +122,10 @@ export async function fetchOpenRouterModels(): Promise<OpenRouterModel[]> {
     }
 
     const data: ModelsResponse = await response.json();
-    
+
     // Filter models: must support text input and text output (for subtitle translation)
     // Include models with text->text, text+image->text, etc. as long as they support text I/O
-    const textModels = data.data.filter(model => 
+    const textModels = data.data.filter(model =>
       model.architecture.input_modalities.includes("text") &&
       model.architecture.output_modalities.includes("text")
     );
@@ -163,11 +163,11 @@ export async function fetchOpenRouterModels(): Promise<OpenRouterModel[]> {
     console.log(`📋 Fetched ${transformedModels.length} text-capable models from OpenRouter API`);
     console.log(`🆓 Free models: ${transformedModels.filter(m => m.isFree).length}`);
     console.log(`💰 Paid models: ${transformedModels.filter(m => !m.isFree).length}`);
-    
+
     return transformedModels;
   } catch (error) {
     console.error("Failed to fetch OpenRouter models:", error);
-    
+
     // Return fallback models if API fails
     return getFallbackModels();
   }
@@ -293,19 +293,19 @@ Translation:`;
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
-          errorData.error?.message || 
+          errorData.error?.message ||
           `OpenRouter API error: ${response.status} ${response.statusText}`
         );
       }
 
       const data = await response.json();
-      
+
       if (!data.choices || !data.choices[0] || !data.choices[0].message) {
         throw new Error("Invalid response format from OpenRouter API");
       }
 
       const translatedText = data.choices[0].message.content.trim();
-      
+
       return {
         translatedText,
         success: true
@@ -330,7 +330,7 @@ export async function translateWithOpenRouterBatch(
   targetLanguage: string,
   prompt?: string,
   context?: string
-): Promise<Array<{text: string, error?: string}>> {
+): Promise<Array<{ text: string, error?: string }>> {
   if (!currentApiKey) {
     return texts.map(() => ({
       text: "",
@@ -375,7 +375,7 @@ Response (JSON only):`;
             }
           ],
           temperature: 0.2,
-          max_tokens: 4000,
+          max_tokens: 8000, // Increased to handle longer subtitle batches
           top_p: 1,
           frequency_penalty: 0,
           presence_penalty: 0
@@ -392,7 +392,7 @@ Response (JSON only):`;
       }
 
       const data = await response.json();
-      
+
       if (!data.choices || !data.choices[0] || !data.choices[0].message) {
         return texts.map(() => ({
           text: "",
@@ -401,25 +401,39 @@ Response (JSON only):`;
       }
 
       const responseText = data.choices[0].message.content.trim();
-      
+
       try {
         // Try to parse JSON response first (like Gemini)
         const jsonMatch = responseText.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
           const parsed = JSON.parse(jsonMatch[0]);
           if (parsed.translations && Array.isArray(parsed.translations)) {
-            return texts.map((_, index) => ({
-              text: parsed.translations[index] || `[Error: Missing translation ${index + 1}]`
-            }));
+            // Log warning if translation count doesn't match
+            if (parsed.translations.length !== texts.length) {
+              console.warn(`⚠️ OpenRouter batch mismatch: expected ${texts.length} translations, got ${parsed.translations.length}`);
+              console.warn(`Response text length: ${responseText.length} characters`);
+            }
+
+            return texts.map((originalText, index) => {
+              const translation = parsed.translations[index];
+              if (!translation) {
+                console.error(`❌ Missing translation for index ${index}: "${originalText.substring(0, 50)}..."`);
+                return {
+                  text: "",
+                  error: `Missing translation ${index + 1}/${texts.length} - try with smaller batch`
+                };
+              }
+              return { text: translation };
+            });
           }
         }
-        
+
         // Fallback: parse line by line
         const lines = responseText
           .split('\n')
           .filter((line: string) => line.trim())
           .map((line: string) => line.replace(/^\d+[\.\)]?\s*["']?|["']?\s*$/, "").trim());
-        
+
         return texts.map((_, index) => ({
           text: lines[index] || `[Error: Failed to parse translation ${index + 1}]`
         }));
@@ -444,9 +458,9 @@ Response (JSON only):`;
 /**
  * Test OpenRouter API connection using the credits endpoint
  */
-export async function testOpenRouterConnection(): Promise<{ 
-  success: boolean; 
-  error?: string; 
+export async function testOpenRouterConnection(): Promise<{
+  success: boolean;
+  error?: string;
   warning?: string;
   credits?: number;
 }> {
@@ -470,7 +484,7 @@ export async function testOpenRouterConnection(): Promise<{
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      
+
       // Handle specific error cases
       if (response.status === 401) {
         return {
@@ -488,7 +502,7 @@ export async function testOpenRouterConnection(): Promise<{
           error: "Rate limit exceeded"
         };
       }
-      
+
       return {
         success: false,
         error: errorData.error?.message || `HTTP ${response.status}`
@@ -498,14 +512,14 @@ export async function testOpenRouterConnection(): Promise<{
     // If we get here, the API key is valid
     const creditsData = await response.json().catch(() => ({}));
     console.log("OpenRouter credits:", creditsData);
-    
+
     // Calculate remaining credits: total_credits - total_usage
     const totalCredits = creditsData.data?.total_credits || 0;
     const totalUsage = creditsData.data?.total_usage || 0;
     const remainingCredits = totalCredits - totalUsage;
-    
+
     console.log(`Credits info: total=${totalCredits}, usage=${totalUsage}, remaining=${remainingCredits}`);
-    
+
     // Check if credits are low and provide warning
     if (remainingCredits < 0) {
       return {
@@ -514,8 +528,8 @@ export async function testOpenRouterConnection(): Promise<{
         warning: "LOW_CREDITS" // This will be translated in the component
       };
     }
-    
-    return { 
+
+    return {
       success: true,
       credits: remainingCredits
     };
