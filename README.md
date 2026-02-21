@@ -1,112 +1,193 @@
-# SubtitleAI - AI-Powered Subtitle Translation Tool
+# 🌐 Subtitle Translate Web
 
-SubtitleAI is a modern web application that translates subtitle files using Google's Gemini AI. The application provides a sleek, user-friendly interface to upload subtitle files, translate them to various languages, and export the translated subtitles in multiple formats.
+AI-powered subtitle & data file translation web application. Translate subtitles using **Google Gemini** or **OpenRouter** (100+ models) with real-time streaming, batch processing, and a beautiful modern UI.
 
-![SubtitleAI Preview](/public/og-image.jpg)
+## ✨ Features
 
-## Features
+- **Multi-format support** — SRT, VTT, ASS/SSA, JSON, XML
+- **Multiple AI providers** — Google Gemini, OpenRouter, or any custom OpenAI-compatible endpoint
+- **Real-time streaming** — See translations appear line-by-line as they're processed
+- **Guest mode** — Try it free with the built-in Gemma 3 27B model (rate-limited)
+- **Streaming REST API** — Programmatic access via `/api/v1/translate` (NDJSON streaming)
+- **Video preview** — Load a video file and preview translated subtitles in sync
+- **Bilingual export** — Export original + translated text side by side
+- **Multiple export formats** — Download in SRT, VTT, ASS, or original format
+- **Dark / Light theme** — Automatic and manual theme switching
+- **Internationalization (i18n)** — Multi-language UI (Vietnamese, English, …)
+- **Responsive design** — Fully optimized for desktop and mobile
+- **Advanced settings** — Custom context, style prompts, and batch size control
 
-- **Multiple Format Support**: Translate SRT, VTT, and ASS subtitle files
-- **Powered by Gemini AI**: High-quality translations with context awareness
-- **Real-time Progress Tracking**: Monitor translation progress in real-time
-- **Smart Batch Processing**: Optimizes API usage and improves translation quality
-- **Context-Aware Translation**: Maintains consistency across related subtitles
-- **Advanced Translation Controls**:
-  - Pause/Resume functionality
-  - Batch retry for failed translations
-  - Manual editing of translated subtitles
-- **AI Suggestions**: Get alternative translation suggestions for subtitles
-- **Flexible Export Options**:
-  - Export in original or different subtitle formats
-  - Bilingual export with both original and translated text
-- **Full Customization**: Customize prompts to control translation style and tone
-- **Mobile Responsive**: Works seamlessly on desktop and mobile devices
+## 🛠 Tech Stack
 
-## Getting Started
+| Layer | Technology |
+|---|---|
+| Framework | [Next.js 16](https://nextjs.org) (App Router, Turbopack) |
+| UI | [React 19](https://react.dev), [Ant Design 6](https://ant.design) |
+| Styling | [Tailwind CSS 4](https://tailwindcss.com) |
+| AI | [Google Generative AI SDK](https://ai.google.dev), [OpenRouter API](https://openrouter.ai) |
+| Rate Limiting | [Upstash Redis](https://upstash.com) |
+| Language | TypeScript 5 |
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18.x or higher
-- A Google Gemini API key (https://ai.google.dev/)
+- **Node.js** 18+
+- **npm**, **yarn**, or **pnpm**
 
 ### Installation
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/bihv/subtitle-translate-web-v2.git
-   cd subtitle-translate-v2
-   ```
+```bash
+# Clone the repository
+git clone <repo-url>
+cd subtitle-translate-web-v2
 
-2. Install dependencies:
-   ```
-   npm install
-   ```
+# Install dependencies
+npm install
+```
 
-3. Create a `.env.local` file in the root directory and add the following:
-   ```
-   NEXT_PUBLIC_SITE_URL=http://localhost:3000
-   ```
+### Environment Variables
 
-4. Start the development server:
-   ```
-   npm run dev
-   ```
+Create a `.env.local` file in the project root:
 
-5. Open your browser and navigate to http://localhost:3000
+```env
+# Required for guest mode (server-side AI keys)
+GEMINI_API_KEY=your-gemini-api-key
+OPENROUTER_API_KEY=your-openrouter-api-key
 
-### Usage
+# Optional: Rate limiting via Upstash Redis (for guest mode)
+UPSTASH_REDIS_REST_URL=your-upstash-url
+UPSTASH_REDIS_REST_TOKEN=your-upstash-token
+DAILY_QUOTA=5  # Daily translation limit per IP for guest mode
+```
 
-1. Enter your Gemini API key
-2. Upload a subtitle file (SRT, VTT, or ASS) via drag-and-drop or file selector
-3. Choose your target language from the dropdown
-4. Customize the translation prompt if needed
-5. Click "Start Translation" to begin the process
-6. Use the controls to pause, resume, or stop translation as needed
-7. Edit any translations directly or use AI suggestions for improvements
-8. Retry any failed translations individually or in batches
-9. Export the translated subtitles in your preferred format
+> **Note:** Users can bring their own API keys in the UI — the server-side keys above are only needed for guest mode.
 
-## Technical Details
+### Development
 
-- **Frontend**: Next.js 15.3.0 with React 19
-- **UI Framework**: Tailwind CSS with ShadCN UI components
-- **AI Integration**: Google Gemini AI through @google/generative-ai
-- **Analytics**: Optional Google Analytics integration
-- **SEO Optimization**: Open Graph images, metadata, and JSON-LD
-- **Internationalization**: Multi-language support with context-aware translations
+```bash
+npm run dev
+```
 
-## Customizing Favicon
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-The app uses a custom favicon for brand identity. To update the favicon:
+### Production Build
 
-1. Create favicon images in various sizes (16x16, 32x32, 192x192, 512x512)
-2. Use tools like [Favicon.io](https://favicon.io/) or [RealFaviconGenerator](https://realfavicongenerator.net/)
-3. Place the generated files in the following locations:
-   - `public/favicon.ico` - Main favicon file
-   - `public/favicon/icon-16x16.png` - 16x16 PNG icon
-   - `public/favicon/icon-32x32.png` - 32x32 PNG icon
-   - `public/favicon/icon-192x192.png` - 192x192 PNG icon (for Android)
-   - `public/favicon/icon-512x512.png` - 512x512 PNG icon (for PWA)
-   - `public/favicon/apple-icon-180x180.png` - 180x180 PNG icon (for iOS)
-4. Metadata for the icons is already configured in the app
+```bash
+npm run build
+npm start
+```
 
-## API Key Security
+## 📡 REST API
 
-**Client-side storage**: Your API key can be stored in browser storage for convenience
+The app exposes a streaming translation API for programmatic use.
 
-API keys are never sent to our servers and all translations occur directly between your browser and Google's API servers.
+### `GET /api/v1/models`
 
-## License
+Returns available AI models for Google Gemini and OpenRouter.
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### `POST /api/v1/translate`
 
-## Acknowledgments
+Translates a subtitle/data file with streaming NDJSON response.
 
-- Google Generative AI for providing the translation capabilities
-- Next.js team for the excellent framework
-- ShadCN UI for the beautiful UI components
-- All contributors to the project
+**Request** (`multipart/form-data`):
 
----
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `file` | File | ✅ | Subtitle file (.srt, .vtt, .ass, .json, .xml) |
+| `apiKey` | string | ✅ | Your AI provider API key |
+| `provider` | string | ✅ | `google`, `openrouter`, or `custom` |
+| `model` | string | ✅ | Model ID (e.g. `gemini-2.0-flash`) |
+| `targetLanguage` | string | ✅ | Target language code (e.g. `vi`, `en`, `ja`) |
+| `context` | string | | Additional context for the translator |
+| `style` | string | | Translation style instructions |
+| `batchSize` | string | | Lines per batch (default: 50, max: 100) |
+| `customEndpoint` | string | | Required for `custom` provider |
 
-Visit the live site: [translate.io.vn](https://translate.io.vn)
+**Example:**
+
+```bash
+curl -X POST \
+  http://localhost:3000/api/v1/translate \
+  -F "file=@subtitle.srt" \
+  -F "apiKey=your-api-key" \
+  -F "provider=google" \
+  -F "model=gemini-2.0-flash" \
+  -F "targetLanguage=vi"
+```
+
+**Response** — Streaming NDJSON (`application/x-ndjson`):
+
+```jsonl
+{"index":0,"originalText":"Hello","translatedText":"Xin chào","status":"translating","completed":1,"total":100}
+{"index":1,"originalText":"World","translatedText":"Thế giới","status":"translating","completed":2,"total":100}
+...
+{"index":99,"originalText":"Goodbye","translatedText":"Tạm biệt","status":"done","completed":100,"total":100}
+```
+
+> Full API documentation is available at `/docs` in the running app.
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── translate/       # Internal translation API (UI use)
+│   │   └── v1/              # Public REST API
+│   │       ├── models/      # GET  /api/v1/models
+│   │       └── translate/   # POST /api/v1/translate
+│   ├── docs/                # Documentation page
+│   ├── layout.tsx           # Root layout with theme & i18n providers
+│   └── page.tsx             # Main translation page
+├── components/
+│   ├── AITranslation.tsx    # Translation orchestration
+│   ├── AppHeader.tsx        # Navigation header
+│   ├── ExportPanel.tsx      # File export options
+│   ├── FileUpload.tsx       # File upload component
+│   ├── LanguageSelector.tsx # Target language picker
+│   ├── ModelSelector.tsx    # AI model picker
+│   ├── TranslationTable.tsx # Side-by-side translation view
+│   └── VideoPreview.tsx     # Video + subtitle preview
+├── contexts/                # React context (Language, Theme)
+├── hooks/                   # Custom hooks (analytics)
+├── lib/
+│   ├── ai-services/         # AI provider implementations
+│   │   ├── base-translation-service.ts
+│   │   ├── gemini-service.ts
+│   │   ├── openai-service.ts
+│   │   └── models.ts
+│   ├── file-parser.ts       # Multi-format file parser
+│   ├── file-exporter.ts     # Multi-format file exporter
+│   ├── i18n.ts              # Internationalization strings
+│   ├── rate-limiter.ts      # Upstash rate limiting
+│   └── theme.ts             # Theme configuration
+└── types/
+    └── translation.ts       # TypeScript type definitions
+```
+
+## 🌍 Deployment
+
+### Vercel (Recommended)
+
+Deploy instantly with [Vercel](https://vercel.com):
+
+1. Push to GitHub
+2. Import project on Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy
+
+> **Important:** Streaming is enabled by default (`compress: false` in `next.config.ts`). If behind a reverse proxy (nginx, Cloudflare), handle compression at the proxy level.
+
+### Self-hosted
+
+```bash
+npm run build
+npm start
+```
+
+The app runs on port 3000 by default.
+
+## 📄 License
+
+This project is private.

@@ -1,0 +1,81 @@
+/* Step Flow Animations */
+@keyframes stepFadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes stepFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.stepSection {
+    animation: stepFadeSlideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.stepSectionFade {
+    animation: stepFadeIn 0.4s ease forwards;
+}
+
+/* Upload Hero */
+.uploadHero {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    min-height: calc(100vh - 64px - 48px);
+    padding: 32px 24px 24px;
+    text-align: center;
+}
+
+.uploadHero :global(.ant-upload-wrapper) {
+    max-width: 100%;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.uploadHero :global(.ant-upload-wrapper .ant-upload.ant-upload-drag) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px !important;
+    transition: all 0.3s ease;
+}
+
+.uploadHero :global(.ant-upload-wrapper .ant-upload.ant-upload-drag .ant-upload) {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.uploadHero :global(.ant-upload-drag:hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(22, 119, 255, 0.15);
+}
+
+/* Settings States */
+.settingsCollapsed {
+    opacity: 0.6;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.settingsActive {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
