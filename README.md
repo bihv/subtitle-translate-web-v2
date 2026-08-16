@@ -7,7 +7,7 @@ AI-powered subtitle & data file translation web application. Translate subtitles
 - **Multi-format support** — SRT, VTT, ASS/SSA, JSON, XML
 - **Multiple AI providers** — Google Gemini, OpenRouter, or any custom OpenAI-compatible endpoint
 - **Real-time streaming** — See translations appear line-by-line as they're processed
-- **Guest mode** — Try it free with the built-in Gemma 3 27B model (rate-limited)
+- **Guest mode** — Try it free with the built-in Gemma 4 models (rate-limited)
 - **Streaming REST API** — Programmatic access via `/api/v1/translate` (NDJSON streaming)
 - **Video preview** — Load a video file and preview translated subtitles in sync
 - **Bilingual export** — Export original + translated text side by side

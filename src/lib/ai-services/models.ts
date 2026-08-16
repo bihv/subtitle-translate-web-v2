@@ -38,13 +38,18 @@ export const GEMINI_MODELS: AIModel[] = [
         provider: 'google'
     },
     {
-        id: 'gemma-3-27b-it',
-        name: 'Gemma 3 27B IT',
+        id: 'gemma-4-31b-it',
+        name: 'Gemma 4 31B IT',
+        provider: 'google'
+    },
+    {
+        id: 'gemma-4-26b-a4b-it',
+        name: 'Gemma 4 26B A4B IT',
         provider: 'google'
     }
 ];
 
-export const GUEST_ALLOWED_GEMINI_MODELS = ['gemma-3-27b-it'];
+export const GUEST_ALLOWED_GEMINI_MODELS = ['gemma-4-31b-it', 'gemma-4-26b-a4b-it'];
 
 // Cache for OpenRouter models
 let openRouterModelsCache: AIModel[] | null = null;

@@ -21,7 +21,7 @@ export function validateApiKey(provider: 'google' | 'openrouter' | 'custom', api
 export async function validateGeminiApiKey(apiKey: string): Promise<{ valid: boolean; error?: string }> {
     try {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: 'gemma-3-27b-it' });
+        const model = genAI.getGenerativeModel({ model: 'gemma-4-31b-it' });
 
         // Send a simple test prompt
         const result = await model.generateContent('Test');
