@@ -21,20 +21,20 @@ export function parseOpenRouterPricing(pricing: { prompt: string; completion: st
   if (pricing.prompt === "Free" || pricing.completion === "Free") {
     return { inputPrice: 0, outputPrice: 0 };
   }
-  
+
   try {
     // Remove $ sign and parse the number (API returns per-token price)
     const inputPricePerToken = parseFloat(pricing.prompt.replace('$', ''));
     const outputPricePerToken = parseFloat(pricing.completion.replace('$', ''));
-    
+
     if (isNaN(inputPricePerToken) || isNaN(outputPricePerToken)) {
       return null;
     }
-    
+
     // Convert from per-token to per-1M-tokens for consistency with PROVIDER_PRICING
     const inputPrice = inputPricePerToken * 1_000_000;
     const outputPrice = outputPricePerToken * 1_000_000;
-    
+
     return { inputPrice, outputPrice };
   } catch {
     return null;
@@ -49,10 +49,15 @@ export const PROVIDER_PRICING: Record<string, ProviderPricing> = {
   'gemini-1.5-pro-latest': { inputPrice: 1.25, outputPrice: 5.0 },
   'gemini-1.5-flash': { inputPrice: 0.075, outputPrice: 0.3 },
   'gemini-1.5-flash-latest': { inputPrice: 0.075, outputPrice: 0.3 },
+  'gemini-2.0-flash': { inputPrice: 0.1, outputPrice: 0.4 },
   'gemini-2.0-flash-exp': { inputPrice: 0.075, outputPrice: 0.3 },
+  'gemini-2.5-flash': { inputPrice: 0.1, outputPrice: 0.4 },
+  'gemini-2.5-pro': { inputPrice: 1.25, outputPrice: 5.0 },
+  'gemma-4-31b-it': { inputPrice: 0.15, outputPrice: 0.15 },
+  'gemma-4-26b-a4b-it': { inputPrice: 0.1, outputPrice: 0.1 },
   'gemini-exp-1121': { inputPrice: 1.25, outputPrice: 5.0 },
   'gemini-exp-1206': { inputPrice: 1.25, outputPrice: 5.0 },
-  
+
   // OpenRouter fallback pricing (will be overridden by live API data when available)
   'openai/gpt-4o': { inputPrice: 2.5, outputPrice: 10.0 },
   'openai/gpt-4o-mini': { inputPrice: 0.15, outputPrice: 0.6 },
@@ -74,7 +79,7 @@ export const PROVIDER_PRICING: Record<string, ProviderPricing> = {
  */
 export function estimateTokenCount(text: string, language: string = 'English'): number {
   if (!text || text.trim().length === 0) return 0;
-  
+
   // Language-specific token ratios (characters per token)
   const languageRatios: Record<string, number> = {
     'English': 4,
@@ -89,7 +94,7 @@ export function estimateTokenCount(text: string, language: string = 'English'): 
     'Arabic': 3.5,
     'Thai': 3,
   };
-  
+
   const ratio = languageRatios[language] || 4; // Default to English ratio
   return Math.ceil(text.length / ratio);
 }
@@ -98,7 +103,7 @@ export function estimateTokenCount(text: string, language: string = 'English'): 
  * Estimate tokens for subtitle translation task
  */
 export function estimateSubtitleTokens(
-  subtitles: Array<{text: string}>,
+  subtitles: Array<{ text: string }>,
   targetLanguage: string,
   customPrompt: string,
   contextPerBatch: number = 3
@@ -106,32 +111,32 @@ export function estimateSubtitleTokens(
   if (!subtitles || subtitles.length === 0) {
     return { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
   }
-  
+
   // Calculate input tokens
   let inputTokens = 0;
-  
+
   // 1. Base prompt tokens
   const basePromptTokens = estimateTokenCount(customPrompt, 'English');
-  
+
   // 2. Source text tokens
   const sourceTextTokens = subtitles.reduce((total, sub) => {
     return total + estimateTokenCount(sub.text, 'English'); // Assume source is English
   }, 0);
-  
+
   // 3. Context tokens (previous translations for context)
   // Assume average context of 3 previous subtitles per batch
   const avgSubtitleLength = sourceTextTokens / subtitles.length;
   const contextTokens = Math.floor(subtitles.length / 10) * contextPerBatch * avgSubtitleLength * 2; // 2x for original + translation
-  
+
   // 4. Instruction tokens (language specification, formatting)
   const instructionTokens = estimateTokenCount(`Translate to ${targetLanguage}. Maintain formatting.`, 'English');
-  
+
   inputTokens = basePromptTokens + sourceTextTokens + contextTokens + instructionTokens;
-  
+
   // Estimate output tokens (translated text is usually 1.1-1.5x longer)
   const outputMultiplier = getLanguageOutputMultiplier(targetLanguage);
   const outputTokens = Math.ceil(sourceTextTokens * outputMultiplier);
-  
+
   return {
     inputTokens,
     outputTokens,
@@ -156,7 +161,7 @@ function getLanguageOutputMultiplier(targetLanguage: string): number {
     'Thai': 1.0,
     'English': 1.0,
   };
-  
+
   return multipliers[targetLanguage] || 1.2; // Default multiplier
 }
 
@@ -182,10 +187,10 @@ export function calculateEstimatedCost(
     console.log(`No pricing data available for model: ${modelId}`);
     return 0;
   }
-  
+
   const inputCost = (tokenEstimate.inputTokens / 1_000_000) * pricing.inputPrice;
   const outputCost = (tokenEstimate.outputTokens / 1_000_000) * pricing.outputPrice;
-  
+
   return inputCost + outputCost;
 }
 
@@ -214,7 +219,7 @@ export function formatCost(cost: number): string {
  * Get comprehensive token and cost estimate for subtitle translation
  */
 export function getTranslationEstimate(
-  subtitles: Array<{text: string}>,
+  subtitles: Array<{ text: string }>,
   targetLanguage: string,
   customPrompt: string,
   modelId: string,
@@ -223,7 +228,7 @@ export function getTranslationEstimate(
 ): TokenEstimate & { estimatedCost: number; pricingSource: 'live' | 'fallback' | 'none' } {
   const tokenEstimate = estimateSubtitleTokens(subtitles, targetLanguage, customPrompt);
   const estimatedCost = calculateEstimatedCost(tokenEstimate, modelId, aiProvider, customPricing);
-  
+
   // Determine pricing source
   let pricingSource: 'live' | 'fallback' | 'none';
   if (customPricing) {
@@ -233,7 +238,7 @@ export function getTranslationEstimate(
   } else {
     pricingSource = 'none';
   }
-  
+
   return {
     ...tokenEstimate,
     estimatedCost,

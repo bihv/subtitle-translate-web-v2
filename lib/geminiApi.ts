@@ -10,7 +10,7 @@ const rateLimiter = new RateLimiter(2000, 3, 2);
 let currentApiKey = "";
 
 // Biến lưu trữ model hiện tại
-let currentModel = "gemini-2.0-flash-exp"; // Default model
+let currentModel = "gemma-4-31b-it"; // Default model
 
 /**
  * Cập nhật API key mới

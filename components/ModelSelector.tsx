@@ -55,17 +55,25 @@ export const AVAILABLE_MODELS: ModelOption[] = [
     }
   },
   {
-    id: "gemma-3-27b-it",
-    name: "Gemma 3 27B",
+    id: "gemma-4-31b-it",
+    name: "Gemma 4 31B IT",
     description: {
-      vi: "Mô hình mã nguồn mở của Google, hiệu suất tốt với kích thước nhỏ gọn",
-      en: "Google's open-source model, good performance with compact size"
+      vi: "Mô hình mã nguồn mở thế hệ 4 của Google, hiệu suất suy luận cao và đa phương thức",
+      en: "Google's 4th gen open model, high reasoning performance & multimodal"
+    }
+  },
+  {
+    id: "gemma-4-26b-a4b-it",
+    name: "Gemma 4 26B A4B IT",
+    description: {
+      vi: "Mô hình Mixture-of-Experts của Google (4B active), phản hồi siêu nhanh và tối ưu",
+      en: "Google's Mixture-of-Experts model (4B active), ultra fast and optimized"
     }
   }
 ];
 
-// Default model - sử dụng model miễn phí làm mặc định
-export const DEFAULT_MODEL = "gemma-3-27b-it";
+// Default model - sử dụng model Gemma 4 làm mặc định
+export const DEFAULT_MODEL = "gemma-4-31b-it";
 
 interface ModelSelectorProps {
   onModelChange: (modelId: string) => void;
